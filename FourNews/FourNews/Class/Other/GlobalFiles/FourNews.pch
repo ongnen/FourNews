@@ -1,0 +1,21 @@
+
+//
+//  FourNews.pch
+//  FourNews
+//
+//  Created by admin on 16/3/27.
+//  Copyright © 2016年 天涯海北. All rights reserved.
+//
+
+#ifndef FourNews_pch
+#define FourNews_pch
+
+#import "Common.h"
+
+#import "UIImage+FN.h"
+
+#import "UIView+FN.h"
+#import "FNUserDefaults.h"
+#import "FNNetWorking.h"
+
+#endif /* FourNews_pch */
