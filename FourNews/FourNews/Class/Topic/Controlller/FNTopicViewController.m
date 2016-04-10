@@ -7,51 +7,104 @@
 //
 
 #import "FNTopicViewController.h"
+#import "FNTopicGetListItem.h"
+#import "FNTopicListCell.h"
+#import <MJRefresh.h>
+#import "FNTabBarController.h"
 
+@interface FNTopicViewController()
+@property (nonatomic, assign) NSInteger refreshCount;
+
+@property (nonatomic, strong) NSMutableArray *listItems;
+
+@end
 
 @implementation FNTopicViewController
+static NSString * const ID = @"cell";
+- (NSMutableArray *)listItems
+{
+    if (!_listItems) {
+        _listItems = [NSMutableArray array];
+    }
+    return _listItems;
+}
 
-//view加载
 -(void)viewDidLoad
 {
-    // 设置我们的url
-    NSURL *url = [NSURL URLWithString:@"http://c.m.163.com/newstopic/list/expert/0-10.html"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [super viewDidLoad];
+    // 设置下拉刷新
+    self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
+    // 设置上拉刷新
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
+    // 加载完直接刷新
+    [self.tableView.mj_header beginRefreshing];
+    // 点击选项跳到顶部刷新
+    FNTabBarController *tabBarVC = (FNTabBarController *)self.tabBarController;
+    tabBarVC.newsBtnBlock = ^{
+        [self.tableView.mj_header beginRefreshing];
+    };
     
-    NSURLSession *session =[NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        
-//        NSString *pathName =[dict objectForKey:@"data"];
+    
+    // 注册cell
+    [self.tableView registerNib:[UINib nibWithNibName:@"FNTopicListCell" bundle:nil] forCellReuseIdentifier:ID];
+}
+
+- (void)bottomDragRefreshData
+{
+    [FNTopicGetListItem getTopicNewsListWithPageCount:0 :^(NSArray *array) {
+        self.listItems = (NSMutableArray*)array;
+        [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
     }];
-    
-    [dataTask resume];
-    
-    
-    
 }
 
-
-//多少行
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)topDragRefreshData
 {
-    return 20;
-    
+    [FNTopicGetListItem getTopicNewsListWithPageCount:++self.refreshCount :^(NSArray *array) {
+        [self.listItems addObjectsFromArray:array];
+        [self.tableView reloadData];
+        [self.tableView.mj_footer endRefreshing];
+    }];
 }
 
-// cell
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - datasource数据源
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSString *ID =@"cellss";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    }
-    
-    
-    
+    return self.listItems.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    FNTopicListCell *cell = [tableView dequeueReusableCellWithIdentifier:ID forIndexPath:indexPath];
+    cell.listItem = self.listItems[indexPath.section];
     return cell;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 338;
+}
+// 设置footer高度
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
+}
+//// 设置footer样式
+- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *footV = [[UIView alloc] init];
+    footV.backgroundColor = FNColor(215, 215, 215);
+    footV.bounds = CGRectMake(0, 0, FNScreenW, 10);
+    NSLog(@"%@",NSStringFromCGRect(footV.frame));
+    return footV;
+}
+
 
 
 @end

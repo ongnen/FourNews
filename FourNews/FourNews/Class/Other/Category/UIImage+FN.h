@@ -15,4 +15,15 @@
 //返回一张不经过渲染，原始的图片
 + (UIImage *)imageWithOriginImage:(UIImage *)image;
 + (UIImage *)imageWithOriginImageName:(NSString *)image;
+
+/**
+ *  返回一个带有边框的圆形裁剪图片
+ *
+ *  @param borderW    边框宽度
+ *  @param boderColor 边框颜色
+ *  @param oriImage   要裁剪的图片
+ *
+ *  @return 已经裁剪好的带有边框的图片
+ */
++ (UIImage *)circleImageWithBorder:(CGFloat)borderW color:(UIColor *)boderColor image:(UIImage *)oriImage;
 @end

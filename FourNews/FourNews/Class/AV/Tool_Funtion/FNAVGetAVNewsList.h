@@ -10,6 +10,6 @@
 
 @interface FNAVGetAVNewsList : NSObject
 
-+ (void)getAVNewsListWithTid:(NSString *)tid :(void(^)(NSArray *))complete;
++ (void)getAVNewsListWithTid:(NSString *)tid :(NSInteger)pageCount :(void(^)(NSArray *))complete;
 
 @end

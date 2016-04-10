@@ -11,10 +11,13 @@
 #import "FNAVListCell.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "FNNewsReplyController.h"
+#import <MJRefresh.h>
+#import "FNTabBarController.h"
 
 @interface FNAVListController ()
+@property (nonatomic, assign) NSInteger refreshCount;
 
-@property (nonatomic, strong) NSArray<FNAVListItem *> *listItemArray;
+@property (nonatomic, strong) NSMutableArray<FNAVListItem *> *listItemArray;
 
 @end
 
@@ -23,7 +26,7 @@ static NSString * const ID = @"cell";
 - (NSArray *)listItemArray
 {
     if (!_listItemArray){
-        self.listItemArray = [[NSArray alloc] init];
+        self.listItemArray = [[NSMutableArray alloc] init];
     }
     return _listItemArray;
     
@@ -33,13 +36,44 @@ static NSString * const ID = @"cell";
 {
     [super viewDidLoad];
     
-    [FNAVGetAVNewsList getAVNewsListWithTid:self.tid :^(NSArray *array) {
-        self.listItemArray = array;
+    [FNAVGetAVNewsList getAVNewsListWithTid:self.tid :1 :^(NSArray *array) {
+        self.listItemArray = (NSMutableArray *)array;
         [self.tableView reloadData];
     }];
     
+    // 设置下拉刷新
+    self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
+    // 设置上拉刷新
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
+    // 加载完直接刷新
+    [self.tableView.mj_header beginRefreshing];
+    // 点击选项跳到顶部刷新
+    FNTabBarController *tabBarVC = (FNTabBarController *)self.tabBarController;
+    tabBarVC.newsBtnBlock = ^{
+        [self.tableView.mj_header beginRefreshing];
+    };
+
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"FNAVListCell" bundle:nil] forCellReuseIdentifier:ID];
 }
+- (void)bottomDragRefreshData
+{
+    [FNAVGetAVNewsList getAVNewsListWithTid:self.tid :0 :^(NSArray *array) {
+        self.listItemArray = (NSMutableArray *)array;
+        [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
+    }];
+}
+
+- (void)topDragRefreshData
+{
+    [FNAVGetAVNewsList getAVNewsListWithTid:self.tid :++self.refreshCount :^(NSArray *array) {
+        [self.listItemArray addObjectsFromArray:array];
+        [self.tableView reloadData];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+}
+
 
 #pragma mark - Table view data source
 
