@@ -6,8 +6,10 @@
 //  Copyright © 2016年 天涯海北. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "FNAVBaseController.h"
 
-@interface FNAVViewController : UITableViewController
+@interface FNAVViewController : FNAVBaseController
+
+
 
 @end

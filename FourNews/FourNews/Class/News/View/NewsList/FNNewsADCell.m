@@ -83,7 +83,7 @@ static NSString * const ADCollecID = @"newsAD";
     [self.contentView addSubview:collectionV];
     
     [self.contentView sendSubviewToBack:collectionV];
-    collectionV.userInteractionEnabled = NO;
+//    collectionV.userInteractionEnabled = NO;
     [collectionV registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ADCollecID];
     
     [collectionV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:5000 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];

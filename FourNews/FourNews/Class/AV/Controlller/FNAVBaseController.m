@@ -1,18 +1,17 @@
 //
-//  FNNewsBaseController.m
+//  FNAVBaseController.m
 //  FourNews
 //
-//  Created by admin on 16/3/28.
+//  Created by admin on 16/4/10.
 //  Copyright © 2016年 天涯海北. All rights reserved.
 //
-
 #define YJScreenW [UIScreen mainScreen].bounds.size.width
 #define YJScreenH [UIScreen mainScreen].bounds.size.height
 #define YJConH YJScreenH - 64 - self.titleScrollView.frame.size.height - 49
-#import "FNNewsBaseController.h"
+#import "FNAVBaseController.h"
 
 
-@interface FNNewsBaseController () <UIScrollViewDelegate>
+@interface FNAVBaseController () <UIScrollViewDelegate>
 
 @property (nonatomic, weak) UIScrollView *titleScrollView;
 @property (nonatomic, weak) UIScrollView *contentScrollView;
@@ -24,7 +23,7 @@
 
 @end
 
-@implementation FNNewsBaseController
+@implementation FNAVBaseController
 
 - (NSMutableArray *)titleBtnArray
 {
@@ -38,17 +37,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)setAllPrepare
 {
-    if (self.isSet == NO) {
-        _isSet = YES;
-        [self setTitleScrollView];
-        [self setTitleScrollViewBtn];
-        [self setContentScrollView];
-    }
+    [self setContentScrollView];
+    [self setTitleScrollView];
+    [self setTitleScrollViewBtn];
+    [self titleViewBtnClick:self.titleBtnArray[0]];
 }
 #pragma mark - 设置标题scrollView
 - (void)setTitleScrollView
@@ -56,6 +52,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     UIScrollView *titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, YJScreenW, 35)];
+    titleScrollView.backgroundColor = FNColorAlpha(255, 255, 255, 0);
     titleScrollView.backgroundColor = [UIColor whiteColor];
     
     CGFloat W = self.childViewControllers.count * YJScreenW / 4;
@@ -110,43 +107,24 @@
     }
     [self.titleScrollView setContentOffset:CGPointMake(offSetX, 0) animated:YES];
     
-    CGFloat contH = YJScreenH - 64 + self.titleScrollView.frame.size.height;
-    UIViewController *VC = self.childViewControllers[btn.tag];
-    CGFloat X = YJScreenW * btn.tag;
-    VC.view.frame = CGRectMake(X, 0, YJScreenW, contH);
-    [self.contentScrollView addSubview:VC.view];
+    [self showTargetViewWithIndex:btn.tag];
 }
 #pragma mark - 设置contentScrollView
 - (void)setContentScrollView
 {
     self.automaticallyAdjustsScrollViewInsets = NO;
-    CGFloat contW = YJScreenW;
-//    CGFloat contH = YJScreenH - 64 - self.titleScrollView.frame.size.height - 49;
-    CGFloat contY = 64 + self.titleScrollView.frame.size.height;
     UIScrollView *contentScrollView = [[UIScrollView alloc] init];
     contentScrollView.delegate = self;
-    contentScrollView.frame = CGRectMake(0, contY, contW, YJConH);
+    contentScrollView.frame = CGRectMake(0, 0, FNScreenW , FNScreenH);
     contentScrollView.backgroundColor = [UIColor grayColor];
     
-    CGFloat CW = self.childViewControllers.count * YJScreenW;
-    contentScrollView.contentSize = CGSizeMake(CW, 0);
+    contentScrollView.contentSize = CGSizeMake(self.childViewControllers.count * YJScreenW, 0);
     contentScrollView.showsHorizontalScrollIndicator = NO;
     contentScrollView.showsVerticalScrollIndicator = NO;
     contentScrollView.pagingEnabled = YES;
     [self.view addSubview:contentScrollView];
     
     self.contentScrollView = contentScrollView;
-    
-//    for (int i = 0; i < self.childViewControllers.count; i++) {
-//        UIViewController *VC = self.childViewControllers[i];
-//        CGFloat X = YJScreenW * i;
-//        VC.view.frame = CGRectMake(X, 0, YJScreenW, contH);
-//        [contentScrollView addSubview:VC.view];
-//    }
-    UIViewController *VC = self.childViewControllers[0];
-    CGFloat X = 0;
-    VC.view.frame = CGRectMake(X, 0, YJScreenW, YJConH);
-    [self.contentScrollView addSubview:VC.view];
 }
 
 
@@ -172,6 +150,14 @@
     [leftbtnBtn setTitleColor:[UIColor colorWithRed:leftScale green:0 blue:0 alpha:1] forState:UIControlStateNormal];
     
 }
+#pragma mark - 展示点击的目标View
+- (void)showTargetViewWithIndex:(NSInteger)index
+{
+    UITableViewController *tableVC = (UITableViewController*)self.childViewControllers[index];
+    tableVC.view.frame = CGRectMake(YJScreenW * index, 0, YJScreenW, YJScreenH);
+    tableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+    [self.contentScrollView addSubview:tableVC.view];
+}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -180,12 +166,6 @@
     UIButton *btn = self.titleBtnArray[index];
     
     [self titleViewBtnClick:btn];
-    
-    
-    UIViewController *VC = self.childViewControllers[btn.tag];
-    CGFloat X = YJScreenW * btn.tag;
-    VC.view.frame = CGRectMake(X, 0, YJScreenW, YJConH);
-    [self.contentScrollView addSubview:VC.view];
 }
 @end
 

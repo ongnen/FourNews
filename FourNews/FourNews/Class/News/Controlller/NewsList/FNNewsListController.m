@@ -46,7 +46,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.refreshCount = 1;
-    self.tableView.rowHeight = 90;
     
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     

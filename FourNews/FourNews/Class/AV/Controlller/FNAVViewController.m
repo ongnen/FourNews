@@ -7,7 +7,29 @@
 //
 
 #import "FNAVViewController.h"
+#import "FNAVGetAllColumns.h"
+#import "FNAVListController.h"
 
 @implementation FNAVViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor grayColor];
+    [FNAVGetAllColumns getAllColumns:^(NSArray *array) {
+        [self setAllChildControllerWithArray:array];
+        [self setAllPrepare];
+    }];
+}
+
+- (void)setAllChildControllerWithArray:(NSArray *)dicArray
+{
+    for (NSDictionary *dic in dicArray) {
+        FNAVListController *listVC = [[FNAVListController alloc] init];
+        listVC.title = dic[@"tname"];
+        listVC.tid = dic[@"tid"];
+        [self addChildViewController:listVC];
+    }
+}
 
 @end
