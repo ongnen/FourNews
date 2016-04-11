@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FNTopicDetailHeaderVBottomView">
+            <rect key="frame" x="0.0" y="0.0" width="395" height="30"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R03-RT-yvm">
+                    <rect key="frame" x="10" y="0.0" width="200" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="0sU-j7-cSi"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SQY-Of-DoQ">
+                    <rect key="frame" x="304" y="2" width="81" height="27"/>
+                    <segments>
+                        <segment title="最新"/>
+                        <segment title="最热"/>
+                    </segments>
+                    <color key="tintColor" red="1" green="0.17357249199999999" blue="0.13839655040000001" alpha="1" colorSpace="calibratedRGB"/>
+                </segmentedControl>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="R03-RT-yvm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="4dX-VK-wBJ"/>
+                <constraint firstItem="SQY-Of-DoQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="78p-ME-boG"/>
+                <constraint firstItem="R03-RT-yvm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="D1L-ap-Eix"/>
+                <constraint firstAttribute="bottom" secondItem="R03-RT-yvm" secondAttribute="bottom" id="OwW-4U-boZ"/>
+                <constraint firstAttribute="trailing" secondItem="SQY-Of-DoQ" secondAttribute="trailing" constant="10" id="may-rY-nZq"/>
+                <constraint firstAttribute="bottom" secondItem="SQY-Of-DoQ" secondAttribute="bottom" constant="2" id="r4J-ck-30X"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="chooseSegment" destination="SQY-Of-DoQ" id="jyp-Vg-Wc0"/>
+                <outlet property="messageL" destination="R03-RT-yvm" id="R5J-vD-26p"/>
+            </connections>
+            <point key="canvasLocation" x="264.5" y="409"/>
+        </view>
+    </objects>
+</document>

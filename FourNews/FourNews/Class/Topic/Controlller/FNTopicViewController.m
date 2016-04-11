@@ -11,6 +11,7 @@
 #import "FNTopicListCell.h"
 #import <MJRefresh.h>
 #import "FNTabBarController.h"
+#import "FNTopicDetailController.h"
 
 @interface FNTopicViewController()
 @property (nonatomic, assign) NSInteger refreshCount;
@@ -21,6 +22,7 @@
 
 @implementation FNTopicViewController
 static NSString * const ID = @"cell";
+static NSString * const FOOT = @"footer";
 - (NSMutableArray *)listItems
 {
     if (!_listItems) {
@@ -44,9 +46,16 @@ static NSString * const ID = @"cell";
         [self.tableView.mj_header beginRefreshing];
     };
     
-    
     // 注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"FNTopicListCell" bundle:nil] forCellReuseIdentifier:ID];
+    [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:FOOT];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)bottomDragRefreshData
@@ -82,6 +91,7 @@ static NSString * const ID = @"cell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FNTopicListCell *cell = [tableView dequeueReusableCellWithIdentifier:ID forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.listItem = self.listItems[indexPath.section];
     return cell;
 }
@@ -95,14 +105,24 @@ static NSString * const ID = @"cell";
 {
     return 10;
 }
-//// 设置footer样式
+// 设置footer样式
 - (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    UIView *footV = [[UIView alloc] init];
-    footV.backgroundColor = FNColor(215, 215, 215);
-    footV.bounds = CGRectMake(0, 0, FNScreenW, 10);
-    NSLog(@"%@",NSStringFromCGRect(footV.frame));
+    UITableViewHeaderFooterView *footV = [tableView dequeueReusableHeaderFooterViewWithIdentifier:FOOT];
+    footV.contentView.backgroundColor = FNColor(200, 200, 200);
+    
     return footV;
+}
+
+#pragma mark - tableViewDatagete
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    FNTopicDetailController *detailVc = [[FNTopicDetailController alloc] init];
+    detailVc.listItem = _listItems[indexPath.section];
+    
+    [self.navigationController pushViewController:detailVc animated:YES];
 }
 
 

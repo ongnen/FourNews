@@ -13,6 +13,7 @@
 #import "FNTopicViewController.h"
 #import "FNMeController.h"
 #import "FNNavigationController.h"
+#import "FNTopicNavgationController.h"
 
 @interface FNTabBarController () <UITabBarDelegate>
 
@@ -64,7 +65,9 @@
     controller.title = title;
     controller.navigationItem.title = nil;;
     FNNavigationController *nav = [[FNNavigationController alloc] initWithRootViewController:controller];
-    
+    if ([controller isKindOfClass:[FNTopicViewController class]]) {
+        nav = [[FNTopicNavgationController alloc] initWithRootViewController:controller];
+    }
     nav.tabBarItem.image = [UIImage imageWithOriginImage:[UIImage imageNamed:image]];
     nav.tabBarItem.selectedImage = [UIImage imageWithOriginImage:[UIImage imageNamed:selectesImage]];
     

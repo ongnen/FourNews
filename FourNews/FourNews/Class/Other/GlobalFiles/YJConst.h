@@ -10,3 +10,7 @@ UIKIT_EXTERN CGFloat const YJTabBarH;
 UIKIT_EXTERN CGFloat const YJTitlesViewH;
 
 UIKIT_EXTERN CGFloat const YJCommonMargin;
+
+UIKIT_EXTERN CGFloat const YJNavBarH;
+
+UIKIT_EXTERN CGFloat const YJStateBarH;

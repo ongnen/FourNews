@@ -21,7 +21,7 @@
         [self setAllPrepare];
     }];
 }
-
+// 添加所有子控制器
 - (void)setAllChildControllerWithArray:(NSArray *)dicArray
 {
     for (NSDictionary *dic in dicArray) {

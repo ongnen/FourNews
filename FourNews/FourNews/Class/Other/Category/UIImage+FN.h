@@ -26,4 +26,8 @@
  *  @return 已经裁剪好的带有边框的图片
  */
 + (UIImage *)circleImageWithBorder:(CGFloat)borderW color:(UIColor *)boderColor image:(UIImage *)oriImage;
+
+// 由颜色产生一张图片
+
++ (UIImage *)colorImageWithColor:(UIColor *)color;
 @end

@@ -30,6 +30,7 @@
 @implementation FNNewsDetailController
 
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -37,7 +38,9 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self setBottomImgV];
+    
 }
+
 #pragma mark - 记录浏览历史
 - (void)saveHistorySkim
 {

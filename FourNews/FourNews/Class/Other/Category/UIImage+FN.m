@@ -78,7 +78,24 @@
     UIGraphicsEndImageContext();
     
     return newImage;
+}
+
++ (UIImage *)colorImageWithColor:(UIColor *)color
+{
+    // 开启上下文
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(1, 1), YES, 0);
+    // 绘制一个像素点的矩形
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 1, 1)];
+    // 加颜色
+    [color set];
+    // 路径添加
+    [path fill];
+    // 拿到图片
+    UIImage  *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    // 关闭上下文
+    UIGraphicsEndImageContext();
     
+    return newImage;
 }
 
 @end

@@ -57,7 +57,12 @@
     tabBarVC.newsBtnBlock = ^{
         [self.tableView.mj_header beginRefreshing];
     };
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)bottomDragRefreshData
