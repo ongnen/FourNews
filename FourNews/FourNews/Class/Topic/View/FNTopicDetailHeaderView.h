@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "FNTopicListItem.h"
+#import "FNTopicDetailHeaderVBottomView.h"
 
 @interface FNTopicDetailHeaderView : UIView
 
 + (instancetype)topicDetailHeaderViewWithListItem:(FNTopicListItem *)listItem;
 
 + (CGFloat)totalHeightWithItem:(FNTopicListItem *)listItem;
+
+@property (nonatomic, strong) void(^detailBlock)(UIView *);
+
+@property (nonatomic, weak) FNTopicDetailHeaderVBottomView *bottomV;
 
 @end

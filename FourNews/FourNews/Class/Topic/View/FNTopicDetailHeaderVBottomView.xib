@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -21,7 +21,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SQY-Of-DoQ">
-                    <rect key="frame" x="304" y="2" width="81" height="27"/>
+                    <rect key="frame" x="304" y="3" width="81" height="25"/>
                     <segments>
                         <segment title="最新"/>
                         <segment title="最热"/>
@@ -32,11 +32,11 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="R03-RT-yvm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="4dX-VK-wBJ"/>
-                <constraint firstItem="SQY-Of-DoQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="78p-ME-boG"/>
+                <constraint firstItem="SQY-Of-DoQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="78p-ME-boG"/>
                 <constraint firstItem="R03-RT-yvm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="D1L-ap-Eix"/>
                 <constraint firstAttribute="bottom" secondItem="R03-RT-yvm" secondAttribute="bottom" id="OwW-4U-boZ"/>
                 <constraint firstAttribute="trailing" secondItem="SQY-Of-DoQ" secondAttribute="trailing" constant="10" id="may-rY-nZq"/>
-                <constraint firstAttribute="bottom" secondItem="SQY-Of-DoQ" secondAttribute="bottom" constant="2" id="r4J-ck-30X"/>
+                <constraint firstAttribute="bottom" secondItem="SQY-Of-DoQ" secondAttribute="bottom" constant="3" id="r4J-ck-30X"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

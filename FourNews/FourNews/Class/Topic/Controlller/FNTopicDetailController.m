@@ -123,6 +123,12 @@
 - (void)setupTableViewHeaderV
 {
     FNTopicDetailHeaderView *headerV = [FNTopicDetailHeaderView topicDetailHeaderViewWithListItem:_listItem];
+    headerV.frame = CGRectMake(0, 0, FNScreenW, 153);
+    __weak typeof(self) weakSelf = self;
+    headerV.detailBlock = ^(UIView *headerView){
+        weakSelf.queAnsTableV.tableHeaderView = headerView;
+        [weakSelf.queAnsTableV reloadData];
+    };
     self.queAnsTableV.tableHeaderView = headerV;
 }
 
