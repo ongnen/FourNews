@@ -15,13 +15,15 @@
 #import "FNNavigationController.h"
 #import "FNTopicNavgationController.h"
 
-@interface FNTabBarController () <UITabBarDelegate>
+@interface FNTabBarController () <UITabBarControllerDelegate>
 
 @property (nonatomic, strong) FNNewsViewController *newsVC;
 @property (nonatomic, strong) FNReadViewController *readVC;
 @property (nonatomic, strong) FNAVViewController *avVC;
 @property (nonatomic, strong) FNTopicViewController *topicVC;
 @property (nonatomic, strong) FNMeController *meVC;
+
+@property (nonatomic, strong) UITabBarItem *selectedItem;
 
 @end
 
@@ -33,7 +35,8 @@
     
     // 添加自控制器
     [self setChildControllers];
-    
+    // 给初值
+    self.selectedItem = self.childViewControllers[0].tabBarItem;
     [self.tabBar setTintColor:[UIColor redColor]];
 }
 
@@ -77,11 +80,13 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    if ([item.title isEqualToString:@"新闻"]) {
+    
+    if ([item.title isEqualToString:@"聚天下,闻四方"] && self.selectedItem == item) {
         if (self.newsBtnBlock) {
             self.newsBtnBlock();
         }
     }
+    self.selectedItem = item;
 }
 
 @end

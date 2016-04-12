@@ -9,6 +9,7 @@
 #define YJScreenH [UIScreen mainScreen].bounds.size.height
 #define YJConH YJScreenH - 64 - self.titleScrollView.frame.size.height - 49
 #import "FNAVBaseController.h"
+#import "FNTabBarController.h"
 
 
 @interface FNAVBaseController () <UIScrollViewDelegate>

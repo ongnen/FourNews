@@ -49,6 +49,8 @@ static NSString * const FOOT = @"footer";
     // 注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"FNTopicListCell" bundle:nil] forCellReuseIdentifier:ID];
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:FOOT];
+    // 分割线样式
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
 }
 
@@ -78,40 +80,22 @@ static NSString * const FOOT = @"footer";
 
 #pragma mark - datasource数据源
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return self.listItems.count;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.listItems.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FNTopicListCell *cell = [tableView dequeueReusableCellWithIdentifier:ID forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.listItem = self.listItems[indexPath.section];
+    cell.listItem = self.listItems[indexPath.row];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 338;
-}
-// 设置footer高度
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 10;
-}
-// 设置footer样式
-- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UITableViewHeaderFooterView *footV = [tableView dequeueReusableHeaderFooterViewWithIdentifier:FOOT];
-    footV.contentView.backgroundColor = FNColor(200, 200, 200);
-    
-    return footV;
 }
 
 #pragma mark - tableViewDatagete
@@ -120,7 +104,7 @@ static NSString * const FOOT = @"footer";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FNTopicDetailController *detailVc = [[FNTopicDetailController alloc] init];
-    detailVc.listItem = _listItems[indexPath.section];
+    detailVc.listItem = _listItems[indexPath.row];
     
     [self.navigationController pushViewController:detailVc animated:YES];
 }
