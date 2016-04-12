@@ -14,3 +14,6 @@ UIKIT_EXTERN CGFloat const YJCommonMargin;
 UIKIT_EXTERN CGFloat const YJNavBarH;
 
 UIKIT_EXTERN CGFloat const YJStateBarH;
+
+/** tabBarButton被重复点击的通知 */
+UIKIT_EXTERN NSString * const FNTabBarButtonRepeatClickNotification;

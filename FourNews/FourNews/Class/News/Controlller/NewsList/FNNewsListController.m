@@ -46,25 +46,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.refreshCount = 1;
-    
+    // 设置刷新控件
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
-    
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
-    
     [self.tableView.mj_header beginRefreshing];
     
-    FNTabBarController *tabBarVC = (FNTabBarController *)self.tabBarController;
-    tabBarVC.newsBtnBlock = ^{
-        [self.tableView.mj_header beginRefreshing];
-    };
+    // 监听通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
+    
+    // 右边内容条设置
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
 }
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
-
+#pragma mark - tabBarButton被点击调用的方法
+- (void)tabBarButtonRepeatClick
+{
+    // 不在当前窗口 返回
+    if (self.view.window == nil) return;
+    // 不再屏幕中间 返回
+    
+    
+    [self.tableView.mj_header beginRefreshing];
+}
+#pragma mark - 上下拉刷新的方法
 - (void)bottomDragRefreshData
 {
     [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :^(NSArray *array) {
@@ -74,7 +82,6 @@
         
     }];
 }
-
 - (void)topDragRefreshData
 {
     [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :++self.refreshCount :^(NSArray *array) {
@@ -104,7 +111,6 @@
     return cell;
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FNNewsListItem *item = self.newsListArray[indexPath.row];
@@ -117,6 +123,7 @@
     }
 }
 
+#pragma mark - 监听cell的点击 跳转
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     

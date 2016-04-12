@@ -31,13 +31,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"聚天下,闻四方";
+    // 添加所有子控件
     [self setAllChildController];
     
+    // 调用父类方法进行布局设置
+    [self setAllPrepare];
+    
+    // 导航条按钮
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithOriginImage:[UIImage imageNamed:@"search_icon"]] style:0 target:self action:@selector(searchBtnClick)];
     
+    // 取出历史浏览记录
     [self setHistorySkim];
 }
 
+#pragma mark - 取出历史浏览记录
 - (void)setHistorySkim
 {
     NSMutableArray *historySkim = [FNUserDefaults objectWithKey:@"historySkim"];

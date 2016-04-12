@@ -81,10 +81,9 @@
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     
-    if ([item.title isEqualToString:@"聚天下,闻四方"] && self.selectedItem == item) {
-        if (self.newsBtnBlock) {
-            self.newsBtnBlock();
-        }
+    if (self.selectedItem == item) {
+        // object = nil 匿名通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:FNTabBarButtonRepeatClickNotification object:nil];
     }
     self.selectedItem = item;
 }

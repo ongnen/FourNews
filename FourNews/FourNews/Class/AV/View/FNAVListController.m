@@ -47,14 +47,11 @@ static NSString * const ID = @"cell";
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
     // 加载完直接刷新
     [self.tableView.mj_header beginRefreshing];
-    // 点击选项跳到顶部刷新
-    FNTabBarController *tabBarVC = (FNTabBarController *)self.tabBarController;
-    tabBarVC.newsBtnBlock = ^{
-        [self.tableView.mj_header beginRefreshing];
-    };
-
     
     [self.tableView registerNib:[UINib nibWithNibName:@"FNAVListCell" bundle:nil] forCellReuseIdentifier:ID];
+    
+    // 右边内容条设置
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
 }
 - (void)bottomDragRefreshData
 {

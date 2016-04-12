@@ -40,11 +40,6 @@ static NSString * const FOOT = @"footer";
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
     // 加载完直接刷新
     [self.tableView.mj_header beginRefreshing];
-    // 点击选项跳到顶部刷新
-    FNTabBarController *tabBarVC = (FNTabBarController *)self.tabBarController;
-    tabBarVC.newsBtnBlock = ^{
-        [self.tableView.mj_header beginRefreshing];
-    };
     
     // 注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"FNTopicListCell" bundle:nil] forCellReuseIdentifier:ID];

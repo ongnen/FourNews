@@ -10,6 +10,5 @@
 
 @interface FNTabBarController : UITabBarController
 
-@property (nonatomic, strong) void(^newsBtnBlock)();
 
 @end

@@ -10,6 +10,6 @@
 
 @interface FNNewsBaseController : UIViewController
 
-
+- (void)setAllPrepare;
 
 @end
