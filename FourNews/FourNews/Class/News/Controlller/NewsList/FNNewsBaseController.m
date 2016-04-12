@@ -81,10 +81,16 @@
         [btn addTarget:self action:@selector(titleViewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.titleScrollView addSubview:btn];
     }
+    
 }
 #pragma mark - 监听标题按钮点击
 - (void)titleViewBtnClick:(UIButton *)btn
 {
+    // 发布通知
+    if (self.selectedBtn == btn) {
+        // object = nil 匿名通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:FNTabBarButtonRepeatClickNotification object:nil];
+    }
     // 1.标题状态改变
     self.selectedBtn.transform = CGAffineTransformIdentity;
     self.selectedBtn.selected = NO;
@@ -176,8 +182,7 @@
 //    NSLog(@"%@",tableVC.tableView);
 //    for (int i = 0;i < self.contentScrollView.subviews.count ;i++) {
 //        UIScrollView *scrollV = self.contentScrollView.subviews[i];
-//        scrollV.scrollsToTop = NO;
-//        NSLog(@"%@",scrollV);
+//        scrollV.scrollsToTop = (i == index);
 //    }
 }
 

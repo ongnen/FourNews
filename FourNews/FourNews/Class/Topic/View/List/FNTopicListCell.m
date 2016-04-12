@@ -101,7 +101,7 @@
         concernCountStr =  [NSString stringWithFormat:@"%0.1f万",[_listItem.concernCount intValue]/10000.0];
     }
     NSString *questionCountStr = [NSString stringWithFormat:@"%d",[_listItem.questionCount intValue]];
-    if ([_listItem.concernCount intValue]>9999) {
+    if ([_listItem.questionCount intValue]>9999) {
         questionCountStr =  [NSString stringWithFormat:@"%0.1f万",[_listItem.questionCount intValue]/10000.0];
     }
     

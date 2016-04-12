@@ -79,6 +79,7 @@ static NSString * const ADCollecID = @"newsAD";
     collectionV.delegate = self;
     collectionV.showsHorizontalScrollIndicator = NO;
     collectionV.showsVerticalScrollIndicator = NO;
+    collectionV.scrollsToTop = NO;
     
     [self.contentView addSubview:collectionV];
     

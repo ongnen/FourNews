@@ -12,6 +12,7 @@
 #import "FNTopicDetailInsetView.h"
 #import "FNTopicTopView.h"
 #import "FNTopicDetailHeaderView.h"
+#import "FNTopicDetailCell.h"
 #define FNTopicDetailImgH 200
 #define FNTopicDetailInsH 136
 
@@ -32,6 +33,7 @@
 @end
 
 @implementation FNTopicDetailController
+static NSString * const ID = @"cell";
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
@@ -52,17 +54,19 @@
     
     [FNTopicGetDetailItem getTopicNewsHotDetailWithExpertId:_listItem.expertId :^(NSMutableArray *array) {
         self.detailItems = array;
+        [self.queAnsTableV reloadData];
     }];
-    
+    // 布局子控件
     [self setTopImgV];
-
     [self setTopBarV];
-    
     [self setQuesAnsTableV];
-    
     [self setInsetV];
-    
     [self setupTableViewHeaderV];
+    
+    // 注册cell
+    [self.queAnsTableV registerNib:[UINib nibWithNibName:@"FNTopicDetailCell" bundle:nil] forCellReuseIdentifier:ID];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -137,17 +141,19 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 30;
+    return self.detailItems.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *ID = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
-    }
-    cell.textLabel.text = @"1111";
+    FNTopicDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:ID forIndexPath:indexPath];
+    NSLog(@"%@",self.detailItems[indexPath.row]);
+    cell.detailItem = self.detailItems[indexPath.row];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [FNTopicDetailCell totalHeightWithItem:self.detailItems[indexPath.row]];
 }
 
 #pragma mark - Table view delegate

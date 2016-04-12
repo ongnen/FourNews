@@ -46,6 +46,8 @@ static NSString * const FOOT = @"footer";
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:FOOT];
     // 分割线样式
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // 监听通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     
 }
 
@@ -54,7 +56,16 @@ static NSString * const FOOT = @"footer";
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
-
+#pragma mark - tabBarButton被点击调用的方法
+- (void)tabBarButtonRepeatClick
+{
+    // 不在当前窗口 返回
+    if (self.view.window == nil) return;
+    // 不再屏幕中间 返回
+    if (self.tableView.scrollsToTop == NO) return;
+    
+    [self.tableView.mj_header beginRefreshing];
+}
 - (void)bottomDragRefreshData
 {
     [FNTopicGetListItem getTopicNewsListWithPageCount:0 :^(NSArray *array) {

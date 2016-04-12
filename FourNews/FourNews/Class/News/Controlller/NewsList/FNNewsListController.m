@@ -56,19 +56,27 @@
     
     // 右边内容条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+    // KVO测试
+    [self.tableView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
+}
+// KVO测试
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UITableView *)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    NSLog(@"%@",change);
 }
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
+
 #pragma mark - tabBarButton被点击调用的方法
 - (void)tabBarButtonRepeatClick
 {
     // 不在当前窗口 返回
     if (self.view.window == nil) return;
     // 不再屏幕中间 返回
-    
+    if (self.tableView.scrollsToTop == NO) return;
     
     [self.tableView.mj_header beginRefreshing];
 }
@@ -158,7 +166,11 @@
             
         }];
     }
-    
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

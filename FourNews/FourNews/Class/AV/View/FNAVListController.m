@@ -52,6 +52,20 @@ static NSString * const ID = @"cell";
     
     // 右边内容条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+    
+    // 监听通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
+}
+
+#pragma mark - tabBarButton被点击调用的方法
+- (void)tabBarButtonRepeatClick
+{
+    // 不在当前窗口 返回
+    if (self.view.window == nil) return;
+    // 不再屏幕中间 返回
+    if (self.tableView.scrollsToTop == NO) return;
+    
+    [self.tableView.mj_header beginRefreshing];
 }
 - (void)bottomDragRefreshData
 {
