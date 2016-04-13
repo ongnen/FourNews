@@ -103,7 +103,7 @@
             <connections>
                 <outlet property="lineZero" destination="aqT-qI-Rre" id="aL1-bB-2nb"/>
             </connections>
-            <point key="canvasLocation" x="498.5" y="202"/>
+            <point key="canvasLocation" x="309.5" y="304"/>
         </view>
     </objects>
 </document>

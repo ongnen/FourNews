@@ -41,6 +41,8 @@
     
 }
 
+
+
 #pragma mark - 记录浏览历史
 - (void)saveHistorySkim
 {
@@ -134,9 +136,10 @@
 
 - (void)setBottomImgV
 {
+    
     UIImageView *botomImgV = [[UIImageView alloc] init];
     botomImgV.image = [UIImage imageNamed:@"detailBottomBackGround"];
-    botomImgV.frame = CGRectMake(0, self.view.frame.size.height-FNBottomBarHeight, FNScreenW, FNBottomBarHeight);
+    botomImgV.frame = CGRectMake(0, self.view.height-FNBottomBarHeight, FNScreenW, FNBottomBarHeight);
     [self.view addSubview:botomImgV];
 }
 

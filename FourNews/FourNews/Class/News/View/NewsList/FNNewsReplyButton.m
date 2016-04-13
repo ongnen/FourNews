@@ -23,7 +23,6 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
 //    self.imageView.frame = self.bounds;
 //    
 //    self.titleLabel.frame = CGRectMake(self.bounds.origin.x+3, self.bounds.origin.y, self.bounds.size.width-4, self.bounds.size.height);

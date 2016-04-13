@@ -215,8 +215,12 @@
     self.shareV.subviews.firstObject.frame = self.shareV.bounds;
     self.replyV.frame = contFrames.replyF;
     self.replyV.hidden = !contFrames.replyF.size.height;
-    self.relativeV.frame = contFrames.relativeF;
-    
+    if (_detailItem.relative_sys.count == 0) {
+        self.relativeV.hidden = YES;
+    } else {
+        self.relativeV.frame = contFrames.relativeF;
+    }
+        
     _totalHeight = contFrames.relativeF.origin.y + contFrames.relativeF.size.height;
 }
 

@@ -135,7 +135,7 @@
     self.timeL.frame = (CGRect){timeX,timeY,timeSize};
     
     CGSize supportSize = [_replyItem.v sizeWithAttributes:@{NSFontAttributeName:FNNewsReplyFont10}];
-    CGFloat supportX = self.frame.size.width-supportSize.width-FNNewsReplyBorder10;
+    CGFloat supportX = self.width-supportSize.width-FNNewsReplyBorder10;
     CGFloat supportY = 2*FNNewsReplyBorder10;
     self.supportL.frame = (CGRect){supportX,supportY,supportSize};
     

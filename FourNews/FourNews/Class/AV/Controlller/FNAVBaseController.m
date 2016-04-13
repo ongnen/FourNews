@@ -7,7 +7,7 @@
 //
 #define YJScreenW [UIScreen mainScreen].bounds.size.width
 #define YJScreenH [UIScreen mainScreen].bounds.size.height
-#define YJConH YJScreenH - 64 - self.titleScrollView.frame.size.height - 49
+#define YJConH YJScreenH - 64 - self.titleScrollView..height - 49
 #import "FNAVBaseController.h"
 #import "FNTabBarController.h"
 
@@ -60,6 +60,7 @@
     titleScrollView.contentSize = CGSizeMake(W, 0);
     titleScrollView.showsHorizontalScrollIndicator = NO;
     titleScrollView.showsVerticalScrollIndicator = NO;
+    titleScrollView.scrollsToTop = NO;
     [self.view addSubview:titleScrollView];
     self.titleScrollView = titleScrollView;
 }
@@ -88,6 +89,11 @@
 #pragma mark - 监听标题按钮点击
 - (void)titleViewBtnClick:(UIButton *)btn
 {
+    // 发布通知
+    if (self.selectedBtn == btn) {
+        // object = nil 匿名通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:FNTitleButtonRepeatClickNotification object:nil];
+    }
     self.selectedBtn.transform = CGAffineTransformIdentity;
     self.selectedBtn.selected = NO;
     [self.selectedBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -123,6 +129,7 @@
     contentScrollView.showsHorizontalScrollIndicator = NO;
     contentScrollView.showsVerticalScrollIndicator = NO;
     contentScrollView.pagingEnabled = YES;
+    contentScrollView.scrollsToTop = NO;
     [self.view addSubview:contentScrollView];
     
     self.contentScrollView = contentScrollView;
@@ -155,9 +162,17 @@
 - (void)showTargetViewWithIndex:(NSInteger)index
 {
     UITableViewController *tableVC = (UITableViewController*)self.childViewControllers[index];
-    tableVC.view.frame = CGRectMake(YJScreenW * index, 0, YJScreenW, YJScreenH);
-    tableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
-    [self.contentScrollView addSubview:tableVC.view];
+    // 如果已经添加了View,不做重复操作
+    if (!tableVC.tableView.window) {
+        [self.contentScrollView addSubview:tableVC.view];
+        tableVC.view.frame = CGRectMake(FNScreenW * index, 0, FNScreenW, FNScreenH);
+        tableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+    }
+    
+    for (int i = 0;i < self.childViewControllers.count ;i++) {
+        UITableViewController *tableVC = self.childViewControllers[i];
+        tableVC.tableView.scrollsToTop = (i == index);
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -165,6 +180,8 @@
     NSInteger index = scrollView.contentOffset.x / YJScreenW;
     
     UIButton *btn = self.titleBtnArray[index];
+    // 如果滑动减速后的页面还是当前页面，就不调用下面的方法
+    if (self.selectedBtn == btn) return;
     
     [self titleViewBtnClick:btn];
 }

@@ -11,7 +11,6 @@
 
 @interface FNTopicDetailCellAnsView : UIView
 
-+ (instancetype)ansViewWithItem:(FNTopicAnswerItem *)ansItem;
 
 @property (nonatomic, assign) CGFloat totalHeight;
 

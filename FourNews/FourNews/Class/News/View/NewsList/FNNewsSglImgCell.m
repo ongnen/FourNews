@@ -66,7 +66,7 @@
     CGSize replyStrSize = [replyStr sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:11]}];
     
     CGFloat replyBtnX = FNScreenW - replyStrSize.width - 10;
-    CGFloat replyBtnY = self.contentView.frame.size.height - replyStrSize.height;
+    CGFloat replyBtnY = self.contentView.height - replyStrSize.height;
     
     self.replyButton.frame = CGRectMake(replyBtnX, replyBtnY, replyStrSize.width,replyStrSize.height);
     [self.contentView addSubview:self.replyButton];

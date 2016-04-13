@@ -11,7 +11,6 @@
 
 @interface FNTopicDetailCellQuesView : UIView
 
-+ (instancetype)quesViewWithItem:(FNTopicQuesItem *)quesItem;
 
 @property (nonatomic, strong) FNTopicQuesItem *quesItem;
 

@@ -14,9 +14,9 @@
 
 + (instancetype)topicDetailHeaderViewWithListItem:(FNTopicListItem *)listItem;
 
-+ (CGFloat)totalHeightWithItem:(FNTopicListItem *)listItem;
+@property (nonatomic, assign) CGFloat totalHeight;
 
-@property (nonatomic, strong) void(^detailBlock)(UIView *);
+@property (nonatomic, strong) void(^detailBlock)(FNTopicDetailHeaderView *);
 
 @property (nonatomic, weak) FNTopicDetailHeaderVBottomView *bottomV;
 
