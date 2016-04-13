@@ -20,9 +20,15 @@
 #import "FNNewsGetPhotoSetItem.h"
 #import <MJRefresh.h>
 
+typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
+    FNNewsListCellHeightTypeAD = 200,
+    FNNewsListCellHeightTypeSgl = 90,
+    FNNewsListCellHeightTypeThr = 120,
+};
+
 @interface FNNewsListController ()
 
-@property (nonatomic, strong) NSMutableArray *newsListArray;
+@property (nonatomic, strong) NSMutableArray<FNNewsListItem *> *newsListArray;
 
 @property (nonatomic, assign) NSInteger refreshCount;
 
@@ -46,6 +52,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.refreshCount = 1;
+    // 设置估算高度，减少heightForRowAtIndexPath调用频率
+    self.tableView.estimatedRowHeight = 100.0;
     // 设置刷新控件
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
@@ -53,6 +61,7 @@
     
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
     
     // 右边内容条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
@@ -62,7 +71,6 @@
 // KVO测试
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UITableView *)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-    NSLog(@"%@",change);
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -72,6 +80,15 @@
 
 #pragma mark - tabBarButton被点击调用的方法
 - (void)tabBarButtonRepeatClick
+{
+    // 不在当前窗口 返回
+    if (self.view.window == nil) return;
+    // 不再屏幕中间 返回
+    if (self.tableView.scrollsToTop == NO) return;
+    
+    [self.tableView.mj_header beginRefreshing];
+}
+- (void)titleButtonRepeatClick
 {
     // 不在当前窗口 返回
     if (self.view.window == nil) return;
@@ -122,13 +139,18 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FNNewsListItem *item = self.newsListArray[indexPath.row];
-    if (indexPath.row == 0 && item.ads) {
-        return 200;
-    } else if (item.imgextra) {
-        return 120;
-    } else {
-        return 90;
+    // 将算过的totalHeight存储，下次直接返回
+    if (item.totalHeight==0) {
+        if (indexPath.row == 0 && item.ads) {
+            item.totalHeight = FNNewsListCellHeightTypeAD;
+        } else if (item.imgextra) {
+            item.totalHeight = FNNewsListCellHeightTypeThr;
+        } else {
+            item.totalHeight = FNNewsListCellHeightTypeSgl;
+        }
     }
+    return item.totalHeight;
+    
 }
 
 #pragma mark - 监听cell的点击 跳转

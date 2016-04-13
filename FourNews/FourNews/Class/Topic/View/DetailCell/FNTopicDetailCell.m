@@ -21,7 +21,7 @@
 - (UIView *)quesView
 {
     if (!_quesView) {
-        FNTopicDetailCellQuesView *quesView = [FNTopicDetailCellQuesView quesViewWithItem:_detailItem.question];
+        FNTopicDetailCellQuesView *quesView = [[NSBundle mainBundle] loadNibNamed:@"FNTopicDetailCellQuesView" owner:nil options:0].lastObject;
         [self addSubview:quesView];
         _quesView = quesView;
     }
@@ -30,7 +30,7 @@
 - (UIView *)ansView
 {
     if (!_ansView) {
-        FNTopicDetailCellAnsView *ansView = [FNTopicDetailCellAnsView ansViewWithItem:_detailItem.answer];
+        FNTopicDetailCellAnsView *ansView = [[NSBundle mainBundle] loadNibNamed:@"FNTopicDetailCellAnsView" owner:nil options:0].lastObject;
         [self addSubview:ansView];
         _ansView = ansView;
     }
@@ -51,13 +51,14 @@
 
 + (CGFloat)totalHeightWithItem:(FNTopicDetailItem *)detailItem
 {
-    FNTopicDetailCellQuesView *quesView = [FNTopicDetailCellQuesView quesViewWithItem:detailItem.question];
-    quesView.frame = CGRectMake(0, 0, FNScreenW, quesView.totalHeight);
+    FNTopicDetailCellQuesView *quesView = [[NSBundle mainBundle] loadNibNamed:@"FNTopicDetailCellQuesView" owner:nil options:0].lastObject;
+    quesView.quesItem = detailItem.question;
     
-    FNTopicDetailCellAnsView *ansView = [FNTopicDetailCellAnsView ansViewWithItem:detailItem.answer];
-    ansView.frame = CGRectMake(0, quesView.totalHeight, FNScreenW, ansView.totalHeight);
+    FNTopicDetailCellAnsView *ansView = [[NSBundle mainBundle] loadNibNamed:@"FNTopicDetailCellAnsView" owner:nil options:0].lastObject;
+    ansView.ansItem = detailItem.answer;
     
-    return CGRectGetMaxY(ansView.frame)+50;
+    
+    return quesView.totalHeight+ansView.totalHeight+50;
 }
 
 @end

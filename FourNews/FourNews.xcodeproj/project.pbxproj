@@ -37,6 +37,7 @@
 		8478B6971CAD3D81000F510D /* UIButton+FN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8478B6961CAD3D81000F510D /* UIButton+FN.m */; };
 		8478B69A1CAD3DC8000F510D /* UILabel+FN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8478B6991CAD3DC8000F510D /* UILabel+FN.m */; };
 		848A1BDC1CBA196800376F51 /* FNAVGetAllColumns.m in Sources */ = {isa = PBXBuildFile; fileRef = 848A1BDB1CBA196800376F51 /* FNAVGetAllColumns.m */; };
+		848AA8281CBDF314001E98B3 /* UIView+FN.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BCD3E01CA7BE040019F1A4 /* UIView+FN.m */; };
 		84BCD2291CA78A670019F1A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BCD2281CA78A670019F1A4 /* main.m */; };
 		84BCD2341CA78A670019F1A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BCD2331CA78A670019F1A4 /* Assets.xcassets */; };
 		84BCD2371CA78A670019F1A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BCD2351CA78A670019F1A4 /* LaunchScreen.storyboard */; };
@@ -756,15 +757,15 @@
 		8E5D3F091CBD36BB00003B4A /* DetailHeader */ = {
 			isa = PBXGroup;
 			children = (
-				8E5D3F0A1CBD36BB00003B4A /* FNTopicDetailHeaderVBottomView.h */,
-				8E5D3F0B1CBD36BB00003B4A /* FNTopicDetailHeaderVBottomView.m */,
-				8E5D3F0C1CBD36BB00003B4A /* FNTopicDetailHeaderVBottomView.xib */,
 				8E5D3F0D1CBD36BB00003B4A /* FNTopicDetailHeaderView.h */,
 				8E5D3F0E1CBD36BB00003B4A /* FNTopicDetailHeaderView.m */,
 				8E5D3F0F1CBD36BB00003B4A /* FNTopicDetailHeaderView.xib */,
 				8E5D3F101CBD36BB00003B4A /* FNTopicDetailInsetView.h */,
 				8E5D3F111CBD36BB00003B4A /* FNTopicDetailInsetView.m */,
 				8E5D3F121CBD36BB00003B4A /* FNTopicDetailInsetView.xib */,
+				8E5D3F0A1CBD36BB00003B4A /* FNTopicDetailHeaderVBottomView.h */,
+				8E5D3F0B1CBD36BB00003B4A /* FNTopicDetailHeaderVBottomView.m */,
+				8E5D3F0C1CBD36BB00003B4A /* FNTopicDetailHeaderVBottomView.xib */,
 			);
 			path = DetailHeader;
 			sourceTree = "<group>";
@@ -1214,6 +1215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				848AA8281CBDF314001E98B3 /* UIView+FN.m in Sources */,
 				8475206F1CB631C90008B8DC /* FNNewsSearchController.m in Sources */,
 				8E9030291CB155CB001F005D /* FNNewsListController.m in Sources */,
 				84BCD2291CA78A670019F1A4 /* main.m in Sources */,

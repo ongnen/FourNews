@@ -158,7 +158,6 @@
     
     _totalHeight = imgY+imgH+FNNewsReplyBorder10;
     
-    self.bounds = CGRectMake(0, 0, FNScreenW-2*FNNewsReplyBorder10, _totalHeight);
 }
 
 @end

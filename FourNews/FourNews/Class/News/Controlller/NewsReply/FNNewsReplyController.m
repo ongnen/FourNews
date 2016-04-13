@@ -116,7 +116,7 @@ static NSString * const ID = @"replyCell";
 {
     UIImageView *bottomImgV = [[UIImageView alloc] init];
     bottomImgV.image = [UIImage imageNamed:@"detailBottomBackGround"];
-    bottomImgV.frame = CGRectMake(0, self.view.frame.size.height-FNBottomBarHeight-FNTopBarHeight+FNStateBarHeight+100, FNScreenW, FNBottomBarHeight);
+    bottomImgV.frame = CGRectMake(0, self.view.height-FNBottomBarHeight-FNTopBarHeight+FNStateBarHeight+100, FNScreenW, FNBottomBarHeight);
     [self.view addSubview:bottomImgV];
     self.bottonImgV = bottomImgV;
 //    NSLog(@"%@",NSStringFromCGPoint(self.view.frame.origin));
@@ -125,7 +125,7 @@ static NSString * const ID = @"replyCell";
 #pragma mark - 设置底部图片相对不移动
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat bottomImgY = self.isFirstScroll ? self.view.frame.size.height-FNTopBarHeight+FNStateBarHeight+scrollView.contentOffset.y : self.view.frame.size.height-FNTopBarHeight+scrollView.contentOffset.y+2*FNStateBarHeight;
+    CGFloat bottomImgY = self.isFirstScroll ? self.view.height-FNTopBarHeight+FNStateBarHeight+scrollView.contentOffset.y : self.view.height-FNTopBarHeight+scrollView.contentOffset.y+2*FNStateBarHeight;
     self.bottonImgV.frame = CGRectMake(0, bottomImgY, FNScreenW, FNBottomBarHeight);
 
 }

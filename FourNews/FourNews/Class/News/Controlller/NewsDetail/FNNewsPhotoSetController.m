@@ -107,7 +107,7 @@ static NSString * const ID = @"collec";
     UIImageView *imageV = [[UIImageView alloc] init];
     [imageV sd_setImageWithURL:[NSURL URLWithString:self.photoSet[indexPath.row].imgurl] placeholderImage:[UIImage imageNamed:@"newsTitleImage"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [imageV sizeToFit];
-        imageV.bounds = CGRectMake(0, 0, FNScreenW, imageV.frame.size.height * FNScreenW/imageV.frame.size.width);
+        imageV.bounds = CGRectMake(0, 0, FNScreenW, imageV.height * FNScreenW/imageV.width);
         imageV.center = CGPointMake(FNScreenW/2, FNScreenH/2);
     }];
     [cell addSubview:imageV];
@@ -119,7 +119,7 @@ static NSString * const ID = @"collec";
 {
     UIImageView *botomImgV = [[UIImageView alloc] init];
     botomImgV.image = [UIImage imageNamed:@"photoSetBottom"];
-    botomImgV.frame = CGRectMake(0, self.view.frame.size.height-FNBottomBarHeight, FNScreenW, FNBottomBarHeight);
+    botomImgV.frame = CGRectMake(0, self.view.height-FNBottomBarHeight, FNScreenW, FNBottomBarHeight);
     [self.view addSubview:botomImgV];
 }
 
@@ -128,7 +128,7 @@ static NSString * const ID = @"collec";
     FNNewsPhotoDescView *descView = [[NSBundle mainBundle] loadNibNamed:@"FNNewsPhotoDescView" owner:nil options:nil].lastObject;
     descView.descItem = _photoSet[0];
     CGFloat descViewH = [FNNewsPhotoDescView heightWithPhotoSet:_photoSet];
-    descView.frame = CGRectMake(0, self.view.frame.size.height-FNBottomBarHeight-descViewH, FNScreenW, descViewH);
+    descView.frame = CGRectMake(0, self.view.height-FNBottomBarHeight-descViewH, FNScreenW, descViewH);
     descView.indexL.text = [NSString stringWithFormat:@"1/%ld",_photoSet.count];
     self.descView = descView;
     [self.view addSubview:descView];

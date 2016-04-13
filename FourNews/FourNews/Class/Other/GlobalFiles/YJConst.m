@@ -17,3 +17,6 @@ CGFloat const YJStateBarH = 20;
 
 /** tabBarButton被重复点击的通知 */
 NSString * const FNTabBarButtonRepeatClickNotification = @"FNTabBarButtonRepeatClickNotification";
+
+/** titleButton被重复点击的通知 */
+NSString * const FNTitleButtonRepeatClickNotification = @"FNTitleButtonRepeatClickNotification";

@@ -55,6 +55,7 @@ static NSString * const ID = @"cell";
     
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
 }
 
 #pragma mark - tabBarButton被点击调用的方法
@@ -67,6 +68,16 @@ static NSString * const ID = @"cell";
     
     [self.tableView.mj_header beginRefreshing];
 }
+- (void)titleButtonRepeatClick
+{
+    // 不在当前窗口 返回
+    if (self.view.window == nil) return;
+    // 不再屏幕中间 返回
+    if (self.tableView.scrollsToTop == NO) return;
+    
+    [self.tableView.mj_header beginRefreshing];
+}
+
 - (void)bottomDragRefreshData
 {
     [FNAVGetAVNewsList getAVNewsListWithTid:self.tid :0 :^(NSArray *array) {

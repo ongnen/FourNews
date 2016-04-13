@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -21,12 +21,20 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SQY-Of-DoQ">
-                    <rect key="frame" x="304" y="3" width="81" height="25"/>
+                    <rect key="frame" x="304" y="1" width="81" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="81" id="8Xd-Eq-WkY"/>
+                    </constraints>
                     <segments>
                         <segment title="最新"/>
                         <segment title="最热"/>
                     </segments>
                     <color key="tintColor" red="1" green="0.17357249199999999" blue="0.13839655040000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="8Xd-Eq-WkY"/>
+                        </mask>
+                    </variation>
                 </segmentedControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -35,11 +43,20 @@
                 <constraint firstItem="SQY-Of-DoQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="78p-ME-boG"/>
                 <constraint firstItem="R03-RT-yvm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="D1L-ap-Eix"/>
                 <constraint firstAttribute="bottom" secondItem="R03-RT-yvm" secondAttribute="bottom" id="OwW-4U-boZ"/>
+                <constraint firstAttribute="bottom" secondItem="SQY-Of-DoQ" secondAttribute="bottom" constant="3" id="UjQ-cM-b7P"/>
                 <constraint firstAttribute="trailing" secondItem="SQY-Of-DoQ" secondAttribute="trailing" constant="10" id="may-rY-nZq"/>
+                <constraint firstItem="SQY-Of-DoQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="oMm-9v-2rJ"/>
                 <constraint firstAttribute="bottom" secondItem="SQY-Of-DoQ" secondAttribute="bottom" constant="3" id="r4J-ck-30X"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="78p-ME-boG"/>
+                    <exclude reference="UjQ-cM-b7P"/>
+                    <exclude reference="r4J-ck-30X"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="chooseSegment" destination="SQY-Of-DoQ" id="jyp-Vg-Wc0"/>
                 <outlet property="messageL" destination="R03-RT-yvm" id="R5J-vD-26p"/>

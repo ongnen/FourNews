@@ -105,7 +105,7 @@ static NSString * const ADCollecID = @"newsAD";
     ADImageV.userInteractionEnabled = YES;
     
     [ADImageV sd_setImageWithURL:[NSURL URLWithString:self.adItemArray[indexPath.row%self.adItemArray.count].imgsrc] placeholderImage:[UIImage imageNamed:@"newsTitleImage"]];
-//    self.frame = CGRectMake(0, 0, FNScreenW, self.frame.size.height);
+//    self.frame = CGRectMake(0, 0, FNScreenW, self.height);
     ADImageV.frame = cell.bounds;
     
     [cell.contentView addSubview:ADImageV];
@@ -128,7 +128,6 @@ static NSString * const ADCollecID = @"newsAD";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"111");
     
 }
 

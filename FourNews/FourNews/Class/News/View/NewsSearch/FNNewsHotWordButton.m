@@ -26,7 +26,7 @@
 {
     [super layoutSubviews];
     self.imageView.frame = self.bounds;
-    self.titleLabel.frame = CGRectMake(10, 10, self.frame.size.width-20, self.frame.size.height-20);
+    self.titleLabel.frame = CGRectMake(10, 10, self.width-20, self.height-20);
     
 }
 

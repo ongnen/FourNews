@@ -91,7 +91,7 @@
     playImgV.image = [UIImage imageNamed:@"night_video_cell_play"];
     playImgV.bounds = CGRectMake(0, 0, 40, 40);
     
-    playImgV.center = CGPointMake((FNScreenW-YJCommonMargin*2)/2, self.coverImgV.frame.size.height/2);
+    playImgV.center = CGPointMake((FNScreenW-YJCommonMargin*2)/2, self.coverImgV.height/2);
     [self.coverImgV addSubview:playImgV];
 }
 
@@ -128,7 +128,7 @@
     self.topicL.textColor = [UIColor blackColor];
     self.topicL.font = [UIFont systemFontOfSize:12];
     self.topicL.text = _listItem.topicName;
-    self.topicL.frame = CGRectMake(self.topicImgV.frame.size.width + FNCompensate(5), 0, topicW, FNAVTopicImgWH);
+    self.topicL.frame = CGRectMake(self.topicImgV.width + FNCompensate(5), 0, topicW, FNAVTopicImgWH);
 }
 
 - (void)replyBtnClick

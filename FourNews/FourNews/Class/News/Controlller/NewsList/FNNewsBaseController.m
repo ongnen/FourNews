@@ -35,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
 }
 
 - (void)setAllPrepare
@@ -89,7 +90,7 @@
     // 发布通知
     if (self.selectedBtn == btn) {
         // object = nil 匿名通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:FNTabBarButtonRepeatClickNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:FNTitleButtonRepeatClickNotification object:nil];
     }
     // 1.标题状态改变
     self.selectedBtn.transform = CGAffineTransformIdentity;
@@ -162,6 +163,9 @@
     
     UIButton *btn = self.titleBtnArray[index];
     
+    // 如果滑动减速后的页面还是当前页面，就不调用下面的方法
+    if (self.selectedBtn == btn) return;
+    
     [self titleViewBtnClick:btn];
     
     
@@ -171,9 +175,13 @@
 - (void)showTargetViewWithIndex:(NSInteger)index
 {
     UITableViewController *tableVC = (UITableViewController*)self.childViewControllers[index];
-    tableVC.view.frame = CGRectMake(FNScreenW * index, 0, FNScreenW, FNScreenH);
-    tableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
-    [self.contentScrollView addSubview:tableVC.view];
+    // 如果已经添加了View,不做重复操作
+    if (!tableVC.tableView.window) {
+        [self.contentScrollView addSubview:tableVC.view];
+        tableVC.view.frame = CGRectMake(FNScreenW * index, 0, FNScreenW, FNScreenH);
+        tableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+    }
+    
     
     for (int i = 0;i < self.childViewControllers.count ;i++) {
         UITableViewController *tableVC = self.childViewControllers[i];

@@ -112,21 +112,23 @@
         
     } else {
         // 重新设置约束
-        descLH = [headerV.descL.text boundingRectWithSize:CGSizeMake(headerV.descL.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size.height+FNCompensate(30);
+        descLH = [headerV.descL.text boundingRectWithSize:CGSizeMake(headerV.descL.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil].size.height+FNCompensate(30);
         headerV.descHeightConstraint.constant = descLH;
     }
-    // 重新设置headerV的size
-    headerV.bounds = CGRectMake(headerV.frame.origin.x, headerV.frame.origin.y, headerV.frame.size.width, descLH-FNHeaderDescLNorH+FNHeaderNormalH);
+    // 重新设置headerV的height
+    headerV.height = descLH-FNHeaderDescLNorH+FNHeaderNormalH;
+    
     if (headerV.detailBlock) {
         headerV.detailBlock(headerV);
     }
     
 }
-// layoutSubview中只能设置非Xib中的子空间
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.bottomV.frame = CGRectMake(0, CGRectGetMaxY(self.descL.frame)+30, FNScreenW, 30);
+    self.bottomV.frame = CGRectMake(0, CGRectGetMaxY(self.detailButton.frame), FNScreenW, 30);
+    
 }
 
 @end

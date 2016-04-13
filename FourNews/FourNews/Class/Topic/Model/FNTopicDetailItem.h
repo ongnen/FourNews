@@ -16,5 +16,7 @@
 
 @property (nonatomic, strong) FNTopicAnswerItem *answer;
 
+@property (nonatomic, assign) CGFloat totalHeight;
+
 
 @end

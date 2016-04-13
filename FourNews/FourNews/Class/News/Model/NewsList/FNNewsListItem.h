@@ -39,4 +39,6 @@
 // 回复数
 @property (nonatomic, assign) NSInteger replyCount;
 
+@property (nonatomic, assign) CGFloat totalHeight;
+
 @end

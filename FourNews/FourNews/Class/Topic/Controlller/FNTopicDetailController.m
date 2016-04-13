@@ -18,7 +18,7 @@
 
 @interface FNTopicDetailController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic, strong) NSMutableArray *detailItems;
+@property (nonatomic, strong) NSMutableArray<FNTopicDetailItem *> *detailItems;
 
 @property (nonatomic, weak) UIImageView *topImgV;
 
@@ -129,7 +129,7 @@ static NSString * const ID = @"cell";
     FNTopicDetailHeaderView *headerV = [FNTopicDetailHeaderView topicDetailHeaderViewWithListItem:_listItem];
     headerV.frame = CGRectMake(0, 0, FNScreenW, 153);
     __weak typeof(self) weakSelf = self;
-    headerV.detailBlock = ^(UIView *headerView){
+    headerV.detailBlock = ^(FNTopicDetailHeaderView *headerView){
         weakSelf.queAnsTableV.tableHeaderView = headerView;
         [weakSelf.queAnsTableV reloadData];
     };
@@ -146,14 +146,18 @@ static NSString * const ID = @"cell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FNTopicDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:ID forIndexPath:indexPath];
-    NSLog(@"%@",self.detailItems[indexPath.row]);
     cell.detailItem = self.detailItems[indexPath.row];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [FNTopicDetailCell totalHeightWithItem:self.detailItems[indexPath.row]];
+    // 将算过的totalHeight存储，下次直接返回
+    if (self.detailItems[indexPath.row].totalHeight==0) {
+        NSLog(@"%ld",indexPath.row);
+        self.detailItems[indexPath.row].totalHeight = [FNTopicDetailCell totalHeightWithItem:self.detailItems[indexPath.row]];
+    }
+    return self.detailItems[indexPath.row].totalHeight;
 }
 
 #pragma mark - Table view delegate
@@ -165,7 +169,7 @@ static NSString * const ID = @"cell";
         self.insetView.frame = CGRectMake(0, YJNavBarMaxY-FNTopicDetailInsH-scrollView.contentOffset.y, FNScreenW, 136);
         if (scrollView.contentOffset.y>0) return;
         // 顶部图片下移
-        self.topImgV.frame = CGRectMake(0, -40+(scrollView.contentOffset.y+FNTopicDetailInsH)/136*40, FNScreenW, self.topImgV.frame.size.height);
+        self.topImgV.frame = CGRectMake(0, -40+(scrollView.contentOffset.y+FNTopicDetailInsH)/136*40, FNScreenW, self.topImgV.height);
     }
     // 改变insetView的透明度
     self.insetView.descL.alpha = 1 - (scrollView.contentOffset.y+FNTopicDetailInsH)/80.0;
