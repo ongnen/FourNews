@@ -13,11 +13,12 @@
 #import "FNTopicTopView.h"
 #import "FNTopicDetailHeaderView.h"
 #import "FNTopicDetailCell.h"
+#import <MJRefresh.h>
 #define FNTopicDetailImgH 200
 #define FNTopicDetailInsH 136
 
 @interface FNTopicDetailController ()<UITableViewDataSource,UITableViewDelegate>
-
+@property (nonatomic, assign) NSInteger refreshCount;
 @property (nonatomic, strong) NSMutableArray<FNTopicDetailItem *> *detailItems;
 
 @property (nonatomic, weak) UIImageView *topImgV;
@@ -51,8 +52,7 @@ static NSString * const ID = @"cell";
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    [FNTopicGetDetailItem getTopicNewsHotDetailWithExpertId:_listItem.expertId :^(NSMutableArray *array) {
+    [FNTopicGetDetailItem getTopicNewsHotDetailWithExpertId:_listItem.expertId :0 :^(NSMutableArray *array) {
         self.detailItems = array;
         [self.queAnsTableV reloadData];
     }];
@@ -63,10 +63,20 @@ static NSString * const ID = @"cell";
     [self setInsetV];
     [self setupTableViewHeaderV];
     
+    // 设置上拉刷新
+    self.queAnsTableV.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
+
+    
     // 注册cell
     [self.queAnsTableV registerNib:[UINib nibWithNibName:@"FNTopicDetailCell" bundle:nil] forCellReuseIdentifier:ID];
-    
-    
+}
+- (void)topDragRefreshData
+{
+    [FNTopicGetDetailItem getTopicNewsHotDetailWithExpertId:_listItem.expertId :++self.refreshCount :^(NSMutableArray *array) {
+        [self.detailItems addObjectsFromArray:array];
+        [self.queAnsTableV reloadData];
+        [self.queAnsTableV.mj_footer endRefreshing];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -113,11 +123,12 @@ static NSString * const ID = @"cell";
 }
 - (void)setQuesAnsTableV
 {
-    UITableView *queAnsTableV = [[UITableView alloc] initWithFrame:CGRectMake(0, YJNavBarMaxY, FNScreenW, FNScreenH) style:UITableViewStylePlain];
+    UITableView *queAnsTableV = [[UITableView alloc] initWithFrame:CGRectMake(0, YJNavBarMaxY, FNScreenW, FNScreenH-YJNavBarMaxY) style:UITableViewStylePlain];
     queAnsTableV.dataSource = self;
     queAnsTableV.delegate = self;
     queAnsTableV.contentInset = UIEdgeInsetsMake(FNTopicDetailInsH, 0, 0, 0);
     queAnsTableV.backgroundColor = [UIColor clearColor];
+    queAnsTableV.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:queAnsTableV];
     self.queAnsTableV = queAnsTableV;
     [self.view bringSubviewToFront:queAnsTableV];

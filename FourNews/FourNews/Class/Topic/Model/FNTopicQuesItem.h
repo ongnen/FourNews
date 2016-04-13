@@ -25,6 +25,9 @@
 
 @property (nonatomic, strong) NSString *quesTime;
 
+@property (nonatomic, strong) NSString *questionCount;
+
+
 @end
 
 //"questionId":"QUESTION6607951386972277876",

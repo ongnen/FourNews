@@ -10,9 +10,9 @@
 
 @interface FNTopicGetDetailItem : NSObject
 
-+ (void)getTopicNewsHotDetailWithExpertId:(NSString *)expertId :(void(^)(NSMutableArray *))complete;
++ (void)getTopicNewsHotDetailWithExpertId:(NSString *)expertId :(NSInteger)pageCount :(void(^)(NSMutableArray *))complete;
 
-+ (void)getTopicNewsLateDetailWithExpertId:(NSString *)expertId :(void (^)(NSMutableArray *))complete;
++ (void)getTopicNewsLateDetailWithExpertId:(NSString *)expertId :(NSInteger)pageCount :(void (^)(NSMutableArray *))complete;
 
 
 @end

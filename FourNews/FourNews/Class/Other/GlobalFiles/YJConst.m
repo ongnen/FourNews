@@ -20,3 +20,5 @@ NSString * const FNTabBarButtonRepeatClickNotification = @"FNTabBarButtonRepeatC
 
 /** titleButton被重复点击的通知 */
 NSString * const FNTitleButtonRepeatClickNotification = @"FNTitleButtonRepeatClickNotification";
+
+CGFloat const YJMargin = 10;

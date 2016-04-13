@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSString *specialistName;
 @property (nonatomic, strong) NSString *content;
 
+@property (nonatomic, strong) NSString *answerCount;
 @end
 
 //"answerId":"ANSWER5831584201756739889",

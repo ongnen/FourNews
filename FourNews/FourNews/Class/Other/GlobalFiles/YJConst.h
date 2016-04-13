@@ -21,3 +21,5 @@ UIKIT_EXTERN NSString * const FNTabBarButtonRepeatClickNotification;
 
 /** titleButton被重复点击的通知 */
 UIKIT_EXTERN NSString * const FNTitleButtonRepeatClickNotification;
+
+UIKIT_EXTERN CGFloat const YJMargin;

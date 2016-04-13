@@ -14,13 +14,13 @@
 
 @implementation FNTopicGetDetailItem
 
-+ (void)getTopicNewsHotDetailWithExpertId:(NSString *)expertId :(void (^)(NSMutableArray *))complete
++ (void)getTopicNewsHotDetailWithExpertId:(NSString *)expertId :(NSInteger)pageCount :(void (^)(NSMutableArray *))complete
 {
-    NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/newstopic/qa/%@.html",expertId];
+    NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/newstopic/list/latestqa/%@/%ld0-10.html",expertId,pageCount];
     [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {
     } success:^(id responseObject, NSURLSessionDataTask *task) {
         NSMutableArray *quesAnsArray = [NSMutableArray array];
-        for (NSDictionary *quesAnsDic in responseObject[@"data"][@"hotList"]) {
+        for (NSDictionary *quesAnsDic in responseObject[@"data"]) {
             FNTopicDetailItem *item = [[FNTopicDetailItem alloc] init];
             item.question = [FNTopicQuesItem mj_objectWithKeyValues:quesAnsDic[@"question"]];
             item.answer = [FNTopicAnswerItem mj_objectWithKeyValues:quesAnsDic[@"answer"]];
@@ -32,9 +32,9 @@
     }];
 }
 
-+ (void)getTopicNewsLateDetailWithExpertId:(NSString *)expertId :(void (^)(NSMutableArray *))complete
++ (void)getTopicNewsLateDetailWithExpertId:(NSString *)expertId :(NSInteger)pageCount :(void (^)(NSMutableArray *))complete
 {
-    NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/newstopic/qa/%@.html",expertId];
+    NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/newstopic/qa/%@/%ld0-10.html",expertId,pageCount];
     [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {
     } success:^(id responseObject, NSURLSessionDataTask *task) {
         NSMutableArray *quesAnsArray = [NSMutableArray array];
