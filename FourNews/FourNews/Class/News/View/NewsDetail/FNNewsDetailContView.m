@@ -182,7 +182,7 @@
     for (int i = 0; i<_detailItem.img.count; i++) {
         UIImageView *ImgV = [[UIImageView alloc] init];
         [self.imgVs addObject:ImgV];
-        [ImgV sd_setImageWithURL:[NSURL URLWithString:_detailItem.img[i][@"src"]]];
+        [ImgV sd_setImageWithURL:[NSURL URLWithString:_detailItem.img[i][@"src"]] placeholderImage:[UIImage imageNamed:@"newsTitleImage"]];
         
         UILabel *altL = [[UILabel alloc] init];
         [self.altLs addObject:altL];

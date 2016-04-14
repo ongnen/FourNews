@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) void(^detailBlock)(FNTopicDetailHeaderView *);
 
+@property (nonatomic, strong) void(^bottonSegueBlock)();
+
 @property (nonatomic, weak) FNTopicDetailHeaderVBottomView *bottomV;
 
 @end

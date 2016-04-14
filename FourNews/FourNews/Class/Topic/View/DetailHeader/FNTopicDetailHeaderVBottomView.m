@@ -12,8 +12,6 @@
 
 
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *chooseSegment;
-
 @end
 
 @implementation FNTopicDetailHeaderVBottomView
@@ -21,6 +19,11 @@
 - (void)awakeFromNib
 {
     self.backgroundColor = FNColor(225, 225, 225);
+}
+- (IBAction)newOrHotChange:(id)sender {
+    if (self.segueBlock) {
+        self.segueBlock();
+    }
 }
 
 @end

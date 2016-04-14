@@ -65,13 +65,9 @@ typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
     
     // 右边内容条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
-    // KVO测试
-    [self.tableView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
+
 }
-// KVO测试
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(UITableView *)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
-{
-}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -104,6 +100,7 @@ typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
         [self.tableView.mj_header endRefreshing];
         self.newsListArray = (NSMutableArray *)array;
         [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
         
     }];
 }

@@ -35,6 +35,9 @@
                             <exclude reference="8Xd-Eq-WkY"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="newOrHotChange:" destination="iN0-l3-epB" eventType="valueChanged" id="gfx-69-E5U"/>
+                    </connections>
                 </segmentedControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -61,7 +64,7 @@
                 <outlet property="chooseSegment" destination="SQY-Of-DoQ" id="jyp-Vg-Wc0"/>
                 <outlet property="messageL" destination="R03-RT-yvm" id="R5J-vD-26p"/>
             </connections>
-            <point key="canvasLocation" x="264.5" y="409"/>
+            <point key="canvasLocation" x="243.5" y="413"/>
         </view>
     </objects>
 </document>

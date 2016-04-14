@@ -17,19 +17,23 @@
 #define FNTopicDetailImgH 200
 #define FNTopicDetailInsH 136
 
-@interface FNTopicDetailController ()<UITableViewDataSource,UITableViewDelegate>
+@interface FNTopicDetailController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 @property (nonatomic, assign) NSInteger refreshCount;
 @property (nonatomic, strong) NSMutableArray<FNTopicDetailItem *> *detailItems;
 
 @property (nonatomic, weak) UIImageView *topImgV;
 
 @property (nonatomic, weak) UIView *topV;
-
-@property (nonatomic, weak) UITableView *queAnsTableV;
+@property (nonatomic, weak) UILabel *topL;
 
 @property (nonatomic, weak) FNTopicDetailInsetView *insetView;
 
-@property (nonatomic, weak) UILabel *topL;
+@property (nonatomic, weak) UITableView *queAnsTableV;
+@property (nonatomic, assign,getter=isNewQues) NSInteger newQues;
+
+
+
+
 
 @end
 
@@ -50,9 +54,9 @@ static NSString * const ID = @"cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.newQues = YES;
     self.view.backgroundColor = [UIColor whiteColor];
-    [FNTopicGetDetailItem getTopicNewsHotDetailWithExpertId:_listItem.expertId :0 :^(NSMutableArray *array) {
+    [FNTopicGetDetailItem getTopicNewsDetailWithExpertId:_listItem.expertId :self.isNewQues :0 :^(NSMutableArray *array) {
         self.detailItems = array;
         [self.queAnsTableV reloadData];
     }];
@@ -65,17 +69,29 @@ static NSString * const ID = @"cell";
     
     // 设置上拉刷新
     self.queAnsTableV.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
-
+    self.queAnsTableV.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
+    
+    // 下拉控件隐藏
+    self.queAnsTableV.mj_header.hidden = YES;
     
     // 注册cell
     [self.queAnsTableV registerNib:[UINib nibWithNibName:@"FNTopicDetailCell" bundle:nil] forCellReuseIdentifier:ID];
 }
+#pragma mark - 刷新操作
 - (void)topDragRefreshData
 {
-    [FNTopicGetDetailItem getTopicNewsHotDetailWithExpertId:_listItem.expertId :++self.refreshCount :^(NSMutableArray *array) {
+    [FNTopicGetDetailItem getTopicNewsDetailWithExpertId:_listItem.expertId :self.isNewQues :++self.refreshCount :^(NSMutableArray *array) {
         [self.detailItems addObjectsFromArray:array];
         [self.queAnsTableV reloadData];
         [self.queAnsTableV.mj_footer endRefreshing];
+    }];
+}
+- (void)bottomDragRefreshData
+{
+    [FNTopicGetDetailItem getTopicNewsDetailWithExpertId:_listItem.expertId :self.isNewQues :0 :^(NSMutableArray *array) {
+        self.detailItems = array;
+        [self.queAnsTableV reloadData];
+        [self.queAnsTableV.mj_header endRefreshing];
     }];
 }
 
@@ -138,6 +154,9 @@ static NSString * const ID = @"cell";
 - (void)setupTableViewHeaderV
 {
     FNTopicDetailHeaderView *headerV = [FNTopicDetailHeaderView topicDetailHeaderViewWithListItem:_listItem];
+    headerV.bottonSegueBlock = ^{
+        [self changeQuesNewOrHot];
+    };
     headerV.frame = CGRectMake(0, 0, FNScreenW, 153);
     __weak typeof(self) weakSelf = self;
     headerV.detailBlock = ^(FNTopicDetailHeaderView *headerView){
@@ -145,6 +164,16 @@ static NSString * const ID = @"cell";
         [weakSelf.queAnsTableV reloadData];
     };
     self.queAnsTableV.tableHeaderView = headerV;
+}
+
+#pragma mark - 点击转换最新最热
+- (void)changeQuesNewOrHot
+{
+    self.newQues = !self.isNewQues;
+    
+    [self.queAnsTableV.mj_header beginRefreshing];
+    
+    self.refreshCount = 0;
 }
 
 #pragma mark - tableViewDataSource
@@ -165,7 +194,6 @@ static NSString * const ID = @"cell";
 {
     // 将算过的totalHeight存储，下次直接返回
     if (self.detailItems[indexPath.row].totalHeight==0) {
-        NSLog(@"%ld",indexPath.row);
         self.detailItems[indexPath.row].totalHeight = [FNTopicDetailCell totalHeightWithItem:self.detailItems[indexPath.row]];
     }
     return self.detailItems[indexPath.row].totalHeight;
@@ -175,12 +203,17 @@ static NSString * const ID = @"cell";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    // 取消下拉控件隐藏
+    self.queAnsTableV.mj_header.hidden = NO;
+    
     // 计算insetView的偏移位置
-    if (scrollView.contentOffset.y>-FNTopicDetailInsH) {
+    if (scrollView.contentOffset.y>=-FNTopicDetailInsH) {
         self.insetView.frame = CGRectMake(0, YJNavBarMaxY-FNTopicDetailInsH-scrollView.contentOffset.y, FNScreenW, 136);
         if (scrollView.contentOffset.y>0) return;
         // 顶部图片下移
         self.topImgV.frame = CGRectMake(0, -40+(scrollView.contentOffset.y+FNTopicDetailInsH)/136*40, FNScreenW, self.topImgV.height);
+        // 下拉控件隐藏
+        self.queAnsTableV.mj_header.hidden = YES;
     }
     // 改变insetView的透明度
     self.insetView.descL.alpha = 1 - (scrollView.contentOffset.y+FNTopicDetailInsH)/80.0;
@@ -188,6 +221,9 @@ static NSString * const ID = @"cell";
     
     // 改变顶部文字的透明度
     self.topL.alpha = (scrollView.contentOffset.y+FNTopicDetailInsH)/100;
+    
+    
+    
     
 }
 
@@ -197,6 +233,15 @@ static NSString * const ID = @"cell";
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+
+
+
+
+
+
+
 
 
 @end

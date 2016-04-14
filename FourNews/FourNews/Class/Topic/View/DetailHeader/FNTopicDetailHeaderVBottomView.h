@@ -13,4 +13,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *messageL;
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *chooseSegment;
+
+@property (nonatomic, strong) void(^segueBlock)();
+
 @end

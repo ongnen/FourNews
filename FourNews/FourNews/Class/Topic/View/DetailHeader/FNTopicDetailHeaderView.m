@@ -23,36 +23,27 @@
 @end
 
 @implementation FNTopicDetailHeaderView
-- (FNTopicDetailHeaderVBottomView *)bottomV
-{
-    if (!_bottomV){
-        FNTopicDetailHeaderVBottomView *bottomV = [[NSBundle mainBundle]loadNibNamed:@"FNTopicDetailHeaderVBottomView" owner:nil options:0].lastObject;
-        [self addSubview:bottomV];
-        _bottomV = bottomV;
-    }
-    return _bottomV;
-    
-}
 
-- (UIView *)nameLine
+- (void)awakeFromNib
 {
-    if (!_nameLine) {
-        UIView *nameLine = [[UIView alloc]init];
-        nameLine.backgroundColor = FNColor(150, 150, 150);
-        [self.nameL addSubview:nameLine];
-        _nameLine = nameLine;
-    }
-    return _nameLine;
-}
-- (UIView *)quesPoint
-{
-    if (!_quesPoint) {
-        UIView *quesPoint = [[UIView alloc]init];
-        quesPoint.backgroundColor = FNColor(150, 150, 150);
-        [self.bottomV.messageL addSubview:quesPoint];
-        _quesPoint = quesPoint;
-    }
-    return _quesPoint;
+    FNTopicDetailHeaderVBottomView *bottomV = [[NSBundle mainBundle]loadNibNamed:@"FNTopicDetailHeaderVBottomView" owner:nil options:0].lastObject;
+    bottomV.segueBlock = ^{
+        if (self.bottonSegueBlock) {
+            self.bottonSegueBlock();
+        }
+    };
+    [self addSubview:bottomV];
+    _bottomV = bottomV;
+    
+    UIView *nameLine = [[UIView alloc]init];
+    nameLine.backgroundColor = FNColor(150, 150, 150);
+    [self.nameL addSubview:nameLine];
+    _nameLine = nameLine;
+    
+    UIView *quesPoint = [[UIView alloc]init];
+    quesPoint.backgroundColor = FNColor(150, 150, 150);
+    [self.bottomV.messageL addSubview:quesPoint];
+    _quesPoint = quesPoint;
 }
 
 + (instancetype)topicDetailHeaderViewWithListItem:(FNTopicListItem *)listItem
