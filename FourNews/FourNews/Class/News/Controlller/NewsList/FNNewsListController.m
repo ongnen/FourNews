@@ -48,7 +48,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.backgroundColor = FNColor(50, 50, 50);
+//    self.tableView.backgroundColor = FNColor(50, 50, 50);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.refreshCount = 1;
     // 设置估算高度，减少heightForRowAtIndexPath调用频率

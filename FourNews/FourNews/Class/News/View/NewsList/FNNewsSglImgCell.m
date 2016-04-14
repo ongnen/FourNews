@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageV;
 @property (weak, nonatomic) IBOutlet UILabel *titleL;
 @property (weak, nonatomic) IBOutlet UILabel *digestLabel;
-@property (nonatomic, strong) FNNewsReplyButton *replyButton;
+@property (nonatomic, weak) FNNewsReplyButton *replyButton;
 
 @end
 
@@ -24,18 +24,14 @@
 - (FNNewsReplyButton *)replyButton
 {
     if (!_replyButton){
-        _replyButton = [[FNNewsReplyButton alloc] init];
+        FNNewsReplyButton *replyButton = [[FNNewsReplyButton alloc] init];
+        [self addSubview:replyButton];
+        _replyButton = replyButton;
+        
     }
     return _replyButton;
-    
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-    }
-    return self;
-}
 
 - (void)setContItem:(FNNewsListItem *)contItem
 {
@@ -66,10 +62,9 @@
     CGSize replyStrSize = [replyStr sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:11]}];
     
     CGFloat replyBtnX = FNScreenW - replyStrSize.width - 10;
-    CGFloat replyBtnY = self.contentView.height - replyStrSize.height;
+    CGFloat replyBtnY = _contItem.totalHeight - replyStrSize.height;
     
     self.replyButton.frame = CGRectMake(replyBtnX, replyBtnY, replyStrSize.width,replyStrSize.height);
-    [self.contentView addSubview:self.replyButton];
     
     // 控制label文字完美适应buttonmn的代码
     

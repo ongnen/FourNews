@@ -19,14 +19,6 @@
 
 @implementation FNNewsSearchListCell
 
-- (void)awakeFromNib {
-    self.titleL.font = [UIFont systemFontOfSize:17];
-    
-    self.ptimeL.textColor = FNColor(155, 155, 155);
-    self.ptimeL.font = [UIFont systemFontOfSize:14];
-    
-}
-
 
 - (void)setItem:(FNNewsSearchWordItem *)item
 {

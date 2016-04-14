@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FNADViewController">
             <connections>
                 <outlet property="ADView" destination="aeQ-CA-xw5" id="JJX-DG-ZbD"/>
+                <outlet property="adTimeBtn" destination="gLa-Ob-x4z" id="pI1-st-nzA"/>
                 <outlet property="launchImageV" destination="8qK-e9-i3M" id="K8P-SY-AhN"/>
                 <outlet property="view" destination="z88-lS-RyP" id="TBf-3T-miR"/>
             </connections>
@@ -65,17 +66,17 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="nwc-mI-tGf"/>
+                    <exclude reference="3dG-cZ-Xa3"/>
+                    <exclude reference="7Hm-Ay-eCQ"/>
                     <exclude reference="ZUY-MN-v4r"/>
+                    <exclude reference="bZO-Rc-XIv"/>
                     <exclude reference="d4H-yt-p3l"/>
                     <exclude reference="hof-0H-jCR"/>
-                    <exclude reference="7Hm-Ay-eCQ"/>
-                    <exclude reference="bZO-Rc-XIv"/>
-                    <exclude reference="3dG-cZ-Xa3"/>
+                    <exclude reference="nwc-mI-tGf"/>
                     <exclude reference="tkB-OX-EyJ"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="190.5" y="-109.5"/>
+            <point key="canvasLocation" x="205.5" y="-112.5"/>
         </view>
     </objects>
 </document>
