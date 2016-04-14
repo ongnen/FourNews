@@ -19,6 +19,7 @@
 #import <SafariServices/SafariServices.h>
 #import "FNMeSettingController.h"
 #import "FNMeSquareItem.h"
+#import "YJGridView.h"
 
 @interface FNMeController () <UICollectionViewDataSource,UICollectionViewDelegate,SFSafariViewControllerDelegate>
 
@@ -26,9 +27,15 @@
 
 @property (nonatomic, weak) UICollectionView *collectionV;
 
+@property (nonatomic, strong) NSMutableArray<YJGridButtonitem *> *itemArray;
+
+
 @end
 
 @implementation FNMeController
+
+
+
 static NSString *const ID = @"cell";
 - (NSMutableArray *)squareArray
 {
@@ -46,18 +53,20 @@ static NSString *const ID = @"cell";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:0 target:self action:@selector(setBtnClick)];
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
-    // 设置footView为collectionView
-    [self setupFooterView];
     
     [FNMeGetSquareItem squareItem:^(NSArray *array) {
         self.squareArray = (NSMutableArray *)array;
-        // 补齐空位
-        NSInteger addCount = 4- ((array.count-1)%4+1);
-        for (int i = 0; i<addCount; i++) {
-            [self.squareArray addObject:[[FNMeSquareItem alloc] init]];
-        }
-        // 在这里拿到真正的collectionV高度
-        self.collectionV.frame = CGRectMake(0, 0, 0, ((self.squareArray.count-1)/4+1)*FNCollecWH);
+        
+        // 设置footView为collectionView
+        [self setupFooterView];
+        
+//        // 补齐空位
+//        NSInteger addCount = 4- ((array.count-1)%4+1);
+//        for (int i = 0; i<addCount; i++) {
+//            [self.squareArray addObject:[[FNMeSquareItem alloc] init]];
+//        }
+//        // 在这里拿到真正的collectionV高度
+//        self.collectionV.frame = CGRectMake(0, 0, 0, ((self.squareArray.count-1)/4+1)*FNCollecWH);
         // 刷新内容
         self.tableView.tableFooterView = _collectionV;
         [self.collectionV reloadData];
@@ -75,21 +84,43 @@ static NSString *const ID = @"cell";
 - (void)setupFooterView
 {
     // 创建设置好collectionView
-    UICollectionViewFlowLayout *flowLy = [[UICollectionViewFlowLayout alloc] init];
-    flowLy.itemSize = CGSizeMake(FNCollecWH, FNCollecWH);
-    flowLy.minimumInteritemSpacing = 0;
-    flowLy.minimumLineSpacing = 1;
+//    UICollectionViewFlowLayout *flowLy = [[UICollectionViewFlowLayout alloc] init];
+//    flowLy.itemSize = CGSizeMake(FNCollecWH, FNCollecWH);
+//    flowLy.minimumInteritemSpacing = 0;
+//    flowLy.minimumLineSpacing = 1;
+//    
+//    UICollectionView *collectionV = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLy];
+//    collectionV.backgroundColor = FNColor(215, 215, 215);
+//    [collectionV registerNib:[UINib nibWithNibName:@"FNMeSquareViewCell" bundle:nil] forCellWithReuseIdentifier:ID];
+//    collectionV.dataSource = self;
+//    collectionV.delegate = self;
+//    collectionV.scrollEnabled = NO;
+//    _collectionV = collectionV;
     
-    UICollectionView *collectionV = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLy];
-    collectionV.backgroundColor = FNColor(215, 215, 215);
-    [collectionV registerNib:[UINib nibWithNibName:@"FNMeSquareViewCell" bundle:nil] forCellWithReuseIdentifier:ID];
-    collectionV.dataSource = self;
-    collectionV.delegate = self;
-    collectionV.scrollEnabled = NO;
-    _collectionV = collectionV;
+    NSMutableArray *itemArray = [NSMutableArray array];
+    
+    for (int i = 0; i<self.squareArray.count; i++) {
+        YJGridButtonitem *item = [[YJGridButtonitem alloc] init];
+        FNMeSquareItem *squareItem = self.squareArray[i];
+        item.image = squareItem.icon;
+        item.desc = squareItem.name;
+        item.url = squareItem.url;
+        item.index = i;
+        [itemArray addObject:item];
+    }
+    self.itemArray = itemArray;
+    YJGridView *gridView = [YJGridView gridViewWithlist:itemArray];
+    CGFloat gridX = 0;
+    CGFloat gridY = 0;
+    CGFloat gridW = FNScreenW;
+    CGFloat gridH = (itemArray.count / 4 + 1) * FNScreenW/4;
+    gridView.frame = CGRectMake(gridX, gridY, gridW, gridH);
+    gridView.listBtnClickBlock = ^(YJGridItemListView *view){
+        [self btnClick:view];
+    };
+    gridView.backgroundColor = [UIColor redColor];
     // 关键代码
-    self.tableView.tableFooterView = collectionV;
-    
+    self.tableView.tableFooterView = gridView;
 }
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -123,6 +154,13 @@ static NSString *const ID = @"cell";
      // 设置SFSafari为madel弹出模式，它会自动设置点击Done为dismiss
      [self presentViewController:sfVC animated:YES completion:nil];
      */
+}
+
+- (void)btnClick:(YJGridItemListView *)view
+{
+    FNWKWebController *webVC = [[FNWKWebController alloc] init];
+    webVC.url = self.itemArray[view.index].url;
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 // 跳转到设置界面

@@ -104,6 +104,7 @@
 		8E7948581CBA895300A8D3EE /* FNTopicListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7948571CBA895300A8D3EE /* FNTopicListItem.m */; };
 		8E79485B1CBA8AA900A8D3EE /* FNTopicGetListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E79485A1CBA8AA900A8D3EE /* FNTopicGetListItem.m */; };
 		8E80D91C1CB2216300007B02 /* FNNewsRelativeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E80D91B1CB2216300007B02 /* FNNewsRelativeItem.m */; };
+		8E82279F1CBFEAB3002AFBBF /* YJGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E82279E1CBFEAB3002AFBBF /* YJGridView.m */; };
 		8E9030271CB155CB001F005D /* FNNewsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E902FEA1CB155CB001F005D /* FNNewsDetailController.m */; };
 		8E9030281CB155CB001F005D /* FNNewsBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E902FED1CB155CB001F005D /* FNNewsBaseController.m */; };
 		8E9030291CB155CB001F005D /* FNNewsListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E902FEF1CB155CB001F005D /* FNNewsListController.m */; };
@@ -314,6 +315,8 @@
 		8E79485A1CBA8AA900A8D3EE /* FNTopicGetListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNTopicGetListItem.m; sourceTree = "<group>"; };
 		8E80D91A1CB2216300007B02 /* FNNewsRelativeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsRelativeItem.h; sourceTree = "<group>"; };
 		8E80D91B1CB2216300007B02 /* FNNewsRelativeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNNewsRelativeItem.m; sourceTree = "<group>"; };
+		8E82279D1CBFEAB3002AFBBF /* YJGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJGridView.h; sourceTree = "<group>"; };
+		8E82279E1CBFEAB3002AFBBF /* YJGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJGridView.m; sourceTree = "<group>"; };
 		8E902FE91CB155CB001F005D /* FNNewsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsDetailController.h; sourceTree = "<group>"; };
 		8E902FEA1CB155CB001F005D /* FNNewsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNNewsDetailController.m; sourceTree = "<group>"; };
 		8E902FEC1CB155CB001F005D /* FNNewsBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsBaseController.h; sourceTree = "<group>"; };
@@ -400,6 +403,8 @@
 		846C5B581CAE275500880168 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				8E82279D1CBFEAB3002AFBBF /* YJGridView.h */,
+				8E82279E1CBFEAB3002AFBBF /* YJGridView.m */,
 				846C5B591CAE276200880168 /* FNLabel.h */,
 				846C5B5A1CAE276200880168 /* FNLabel.m */,
 			);
@@ -1319,6 +1324,7 @@
 				848740E71CBF7DB10053C787 /* FNWKWebController.m in Sources */,
 				8473DDEA1CBA269C007362F2 /* FNAVBaseController.m in Sources */,
 				8E5D3F2F1CBD397600003B4A /* FNTopicDetailCellAnsView.m in Sources */,
+				8E82279F1CBFEAB3002AFBBF /* YJGridView.m in Sources */,
 				8E9030341CB155CB001F005D /* FNGetListCell.m in Sources */,
 				84736E321CBB682000E0B72A /* FNTopicNavgationController.m in Sources */,
 				848AAC6E1CBF262B009401C2 /* FNReadViewController.m in Sources */,
