@@ -7,7 +7,10 @@
 //
 
 #import "FNNewsADsItem.h"
+#import <MJExtension.h>
 
 @implementation FNNewsADsItem
+
+MJCodingImplementation
 
 @end

@@ -72,7 +72,7 @@
                 <outlet property="titleHeightConstraint" destination="qeA-Wd-iyS" id="UGY-UB-qqi"/>
                 <outlet property="titleL" destination="Zxn-tD-0PX" id="5IK-JX-8tH"/>
             </connections>
-            <point key="canvasLocation" x="347.5" y="226.5"/>
+            <point key="canvasLocation" x="157.5" y="220.5"/>
         </tableViewCell>
     </objects>
     <resources>

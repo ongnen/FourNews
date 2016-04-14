@@ -16,4 +16,6 @@
 
 @property (nonatomic, strong) void(^historyBlock)(id);
 
+@property (nonatomic, strong) void(^moreBlock)();
+
 @end

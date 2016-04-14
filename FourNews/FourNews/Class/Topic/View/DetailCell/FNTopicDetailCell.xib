@@ -33,8 +33,8 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="53h-tN-8zW">
-                                <rect key="frame" x="192" y="10" width="150" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="53h-tN-8zW">
+                                <rect key="frame" x="192" y="0.0" width="150" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2FU-ES-eep">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
@@ -98,7 +98,7 @@
                 <outlet property="timeL" destination="Tz0-kC-bh0" id="WRs-Xk-19d"/>
                 <outlet property="zanButton" destination="8td-O7-uAa" id="x7L-uf-BSn"/>
             </connections>
-            <point key="canvasLocation" x="85" y="378.5"/>
+            <point key="canvasLocation" x="301" y="370.5"/>
         </tableViewCell>
     </objects>
     <resources>

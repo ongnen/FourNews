@@ -71,6 +71,8 @@
             [self.altFs addObject:[NSValue valueWithCGRect:altF]];
             
             _totalPicH += (topImgH + altF.size.height + 2 * FNNewsDetailLeftBorder);
+        } else {
+            NSLog(@"frame");
         }
     }
 

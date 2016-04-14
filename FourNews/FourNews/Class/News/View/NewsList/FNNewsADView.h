@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "FNNewsListItem.h"
 
-@interface FNNewsADCell : UITableViewCell
+@interface FNNewsADView : UIView
 
 
 @property (nonatomic, strong) FNNewsListItem *contItem;
+
+@property (nonatomic, strong) void(^adClickBlock)(FNNewsListItem *,NSInteger index);
 
 @end

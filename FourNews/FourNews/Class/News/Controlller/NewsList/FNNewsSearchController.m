@@ -16,6 +16,7 @@
 #import "FNNewsGetReply.h"
 #import "FNNewsGetSearchNews.h"
 #import "FNNewsSearchListController.h"
+#import "FNNewsHistorySkimController.h"
 
 @interface FNNewsSearchController () <UISearchBarDelegate>
 
@@ -67,6 +68,9 @@
     FNNewsHistoryView *historyView = [[NSBundle mainBundle] loadNibNamed:@"FNNewsHistoryView" owner:nil options:nil].lastObject;
     historyView.historyBlock = ^(id item){
         [self historySkimBtnClickWithListItem:item];
+    };
+    historyView.moreBlock = ^{
+        [self historySkimBtnClick];
     };
     historyView.frame = CGRectMake(0, FNTopBarHeight+50, FNScreenW, 140);
     [self.view addSubview:historyView];
@@ -142,8 +146,14 @@
     }];
 }
 
-#pragma mark - UITextFieldDelegate
+- (void)historySkimBtnClick
+{
+    FNNewsHistorySkimController *historySkimVC = [[FNNewsHistorySkimController alloc] init];
+    [self.navigationController pushViewController:historySkimVC animated:YES];
+}
 
+
+#pragma mark - UITextFieldDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {

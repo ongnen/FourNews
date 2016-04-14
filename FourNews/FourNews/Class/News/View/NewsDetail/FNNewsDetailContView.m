@@ -229,13 +229,17 @@
  */
 - (void)setPictureFrames:(FNNewsDetailFrame *)frame
 {
+    NSInteger frameIndex = -1;
     for (int i = 0; i<_detailItem.img.count; i++) {
         if (_detailItem.img[i][@"pixel"]) {
-            CGRect imgF = [frame.pictureFs[i] CGRectValue];
+            frameIndex++;
+            CGRect imgF = [frame.pictureFs[frameIndex] CGRectValue];
             self.imgVs[i].frame = imgF;
             
-            CGRect altF = [frame.altFs[i] CGRectValue];
+            CGRect altF = [frame.altFs[frameIndex] CGRectValue];
             self.altLs[i].frame = altF;
+        } else {
+            frameIndex--;
         }
     }
 }

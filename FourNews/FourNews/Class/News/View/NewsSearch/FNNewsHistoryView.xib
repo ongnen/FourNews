@@ -24,16 +24,30 @@
                     <color key="textColor" red="0.41392440025252519" green="0.41392440025252519" blue="0.41392440025252519" alpha="0.81000000000000005" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yX5-gZ-7xz">
+                    <rect key="frame" x="337" y="0.0" width="50" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="gU6-Un-XwD"/>
+                        <constraint firstAttribute="width" constant="50" id="pwj-r6-xvG"/>
+                    </constraints>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="5"/>
+                    <state key="normal" title="更多"/>
+                    <connections>
+                        <action selector="moreButtonClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="hlz-sB-1f8"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="eFs-57-2K2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="0H4-ey-i31"/>
                 <constraint firstItem="eFs-57-2K2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="KAb-nC-gEy"/>
                 <constraint firstAttribute="trailing" secondItem="eFs-57-2K2" secondAttribute="trailing" constant="8" id="KSD-dQ-vda"/>
+                <constraint firstAttribute="trailing" secondItem="yX5-gZ-7xz" secondAttribute="trailing" id="fsb-ef-l6b"/>
+                <constraint firstItem="yX5-gZ-7xz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="mVH-sH-1ND"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="753.5" y="419"/>
+            <point key="canvasLocation" x="546.5" y="226"/>
         </view>
     </objects>
 </document>

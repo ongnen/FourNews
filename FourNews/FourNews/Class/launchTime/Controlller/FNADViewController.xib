@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FNADViewController">
+            <connections>
+                <outlet property="ADView" destination="aeQ-CA-xw5" id="JJX-DG-ZbD"/>
+                <outlet property="launchImageV" destination="8qK-e9-i3M" id="K8P-SY-AhN"/>
+                <outlet property="view" destination="z88-lS-RyP" id="TBf-3T-miR"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="z88-lS-RyP">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeQ-CA-xw5">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8qK-e9-i3M">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="8qK-e9-i3M" secondAttribute="bottom" id="0Wt-he-6eE"/>
+                        <constraint firstItem="8qK-e9-i3M" firstAttribute="top" secondItem="aeQ-CA-xw5" secondAttribute="top" id="6Nr-dy-EX8"/>
+                        <constraint firstAttribute="trailing" secondItem="8qK-e9-i3M" secondAttribute="trailing" id="GaJ-JQ-7w8"/>
+                        <constraint firstItem="8qK-e9-i3M" firstAttribute="leading" secondItem="aeQ-CA-xw5" secondAttribute="leading" id="r1X-yw-an0"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLa-Ob-x4z">
+                    <rect key="frame" x="287" y="15" width="80" height="30"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.62" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="HRc-ba-0iQ"/>
+                        <constraint firstAttribute="height" constant="30" id="M1o-XA-cIU"/>
+                    </constraints>
+                    <state key="normal" title="跳过 (3s)"/>
+                    <connections>
+                        <action selector="adTimeBtnClick:" destination="-1" eventType="touchUpInside" id="ceP-Un-f8I"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="aeQ-CA-xw5" secondAttribute="bottom" id="1mz-pX-vbo"/>
+                <constraint firstAttribute="trailing" secondItem="aeQ-CA-xw5" secondAttribute="trailing" id="3dG-cZ-Xa3"/>
+                <constraint firstItem="aeQ-CA-xw5" firstAttribute="leading" secondItem="z88-lS-RyP" secondAttribute="leading" id="7Hm-Ay-eCQ"/>
+                <constraint firstItem="gLa-Ob-x4z" firstAttribute="top" secondItem="z88-lS-RyP" secondAttribute="top" constant="15" id="Dwz-Ww-478"/>
+                <constraint firstAttribute="trailing" secondItem="aeQ-CA-xw5" secondAttribute="trailing" id="HoF-mg-Eix"/>
+                <constraint firstAttribute="trailing" secondItem="gLa-Ob-x4z" secondAttribute="trailing" constant="8" id="KVN-VY-ddg"/>
+                <constraint firstItem="aeQ-CA-xw5" firstAttribute="leading" secondItem="z88-lS-RyP" secondAttribute="leading" id="SZd-rm-LyN"/>
+                <constraint firstAttribute="trailing" secondItem="aeQ-CA-xw5" secondAttribute="trailing" id="ZUY-MN-v4r"/>
+                <constraint firstItem="aeQ-CA-xw5" firstAttribute="top" secondItem="gLa-Ob-x4z" secondAttribute="bottom" id="bZO-Rc-XIv"/>
+                <constraint firstAttribute="bottom" secondItem="aeQ-CA-xw5" secondAttribute="bottom" id="d4H-yt-p3l"/>
+                <constraint firstItem="aeQ-CA-xw5" firstAttribute="top" secondItem="z88-lS-RyP" secondAttribute="top" id="hof-0H-jCR"/>
+                <constraint firstItem="aeQ-CA-xw5" firstAttribute="top" secondItem="z88-lS-RyP" secondAttribute="top" id="l8m-aM-vxz"/>
+                <constraint firstItem="aeQ-CA-xw5" firstAttribute="leading" secondItem="z88-lS-RyP" secondAttribute="leading" id="nwc-mI-tGf"/>
+                <constraint firstAttribute="bottom" secondItem="aeQ-CA-xw5" secondAttribute="bottom" id="tkB-OX-EyJ"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="nwc-mI-tGf"/>
+                    <exclude reference="ZUY-MN-v4r"/>
+                    <exclude reference="d4H-yt-p3l"/>
+                    <exclude reference="hof-0H-jCR"/>
+                    <exclude reference="7Hm-Ay-eCQ"/>
+                    <exclude reference="bZO-Rc-XIv"/>
+                    <exclude reference="3dG-cZ-Xa3"/>
+                    <exclude reference="tkB-OX-EyJ"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="190.5" y="-109.5"/>
+        </view>
+    </objects>
+</document>

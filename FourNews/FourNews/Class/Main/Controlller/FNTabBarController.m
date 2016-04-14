@@ -58,15 +58,14 @@
     self.topicVC = topicVC;
     [self setupChildController:self.topicVC title:@"话题" image:@"tabbar_icon_found_normal" selectedImage:@"tabbar_icon_found_highlight"];
     
-    FNMeController *meVC = [[FNMeController alloc] init];
+    FNMeController *meVC = [[UIStoryboard storyboardWithName:@"FNMeController" bundle:nil] instantiateInitialViewController];
     self.meVC = meVC;
-    [self setupChildController:self.meVC title:@"我" image:@"tabbar_icon_found_normal" selectedImage:@"tabbar_icon_found_highlight"];
+    [self setupChildController:self.meVC title:@"我" image:@"tabbar_icon_me_normal" selectedImage:@"tabbar_icon_me_highlight"];
 }
 
 - (void)setupChildController:(UIViewController *)controller title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selectesImage
 {
     controller.title = title;
-    controller.navigationItem.title = nil;;
     FNNavigationController *nav = [[FNNavigationController alloc] initWithRootViewController:controller];
     if ([controller isKindOfClass:[FNTopicViewController class]]) {
         nav = [[FNTopicNavgationController alloc] initWithRootViewController:controller];

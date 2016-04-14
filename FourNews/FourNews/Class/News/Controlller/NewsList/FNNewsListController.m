@@ -18,13 +18,10 @@
 #import "FNNewsGetReply.h"
 #import "FNNewsPhotoSetController.h"
 #import "FNNewsGetPhotoSetItem.h"
+#import "FNNewsADView.h"
+#import "FNNewsADsItem.h"
 #import <MJRefresh.h>
 
-typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
-    FNNewsListCellHeightTypeAD = 200,
-    FNNewsListCellHeightTypeSgl = 90,
-    FNNewsListCellHeightTypeThr = 120,
-};
 
 @interface FNNewsListController ()
 
@@ -51,11 +48,13 @@ typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.backgroundColor = FNColor(50, 50, 50);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.refreshCount = 1;
     // 设置估算高度，减少heightForRowAtIndexPath调用频率
     self.tableView.estimatedRowHeight = 100.0;
     // 设置刷新控件
-    self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
     [self.tableView.mj_header beginRefreshing];
     
@@ -72,6 +71,22 @@ typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+#pragma mark - 广告
+
+- (void)setADHeaderView
+{
+    FNNewsListItem *item = self.newsListArray[0];
+    if (item.ads) {
+        FNNewsADView *adView = [[NSBundle mainBundle] loadNibNamed:@"FNNewsADView" owner:nil options:0].lastObject;
+        adView.height = 200;
+        adView.contItem = item;
+        adView.adClickBlock = ^(FNNewsListItem *listItem,NSInteger index){
+            [self showPhotoSetWith:listItem :index];
+        };
+        self.tableView.tableHeaderView = adView;
+    }
 }
 
 #pragma mark - tabBarButton被点击调用的方法
@@ -97,11 +112,13 @@ typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
 - (void)bottomDragRefreshData
 {
     [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :^(NSArray *array) {
-        [self.tableView.mj_header endRefreshing];
         self.newsListArray = (NSMutableArray *)array;
-        [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
+        // 设置广告
+        [self setADHeaderView];
         
+        [self.tableView reloadData];
+                
     }];
 }
 - (void)topDragRefreshData
@@ -112,8 +129,6 @@ typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
         [self.tableView.mj_footer endRefreshing];
     }];
 }
-
-
 
 #pragma mark - Table view data source
 
@@ -136,18 +151,8 @@ typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FNNewsListItem *item = self.newsListArray[indexPath.row];
-    // 将算过的totalHeight存储，下次直接返回
-    if (item.totalHeight==0) {
-        if (indexPath.row == 0 && item.ads) {
-            item.totalHeight = FNNewsListCellHeightTypeAD;
-        } else if (item.imgextra) {
-            item.totalHeight = FNNewsListCellHeightTypeThr;
-        } else {
-            item.totalHeight = FNNewsListCellHeightTypeSgl;
-        }
-    }
-    return item.totalHeight;
     
+    return item.totalHeight;
 }
 
 #pragma mark - 监听cell的点击 跳转
@@ -186,7 +191,15 @@ typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
         }];
     }
 }
-
+/** 跳转图集控制器 */
+- (void)showPhotoSetWith:(FNNewsListItem *)listItem :(NSInteger)index
+{
+    FNNewsPhotoSetController *photoSetVC = [[FNNewsPhotoSetController alloc] init];
+    FNNewsADsItem *item = listItem.ads[index];
+    photoSetVC.photoSetid = item.url;
+    photoSetVC.listItem = listItem;
+    [self.navigationController pushViewController:photoSetVC animated:YES];
+}
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

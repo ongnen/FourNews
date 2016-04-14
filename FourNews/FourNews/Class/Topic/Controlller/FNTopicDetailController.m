@@ -223,8 +223,6 @@ static NSString * const ID = @"cell";
     self.topL.alpha = (scrollView.contentOffset.y+FNTopicDetailInsH)/100;
     
     
-    
-    
 }
 
 #pragma mark - 监听返回按钮点击

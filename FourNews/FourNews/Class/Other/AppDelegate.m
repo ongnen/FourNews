@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ChooseRootVC.h"
 #import "NewFeatureController.h"
+#import "FNADViewController.h"
 
 @interface AppDelegate ()
 
@@ -25,7 +26,8 @@
 //    NewFeatureController *feature = [[NewFeatureController alloc]init];
 //    
 //    self.window.rootViewController = feature;
-    self.window.rootViewController = [ChooseRootVC chooseRootViewController];
+//    self.window.rootViewController = [ChooseRootVC chooseRootViewController];
+    self.window.rootViewController = [[FNADViewController alloc] init];
     // 窗口显示
     [self.window makeKeyAndVisible];
     return YES;

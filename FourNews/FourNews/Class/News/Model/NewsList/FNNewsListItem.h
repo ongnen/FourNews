@@ -7,6 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
+    FNNewsListCellHeightTypeAD = 200,
+    FNNewsListCellHeightTypeSgl = 90,
+    FNNewsListCellHeightTypeThr = 120,
+};
+
 
 @interface FNNewsListItem : NSObject
 

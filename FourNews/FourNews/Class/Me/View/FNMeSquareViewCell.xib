@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="3f5-sI-Juo" customClass="FNMeSquareViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="112" height="103"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="112" height="103"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C19-km-Ful">
+                        <rect key="frame" x="25" y="10" width="62" height="62"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="C19-km-Ful" secondAttribute="height" multiplier="1:1" id="PCW-al-lxY"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hnn-xz-UPV">
+                        <rect key="frame" x="0.0" y="72" width="112" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="C19-km-Ful" firstAttribute="leading" secondItem="3f5-sI-Juo" secondAttribute="leading" constant="25" id="6MX-K4-00V"/>
+                <constraint firstItem="Hnn-xz-UPV" firstAttribute="top" secondItem="C19-km-Ful" secondAttribute="bottom" id="IS1-0N-CWq"/>
+                <constraint firstItem="Hnn-xz-UPV" firstAttribute="leading" secondItem="3f5-sI-Juo" secondAttribute="leading" id="RIV-0c-SUT"/>
+                <constraint firstAttribute="trailing" secondItem="Hnn-xz-UPV" secondAttribute="trailing" id="UjE-gw-G8m"/>
+                <constraint firstAttribute="trailing" secondItem="C19-km-Ful" secondAttribute="trailing" constant="25" id="bPP-n9-IIZ"/>
+                <constraint firstItem="C19-km-Ful" firstAttribute="top" secondItem="3f5-sI-Juo" secondAttribute="top" constant="10" id="rg4-Yn-nss"/>
+                <constraint firstAttribute="bottom" secondItem="Hnn-xz-UPV" secondAttribute="bottom" id="uTc-Gd-24w"/>
+            </constraints>
+            <size key="customSize" width="112" height="103"/>
+            <connections>
+                <outlet property="iconView" destination="C19-km-Ful" id="zIg-JV-jJk"/>
+                <outlet property="nameL" destination="Hnn-xz-UPV" id="cW3-6n-30X"/>
+            </connections>
+            <point key="canvasLocation" x="219" y="289.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

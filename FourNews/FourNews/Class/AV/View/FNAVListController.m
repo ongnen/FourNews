@@ -35,12 +35,7 @@ static NSString * const ID = @"cell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [FNAVGetAVNewsList getAVNewsListWithTid:self.tid :1 :^(NSArray *array) {
-        self.listItemArray = (NSMutableArray *)array;
-        [self.tableView reloadData];
-    }];
-    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // 设置下拉刷新
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     // 设置上拉刷新
@@ -84,6 +79,7 @@ static NSString * const ID = @"cell";
         self.listItemArray = (NSMutableArray *)array;
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }];
 }
 

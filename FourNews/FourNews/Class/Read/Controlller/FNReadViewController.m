@@ -52,6 +52,8 @@
     
     // 右边滚动条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 #pragma mark - tabBarButton被点击调用的方法
 - (void)tabBarButtonRepeatClick
@@ -80,6 +82,7 @@
         self.newsListArray = (NSMutableArray *)array;
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }];
 }
 - (void)topDragRefreshData

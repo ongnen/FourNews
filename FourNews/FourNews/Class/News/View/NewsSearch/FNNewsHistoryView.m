@@ -14,6 +14,7 @@
 @property (weak, nonatomic)  FNNewsHotWordButton *historySkim1;
 @property (weak, nonatomic)  FNNewsHotWordButton *historySkim2;
 
+
 @end
 
 @implementation FNNewsHistoryView
@@ -58,6 +59,11 @@
         self.historyBlock(item);
     }
     
+    
 }
-
+- (IBAction)moreButtonClick:(id)sender {
+    if (self.moreBlock) {
+        self.moreBlock();
+    }
+}
 @end

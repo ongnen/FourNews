@@ -19,41 +19,40 @@
 @property (nonatomic, weak) UIImageView *topicImgV;
 @property (nonatomic, weak) UILabel *topicL;
 @property (nonatomic, weak) UIView *topicView;
+@property (nonatomic, weak) UILabel *timeAndPlayCountL;
 
 
 @end
 
 @implementation FNAVListCell
 
-- (UIButton *)replyButton
+- (void)awakeFromNib
 {
-    if (!_replyButton){
-        UIButton *replyButton = [[UIButton alloc] init];
-        [self.bottomBar addSubview:replyButton];
-        _replyButton = replyButton;
-    }
-    return _replyButton;
+    // 回复按钮
+    UIButton *replyButton = [[UIButton alloc] init];
+    [self.bottomBar addSubview:replyButton];
+    _replyButton = replyButton;
     
-}
-
-- (UIView *)topicView
-{
-    if (!_topicView){
-        UIView *topicView = [[UIView alloc] init];
-        
-        UIImageView *topicImgV = [[UIImageView alloc] init];
-        self.topicImgV = topicImgV;
-        [topicView addSubview:topicImgV];
-        
-        UILabel *topicL = [[UILabel alloc] init];
-        self.topicL = topicL;
-        [topicView addSubview:topicL];
-        
-        [self.bottomBar addSubview:topicView];
-        _topicView = topicView;
-    }
-    return _topicView;
+    // 图片内部时间及播放次数Label
+    UILabel *timeAndPlayCountL = [[UILabel alloc] init];
+    timeAndPlayCountL.textColor = [UIColor whiteColor];
+    timeAndPlayCountL.font = [UIFont systemFontOfSize:12];
+    [self.coverImgV addSubview:timeAndPlayCountL];
+    self.timeAndPlayCountL = timeAndPlayCountL;
     
+    // 视频图片下方控件
+    UIView *topicView = [[UIView alloc] init];
+    
+    UIImageView *topicImgV = [[UIImageView alloc] init];
+    self.topicImgV = topicImgV;
+    [topicView addSubview:topicImgV];
+    
+    UILabel *topicL = [[UILabel alloc] init];
+    self.topicL = topicL;
+    [topicView addSubview:topicL];
+    
+    [self.bottomBar addSubview:topicView];
+    _topicView = topicView;
 }
 
 
@@ -90,9 +89,20 @@
     UIImageView *playImgV = [[UIImageView alloc] init];
     playImgV.image = [UIImage imageNamed:@"night_video_cell_play"];
     playImgV.bounds = CGRectMake(0, 0, 40, 40);
-    
     playImgV.center = CGPointMake((FNScreenW-YJCommonMargin*2)/2, self.coverImgV.height/2);
     [self.coverImgV addSubview:playImgV];
+    
+    // 图片内部时间及播放次数Label
+    NSString *timeStr = [NSString stringWithFormat:@"%02d:%02d",[_listItem.length  intValue]/60,[_listItem.length  intValue]%60];
+    
+    NSString *playCountStr = [NSString stringWithFormat:@"%d播放",[_listItem.replyCount intValue]];
+    if ([_listItem.replyCount intValue]>9999) {
+        playCountStr =  [NSString stringWithFormat:@"%0.1f万播放",[_listItem.replyCount intValue]/10000.0];
+    }
+    NSString *timeAndPlayCountStr = [NSString stringWithFormat:@"%@/%@",timeStr,playCountStr];
+    self.timeAndPlayCountL.text = timeAndPlayCountStr;
+    CGSize timeAndPlayCountSize = [timeAndPlayCountStr sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]}];
+    self.timeAndPlayCountL.frame = CGRectMake(FNScreenW-16-timeAndPlayCountSize.width-YJMargin, 180-timeAndPlayCountSize.height-YJMargin, timeAndPlayCountSize.width, timeAndPlayCountSize.height);
 }
 
 - (void)coverClick

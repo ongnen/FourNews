@@ -34,6 +34,7 @@ static NSString * const FOOT = @"footer";
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // 设置下拉刷新
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     // 设置上拉刷新
@@ -72,6 +73,7 @@ static NSString * const FOOT = @"footer";
         self.listItems = (NSMutableArray*)array;
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }];
 }
 

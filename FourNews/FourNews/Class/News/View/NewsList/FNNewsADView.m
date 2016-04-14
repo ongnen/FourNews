@@ -6,16 +6,16 @@
 //  Copyright © 2016年 天涯海北. All rights reserved.
 //
 
-#import "FNNewsADCell.h"
+#import "FNNewsADView.h"
 #import <UIImageView+WebCache.h>
 #import "FNNewsADsItem.h"
 #import <MJExtension.h>
 
-@interface FNNewsADCell() <UICollectionViewDataSource,UICollectionViewDelegate>
+@interface FNNewsADView() <UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *ADLabel;
 @property (weak, nonatomic) IBOutlet UIPageControl *ADPage;
-
+@property (nonatomic, assign) CGFloat scrollOffsetX;
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
 @property (nonatomic, strong) NSArray<FNNewsADsItem *> *adItemArray;
@@ -24,7 +24,7 @@
 
 static NSString * const ADCollecID = @"newsAD";
 
-@implementation FNNewsADCell
+@implementation FNNewsADView
 
 - (NSArray *)adItemArray
 {
@@ -39,16 +39,11 @@ static NSString * const ADCollecID = @"newsAD";
 {
     _contItem = contItem;
     if (contItem.ads == nil)return;
-    NSArray *adItemArray = [FNNewsADsItem mj_objectArrayWithKeyValuesArray:contItem.ads];
 
-    self.adItemArray = adItemArray;
+    self.adItemArray = contItem.ads;
     [self setADCollecView];
     
     self.ADLabel.text = self.adItemArray[0].title;
-    
-    self.ADLabel.textColor = [UIColor whiteColor];
-    self.ADLabel.font = [UIFont systemFontOfSize:14];
-    
     
     self.ADPage.numberOfPages = self.adItemArray.count;
     self.ADPage.currentPage = 0;
@@ -81,13 +76,13 @@ static NSString * const ADCollecID = @"newsAD";
     collectionV.showsVerticalScrollIndicator = NO;
     collectionV.scrollsToTop = NO;
     
-    [self.contentView addSubview:collectionV];
+    [self addSubview:collectionV];
     
-    [self.contentView sendSubviewToBack:collectionV];
-//    collectionV.userInteractionEnabled = NO;
+    [self sendSubviewToBack:collectionV];
     [collectionV registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:ADCollecID];
     
     [collectionV scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:5000 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    self.scrollOffsetX = 4999*FNScreenW;
 }
 
 #pragma mark -- UICollectionViewDataSource
@@ -105,30 +100,32 @@ static NSString * const ADCollecID = @"newsAD";
     ADImageV.userInteractionEnabled = YES;
     
     [ADImageV sd_setImageWithURL:[NSURL URLWithString:self.adItemArray[indexPath.row%self.adItemArray.count].imgsrc] placeholderImage:[UIImage imageNamed:@"newsTitleImage"]];
-//    self.frame = CGRectMake(0, 0, FNScreenW, self.height);
     ADImageV.frame = cell.bounds;
     
     [cell.contentView addSubview:ADImageV];
     
     
-    
     return cell;
 }
 
-
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    if (scrollView.contentOffset.x == self.scrollOffsetX) return;
+    
+    self.scrollOffsetX = scrollView.contentOffset.x;
     NSInteger indexPage = self.indexPath.row%self.adItemArray.count;
-    
+    // 轮播改变文字及pageIndex
     self.ADLabel.text = self.adItemArray[indexPage].title;
-    
     self.ADPage.currentPage = indexPage;
 }
 
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSInteger index = indexPath.row%self.adItemArray.count;
+    if (self.adClickBlock) {
+        self.adClickBlock(_contItem,index);
+    }
+        
 }
 
 @end

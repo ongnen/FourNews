@@ -9,7 +9,6 @@
 #import "FNGetListCell.h"
 #import "FNNewsSglImgCell.h"
 #import "FNNewsThrImgCell.h"
-#import "FNNewsADCell.h"
 
 static NSString * const ADCell = @"newsListCell0";
 static NSString * const SglImg = @"newsListCell1";
@@ -19,14 +18,7 @@ static NSString * const ThrImg = @"newsListCell2";
 
 + (instancetype)cellWithTableView:(UITableView *)tableView :(FNNewsListItem *)item :(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0 && item.ads) {
-        FNNewsADCell *cell = [tableView dequeueReusableCellWithIdentifier:ADCell];
-        if (cell == nil) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"FNNewsADCell" owner:nil options:nil] lastObject];
-        }
-        return (id)cell;
-        
-    } else if (item.imgextra) {
+    if (item.imgextra) {
         FNNewsThrImgCell *cell = [tableView dequeueReusableCellWithIdentifier:ThrImg];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"FNNewsThrImgCell" owner:nil options:nil] lastObject];
@@ -40,5 +32,6 @@ static NSString * const ThrImg = @"newsListCell2";
         return (id)cell;
     }
 }
+
 
 @end
