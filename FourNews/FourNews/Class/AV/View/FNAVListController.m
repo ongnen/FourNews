@@ -9,15 +9,19 @@
 #import "FNAVListController.h"
 #import "FNAVGetAVNewsList.h"
 #import "FNAVListCell.h"
-#import <MediaPlayer/MediaPlayer.h>
+#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import "FNNewsReplyController.h"
 #import <MJRefresh.h>
 #import "FNTabBarController.h"
 
 @interface FNAVListController ()
+
 @property (nonatomic, assign) NSInteger refreshCount;
 
 @property (nonatomic, strong) NSMutableArray<FNAVListItem *> *listItemArray;
+
+@property (nonatomic, strong) AVPlayerViewController *playerVC;
 
 @end
 
@@ -30,6 +34,13 @@ static NSString * const ID = @"cell";
     }
     return _listItemArray;
     
+}
+- (AVPlayerViewController *)playerVC
+{
+    if (!_playerVC){
+        _playerVC = [[AVPlayerViewController alloc] init];
+    }
+    return _playerVC;
 }
 
 - (void)viewDidLoad
@@ -143,12 +154,13 @@ static NSString * const ID = @"cell";
 
 - (void)playMovieWithUrlStr:(NSString *)urlStr
 {
-    
     NSURL *movieUrl = [NSURL URLWithString:urlStr];
     
-    MPMoviePlayerViewController *playerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:movieUrl];
+    AVPlayer *player = [AVPlayer playerWithURL:movieUrl];
     
-    [self presentViewController:playerVC animated:YES completion:nil];
+    self.playerVC.player = player;
+    
+    [self.playerVC.player play];
 }
 
 #pragma mark -  跳转评论界面

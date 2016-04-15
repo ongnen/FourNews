@@ -8,7 +8,7 @@
 
 #import "YJGridView.h"
 
-@interface YJGridView () <UICollectionViewDataSource,UICollectionViewDelegate>
+@interface YJGridView () 
 
 @property (nonatomic, assign) NSIndexPath *indexPath;
 @property (nonatomic, assign) CGPoint startP;
@@ -201,8 +201,6 @@
 
 - (void)btnClick:(YJGridItemListButton *)btn
 {
-    YJGridItemListView *view = (YJGridItemListView *)btn.superview;
-    NSLog(@"%ld",view.index);
     if (self.btnClickBlock) {
         self.btnClickBlock(btn);
     }

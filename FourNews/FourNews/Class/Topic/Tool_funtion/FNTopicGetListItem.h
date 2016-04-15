@@ -10,6 +10,6 @@
 
 @interface FNTopicGetListItem : NSObject
 
-+ (void)getTopicNewsListWithPageCount:(NSInteger)pageCount:(void(^)(NSArray *))complete;
++ (void)getTopicNewsListWithPageCount:(NSInteger)pageCount :(void(^)(NSArray *))complete;
 
 @end

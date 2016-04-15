@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleL;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImgV;
 @property (weak, nonatomic) IBOutlet UIView *bottomBar;
+@property (weak, nonatomic) IBOutlet UIView *playerV;
 @property (nonatomic, weak) UIImageView *topicImgV;
 @property (nonatomic, weak) UILabel *topicL;
 @property (nonatomic, weak) UIView *topicView;
@@ -66,9 +67,16 @@
     [self setupCoverImgV];
     // 设置底部条
     [self setBottomBar];
-    
+    // 设置playerV
+    [self setPlayerView];
     
 }
+
+- (void)setPlayerView
+{
+    
+}
+
 #pragma mark - 设置标题
 - (void)setupTitleL
 {
