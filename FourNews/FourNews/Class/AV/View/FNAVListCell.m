@@ -8,6 +8,7 @@
 
 #import "FNAVListCell.h"
 #import <UIImageView+WebCache.h>
+#import "FNPlayerViewController.h"
 #define FNAVTopicImgWH 24
 
 
@@ -54,6 +55,7 @@
     
     [self.bottomBar addSubview:topicView];
     _topicView = topicView;
+    
 }
 
 
@@ -67,15 +69,9 @@
     [self setupCoverImgV];
     // 设置底部条
     [self setBottomBar];
-    // 设置playerV
-    [self setPlayerView];
     
 }
 
-- (void)setPlayerView
-{
-    
-}
 
 #pragma mark - 设置标题
 - (void)setupTitleL
@@ -115,8 +111,9 @@
 
 - (void)coverClick
 {
+    _coverImgV.hidden = YES;
     if (self.movieBlock) {
-        self.movieBlock(_listItem.mp4_url);
+        self.movieBlock(_listItem.mp4_url,_playerV);
     }
 }
 

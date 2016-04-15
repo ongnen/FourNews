@@ -17,7 +17,7 @@
 
 + (CGFloat)totalHeightWithTitle:(NSString *)title;
 
-@property (nonatomic, strong) void(^movieBlock)(NSString *);
+@property (nonatomic, strong) void(^movieBlock)(NSString *,UIView *);
 
 @property (nonatomic, strong) void(^replyBlock)(NSString *,NSString *);
 

@@ -14,6 +14,7 @@
 #import "FNNewsReplyController.h"
 #import <MJRefresh.h>
 #import "FNTabBarController.h"
+#import "FNPlayerViewController.h"
 
 @interface FNAVListController ()
 
@@ -35,9 +36,10 @@ static NSString * const ID = @"cell";
     return _listItemArray;
     
 }
+
 - (AVPlayerViewController *)playerVC
 {
-    if (!_playerVC){
+    if (!_playerVC) {
         _playerVC = [[AVPlayerViewController alloc] init];
     }
     return _playerVC;
@@ -121,8 +123,8 @@ static NSString * const ID = @"cell";
     FNAVListCell *cell = [tableView dequeueReusableCellWithIdentifier:ID forIndexPath:indexPath];
     cell.listItem = self.listItemArray[indexPath.section];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.movieBlock = ^(NSString *urlStr){
-        [self playMovieWithUrlStr:urlStr];
+    cell.movieBlock = ^(NSString *urlStr,UIView *playerV){
+        [self playMovieWithUrlStr:urlStr :playerV];
     };
     cell.replyBlock = ^(NSString *boardid,NSString *replyid){
         [self replyClickWith:boardid :replyid];
@@ -152,13 +154,16 @@ static NSString * const ID = @"cell";
 }
 
 
-- (void)playMovieWithUrlStr:(NSString *)urlStr
+- (void)playMovieWithUrlStr:(NSString *)urlStr :(UIView *)playerV
 {
-    NSURL *movieUrl = [NSURL URLWithString:urlStr];
+    [self.playerVC.player pause];
+    _playerVC = nil;
     
-    AVPlayer *player = [AVPlayer playerWithURL:movieUrl];
-    
+    self.playerVC.showsPlaybackControls = YES;
+    AVPlayer *player = [AVPlayer playerWithURL:[NSURL URLWithString:urlStr]];
     self.playerVC.player = player;
+    self.playerVC.view.frame = playerV.bounds;
+    [playerV addSubview:self.playerVC.view];
     
     [self.playerVC.player play];
 }

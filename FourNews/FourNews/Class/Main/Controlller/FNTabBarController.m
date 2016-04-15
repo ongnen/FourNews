@@ -14,6 +14,7 @@
 #import "FNMeController.h"
 #import "FNNavigationController.h"
 #import "FNTopicNavgationController.h"
+#import "FNPlayerViewController.h"
 
 @interface FNTabBarController () <UITabBarControllerDelegate>
 
@@ -22,6 +23,8 @@
 @property (nonatomic, strong) FNAVViewController *avVC;
 @property (nonatomic, strong) FNTopicViewController *topicVC;
 @property (nonatomic, strong) FNMeController *meVC;
+
+@property (nonatomic, strong) FNPlayerViewController *playerVC;
 
 @property (nonatomic, strong) UITabBarItem *selectedItem;
 
@@ -38,6 +41,8 @@
     // 给初值
     self.selectedItem = self.childViewControllers[0].tabBarItem;
     [self.tabBar setTintColor:[UIColor redColor]];
+    
+    self.playerVC = [FNPlayerViewController sharePlayerViewController];
 }
 
 - (void)setChildControllers
