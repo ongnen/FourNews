@@ -13,6 +13,4 @@
 
 @property (nonatomic, strong) FNTopicListItem *listItem;
 
-+ (CGFloat)totalHeightWithDesc:(NSString *)desc;
-
 @end

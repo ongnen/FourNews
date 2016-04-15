@@ -68,8 +68,6 @@ static NSString *const ID = @"cell";
 //        // 在这里拿到真正的collectionV高度
 //        self.collectionV.frame = CGRectMake(0, 0, 0, ((self.squareArray.count-1)/4+1)*FNCollecWH);
         // 刷新内容
-        self.tableView.tableFooterView = _collectionV;
-        [self.collectionV reloadData];
         [self.tableView reloadData];
     }];
     
@@ -115,10 +113,9 @@ static NSString *const ID = @"cell";
     CGFloat gridW = FNScreenW;
     CGFloat gridH = (itemArray.count / 4 + 1) * FNScreenW/4;
     gridView.frame = CGRectMake(gridX, gridY, gridW, gridH);
-    gridView.listBtnClickBlock = ^(YJGridItemListView *view){
-        [self btnClick:view];
+    gridView.listBtnClickBlock = ^(YJGridItemListButton *btn){
+        [self btnClick:btn];
     };
-    gridView.backgroundColor = [UIColor redColor];
     // 关键代码
     self.tableView.tableFooterView = gridView;
 }
@@ -156,10 +153,10 @@ static NSString *const ID = @"cell";
      */
 }
 
-- (void)btnClick:(YJGridItemListView *)view
+- (void)btnClick:(YJGridItemListButton *)btn
 {
     FNWKWebController *webVC = [[FNWKWebController alloc] init];
-    webVC.url = self.itemArray[view.index].url;
+    webVC.url = btn.url;
     [self.navigationController pushViewController:webVC animated:YES];
 }
 

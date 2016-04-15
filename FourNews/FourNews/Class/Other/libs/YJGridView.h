@@ -18,11 +18,13 @@
 
 + (instancetype)gridViewWithlist:(NSArray *)items;
 
-@property (nonatomic, copy) void(^listBtnClickBlock)(YJGridItemListView *btn);
+@property (nonatomic, copy) void(^listBtnClickBlock)(YJGridItemListButton *btn);
 
 @end
 
 @interface YJGridItemListButton : UIButton
+
+@property (nonatomic, strong) NSString *url;
 
 @end
 
@@ -48,7 +50,6 @@
 
 @property (nonatomic, assign) NSInteger index;
 
-+ (NSArray *)gridItems;
 
 @end
 

@@ -8,7 +8,7 @@
 
 #import "YJGridView.h"
 
-@interface YJGridView () <UICollectionViewDataSource,UICollectionViewDelegate>
+@interface YJGridView () 
 
 @property (nonatomic, assign) NSIndexPath *indexPath;
 @property (nonatomic, assign) CGPoint startP;
@@ -26,16 +26,28 @@
 
     gridView.itemArray = items;
     
-    for (int i = 0; i < 11; i++) {
+    NSInteger lineCount = items.count/4+6;
+    for (int i = 0; i < lineCount; i++) {
         UIView *view = [[UIView alloc ] init];
         if (i < 4) {
-            view = [[UIView alloc] initWithFrame:CGRectMake(FNScreenW/4 * (i+1), 0, 0.5, FNScreenW/4 * 6)];
+            view.frame = CGRectMake(FNScreenW/4 * (i+1), 0, 0.5, FNScreenW/4 * (items.count/4+1));
+            if (items.count%4 == 0) continue;
+            if (i>=(items.count%4)) {
+                 view.frame = CGRectMake(FNScreenW/4 * (i+1), 0, 0.5, FNScreenW/4 * (items.count/4));
+            }
         } else {
-            view = [[UIView alloc] initWithFrame:CGRectMake(0, FNScreenW/4 * (i-4), FNScreenW, 0.5)];
+            view.frame = CGRectMake(0, FNScreenW/4 * (i-4), FNScreenW, 0.5);
+            if (items.count%4 == 0) continue;
+            if (i == lineCount-1) {
+                view.frame = CGRectMake(0, FNScreenW/4 * (i-4), FNScreenW/4*(items.count%4), 0.5);
+                NSLog(@"%@",NSStringFromCGRect(view.frame));
+            }
         }
         view.backgroundColor = FNColor(200, 200, 200);
         [gridView addSubview:view];
     }
+    
+    
     
     return gridView;
 }
@@ -62,7 +74,7 @@
 - (void)listBtnClick:(YJGridItemListButton *)btn
 {
     if (self.listBtnClickBlock) {
-        self.listBtnClickBlock((YJGridItemListView *)btn.superview);
+        self.listBtnClickBlock(btn);
     }
 }
 
@@ -86,7 +98,7 @@
     NSInteger indexX = curP.x / ((NSInteger)FNScreenW/4);
     NSInteger indexY = (NSInteger)(curP.y / ((NSInteger)FNScreenW/4)) * 4;
     NSInteger toIndex = indexX + indexY;
-    if (self.toIndex != toIndex && toIndex < 20) {
+    if (self.toIndex != toIndex && toIndex < _itemArray.count) {
         self.toIndex = toIndex;
         [self reSetListViewFrame:self.fromIndex :self.toIndex];
     }
@@ -163,13 +175,17 @@
 - (void)setItem:(YJGridButtonitem *)item
 {
     YJGridItemListButton *btn = [[YJGridItemListButton alloc] init];
-    
+    btn.url = item.url;
     btn.titleLabel.font = [UIFont systemFontOfSize:15];
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.image]]];
-    [btn setImage:image forState:UIControlStateNormal];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:item.image]]];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [btn setImage:image forState:UIControlStateNormal];
+        });
+    });
     [btn setTitle:item.desc forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchDragInside];
+    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UILongPressGestureRecognizer *longP = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(btnLongPress:)];
     [btn addGestureRecognizer:longP];
@@ -226,43 +242,5 @@
 
 @implementation YJGridButtonitem
 
-+ (YJGridButtonitem *)Cellitem:(NSString *)desc :(NSString *)image :(NSInteger)index
-{
-    YJGridButtonitem *item = [[YJGridButtonitem alloc] init];
-    item.desc = desc;
-    item.image = [UIImage imageNamed:image];
-    item.index = index;
-    
-    return item;
-}
-
-+ (NSArray *)gridItems
-{
-    NSMutableArray *itemArray = [NSMutableArray array];
-    
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝0" :@"i00" :0]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝1" :@"i01" :1]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝2" :@"i02" :2]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝3" :@"i03" :3]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝4" :@"i04" :4]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝5" :@"i05" :5]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝6" :@"i06" :6]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝7" :@"i07" :7]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝8" :@"i08" :8]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝9" :@"i09" :9]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝10" :@"i10" :10]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝11" :@"i11" :11]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝12" :@"i12" :12]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝13" :@"i13" :13]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝14" :@"i14" :14]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝15" :@"i15" :15]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝16" :@"i16" :16]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝17" :@"i17" :17]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝18" :@"i18" :18]];
-    [itemArray addObject:[YJGridButtonitem Cellitem:@"淘宝19" :@"i19" :19]];
-    
-    
-    return itemArray;
-}
 
 @end
