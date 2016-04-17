@@ -5,6 +5,20 @@
       "scale" : "1x"
     },
     {
+      "resizing" : {
+        "mode" : "9-part",
+        "center" : {
+          "mode" : "tile",
+          "width" : 1,
+          "height" : 1
+        },
+        "cap-insets" : {
+          "bottom" : 44,
+          "top" : 43,
+          "right" : 50,
+          "left" : 29
+        }
+      },
       "idiom" : "universal",
       "filename" : "contentview_commentbacky@2x.png",
       "scale" : "2x"

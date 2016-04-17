@@ -8,7 +8,6 @@
 
 #import "FNAVListCell.h"
 #import <UIImageView+WebCache.h>
-#import "FNPlayerViewController.h"
 #define FNAVTopicImgWH 24
 
 
@@ -149,7 +148,7 @@
 - (void)replyBtnClick
 {
     if (self.replyBlock) {
-        self.replyBlock(_listItem.replyBoard,_listItem.replyid);
+        self.replyBlock(_listItem);
     }
 }
 
