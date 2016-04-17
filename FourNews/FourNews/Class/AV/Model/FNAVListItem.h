@@ -36,4 +36,6 @@
 
 @property (nonatomic, strong) NSString *replyBoard;
 
+@property (nonatomic, assign) NSInteger playCount;
+
 @end

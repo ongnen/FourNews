@@ -22,6 +22,8 @@
 @property (nonatomic, weak) UILabel *topicL;
 @property (nonatomic, weak) UIView *topicView;
 @property (nonatomic, weak) UILabel *timeAndPlayCountL;
+@property (nonatomic, weak) UIView *marginV;
+
 
 
 @end
@@ -56,6 +58,12 @@
     [self.bottomBar addSubview:topicView];
     _topicView = topicView;
     
+    // 分隔线
+    UIView *marginV = [[UIView alloc] init];
+    marginV.backgroundColor = FNCommonColor;
+    [self addSubview:marginV];
+    _marginV = marginV;
+    
 }
 
 
@@ -70,6 +78,10 @@
     // 设置底部条
     [self setBottomBar];
     
+    // 设置分割线与分隔View
+    self.marginV.frame = CGRectMake(0, 280, FNScreenW, YJMargin);
+    
+    self.playerV.subviews.count ? [self.playerV.subviews[0] removeFromSuperview] : self.playerV;
 }
 
 
@@ -86,6 +98,7 @@
 #pragma mark - 设置视频图片
 - (void)setupCoverImgV
 {
+    self.coverImgV.hidden = NO;
     self.coverImgV.userInteractionEnabled = YES;
     [self.coverImgV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverClick)]];
     [self.coverImgV sd_setImageWithURL:[NSURL URLWithString:_listItem.cover] placeholderImage:[UIImage imageNamed:@"photosetBackGround"]];
@@ -99,9 +112,9 @@
     // 图片内部时间及播放次数Label
     NSString *timeStr = [NSString stringWithFormat:@"%02d:%02d",[_listItem.length  intValue]/60,[_listItem.length  intValue]%60];
     
-    NSString *playCountStr = [NSString stringWithFormat:@"%d播放",[_listItem.replyCount intValue]];
-    if ([_listItem.replyCount intValue]>9999) {
-        playCountStr =  [NSString stringWithFormat:@"%0.1f万播放",[_listItem.replyCount intValue]/10000.0];
+    NSString *playCountStr = [NSString stringWithFormat:@"%ld播放",_listItem.playCount];
+    if (_listItem.playCount >9999) {
+        playCountStr =  [NSString stringWithFormat:@"%0.1f万播放",_listItem.playCount/10000.0];
     }
     NSString *timeAndPlayCountStr = [NSString stringWithFormat:@"%@/%@",timeStr,playCountStr];
     self.timeAndPlayCountL.text = timeAndPlayCountStr;

@@ -24,6 +24,8 @@
 
 @property (nonatomic, strong) AVPlayerViewController *playerVC;
 
+@property (nonatomic, strong) NSIndexPath *previousIndexPath;
+
 @end
 
 @implementation FNAVListController
@@ -47,6 +49,9 @@ static NSString * const ID = @"cell";
 
 - (void)viewDidLoad
 {
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    self.tableView.rowHeight = 290;
+    [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     [super viewDidLoad];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // 设置下拉刷新
@@ -108,20 +113,16 @@ static NSString * const ID = @"cell";
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.listItemArray.count;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    return 1;
-}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     FNAVListCell *cell = [tableView dequeueReusableCellWithIdentifier:ID forIndexPath:indexPath];
-    cell.listItem = self.listItemArray[indexPath.section];
+    cell.listItem = self.listItemArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.movieBlock = ^(NSString *urlStr,UIView *playerV){
         [self playMovieWithUrlStr:urlStr :playerV];
@@ -131,34 +132,18 @@ static NSString * const ID = @"cell";
     };
     return cell;
 }
-// 设置footer高度
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 10;
-}
-// 设置footer样式
-- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UIView *footV = [[UIView alloc] init];
-    footV.backgroundColor = FNColor(215, 215, 215);
-    footV.bounds = CGRectMake(0, 0, FNScreenW, 10);
-    return footV;
-}
-
-// 设置行高
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString *title = self.listItemArray[indexPath.section].title;
-    
-    return [FNAVListCell totalHeightWithTitle:title];
-}
-
 
 - (void)playMovieWithUrlStr:(NSString *)urlStr :(UIView *)playerV
 {
+    
+    if (self.previousIndexPath) {
+        [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    playerV.subviews.count ? [playerV.subviews[0] removeFromSuperview] : playerV.subviews.count;
     [self.playerVC.player pause];
     _playerVC = nil;
     
+    self.playerVC.view.translatesAutoresizingMaskIntoConstraints = YES;
     self.playerVC.showsPlaybackControls = YES;
     AVPlayer *player = [AVPlayer playerWithURL:[NSURL URLWithString:urlStr]];
     self.playerVC.player = player;
@@ -166,6 +151,15 @@ static NSString * const ID = @"cell";
     [playerV addSubview:self.playerVC.view];
     
     [self.playerVC.player play];
+    
+    NSIndexPath *indexPath;
+    for (int i = 0; i<self.listItemArray.count; i++) {
+        if ([self.listItemArray[i].mp4_url isEqualToString:urlStr]) {
+            indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        }
+    }
+    
+    self.previousIndexPath = indexPath;
 }
 
 #pragma mark -  跳转评论界面
