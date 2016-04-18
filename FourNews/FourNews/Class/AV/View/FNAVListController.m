@@ -27,6 +27,7 @@
 
 @property (nonatomic, strong) NSIndexPath *previousIndexPath;
 
+@property (nonatomic, weak) FNAVDetailController *avDetailVc;
 @end
 
 @implementation FNAVListController
@@ -71,13 +72,33 @@ static NSString * const ID = @"cell";
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
+    
+//    UIImageView *navigationImgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, FNScreenW, 44)];
+//    navigationImgV.image = [self drawNavigationBar];
+//    self.navigationController.navigationBarHidden = YES;
+//    [self.parentViewController.view addSubview:navigationImgV];
 }
 
 //- (void)viewWillAppear:(BOOL)animated
 //{
 //    [super viewWillAppear:animated];
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    
+//    self.navigationController.navigationBarHidden = YES;
 //}
+/** 截屏 */
+- (UIImage *)drawScreen
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(FNScreenW, FNScreenH), NO, 0);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
+    [self.navigationController.view.layer renderInContext:ctx];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    NSData *data = UIImagePNGRepresentation(image);
+            [data writeToFile:[NSString stringWithFormat:@"/Users/admin/Desktop/imag.png"]atomically:YES];
+    return image;
+}
 
 
 #pragma mark - tabBarButton被点击调用的方法
@@ -144,10 +165,25 @@ static NSString * const ID = @"cell";
 
 - (void)playMovieWithUrlStr:(NSString *)urlStr :(UIView *)playerV
 {
+    // 移除正在播放的窗口视频
     
-    if (self.previousIndexPath) {
+    [self.avDetailVc.view removeFromSuperview];
+    [self.avDetailVc removeFromParentViewController];
+    
+    // 取出当前indexPath
+    NSIndexPath *indexPath;
+    for (int i = 0; i<self.listItemArray.count; i++) { // 遍历取出
+        if ([self.listItemArray[i].mp4_url isEqualToString:urlStr]) {
+            indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        }
+    }
+    // 存在上一个indexPath，则刷新上一次播放的视频的cell
+    if (self.previousIndexPath && indexPath.row != self.previousIndexPath.row) {
         [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
+    // 保存当前indexPath
+    self.previousIndexPath = indexPath;
+    
     playerV.subviews.count ? [playerV.subviews[0] removeFromSuperview] : playerV.subviews.count;
     [self.playerVC.player pause];
     _playerVC = nil;
@@ -161,28 +197,47 @@ static NSString * const ID = @"cell";
     
     [self.playerVC.player play];
     
-    NSIndexPath *indexPath;
-    for (int i = 0; i<self.listItemArray.count; i++) {
-        if ([self.listItemArray[i].mp4_url isEqualToString:urlStr]) {
-            indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        }
-    }
     
-    self.previousIndexPath = indexPath;
 }
 
 #pragma mark -  跳转评论界面
 - (void)replyClickWithListItem:(FNAVListItem *)item
 {
-    // 1.跳转
-
+    // 移除正在播放的非窗口视频
+    if (self.previousIndexPath) {
+        [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    [self.playerVC.player pause];
+    _playerVC = nil;
     
+    FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
+    // 1.跳转.
+    // 用画的图片遮盖
+    UIImageView *screenImgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, FNScreenW, FNScreenH)];
+    screenImgV.image = [self drawScreen];
+    [self.parentViewController.view addSubview:screenImgV];
+    avVC.screenImgV = screenImgV;
+    self.navigationController.navigationBarHidden = YES;
+    
+    // 创建详情控制器
     FNAVDetailController *avDetailVC = [[FNAVDetailController alloc] init];
     avDetailVC.item = item;
     avDetailVC.view.frame = CGRectMake(FNScreenW, 0, FNScreenW, FNScreenH);
-    FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
+    self.avDetailVc = avDetailVC;
     [avVC addChildViewController:avDetailVC];
     [avVC.view addSubview:avDetailVC.view];
+    
+    __weak FNAVDetailController *weakAVController = avDetailVC;
+    avDetailVC.backBlock = ^{
+        [UIView animateWithDuration:0.2 animations:^{
+            weakAVController.view.frame = CGRectMake(FNScreenW, 0, FNScreenW, FNScreenH);
+        } completion:^(BOOL finished) {
+            [weakAVController.view removeFromSuperview];
+            [weakAVController removeFromParentViewController];
+            avVC.navigationController.navigationBarHidden = NO;
+            [avVC.screenImgV removeFromSuperview];
+        }];
+    };
     
     [UIView animateWithDuration:0.2 animations:^{
         avDetailVC.view.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);

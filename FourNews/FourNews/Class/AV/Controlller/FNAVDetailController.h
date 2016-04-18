@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) FNAVListItem *item;
 
+@property (nonatomic, strong) void(^backBlock)();
+
 @end

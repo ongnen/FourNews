@@ -22,7 +22,7 @@
 @property (nonatomic, weak) UIView *topicView;
 @property (nonatomic, weak) UILabel *timeAndPlayCountL;
 @property (nonatomic, weak) UIView *marginV;
-
+@property (nonatomic, weak) UIImageView *playImgV;
 
 
 @end
@@ -63,6 +63,14 @@
     [self addSubview:marginV];
     _marginV = marginV;
     
+    // 播放按钮图片
+    UIImageView *playImgV = [[UIImageView alloc] init];
+    playImgV.image = [UIImage imageNamed:@"night_video_cell_play"];
+    playImgV.bounds = CGRectMake(0, 0, 40, 40);
+    playImgV.center = CGPointMake((FNScreenW-YJCommonMargin*2)/2, self.coverImgV.height/2);
+    self.playImgV = playImgV;
+    [self.coverImgV addSubview:playImgV];
+    
 }
 
 
@@ -101,12 +109,7 @@
     self.coverImgV.userInteractionEnabled = YES;
     [self.coverImgV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverClick)]];
     [self.coverImgV sd_setImageWithURL:[NSURL URLWithString:_listItem.cover] placeholderImage:[UIImage imageNamed:@"photosetBackGround"]];
-    
-    UIImageView *playImgV = [[UIImageView alloc] init];
-    playImgV.image = [UIImage imageNamed:@"night_video_cell_play"];
-    playImgV.bounds = CGRectMake(0, 0, 40, 40);
-    playImgV.center = CGPointMake((FNScreenW-YJCommonMargin*2)/2, self.coverImgV.height/2);
-    [self.coverImgV addSubview:playImgV];
+
     
     // 图片内部时间及播放次数Label
     NSString *timeStr = [NSString stringWithFormat:@"%02d:%02d",[_listItem.length  intValue]/60,[_listItem.length  intValue]%60];
@@ -132,10 +135,12 @@
 - (void)setBottomBar
 {
     [self.replyButton setImage:[UIImage imageNamed:@"pluginmanager_icon_message"] forState:UIControlStateNormal];
+    [self.replyButton setImage:[UIImage imageNamed:@"pluginmanager_icon_message"] forState:UIControlStateHighlighted];
     NSString *replyCount = [NSString stringWithFormat:@"%@",_listItem.replyCount];
     [self.replyButton addTarget:self action:@selector(replyBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.replyButton setTitle:replyCount forState:UIControlStateNormal];
     [self.replyButton setTitleColor:FNColor(150, 150, 150) forState:UIControlStateNormal];
+    [self.replyButton setTitleColor:FNColor(150, 150, 150) forState:UIControlStateHighlighted];
     self.replyButton.titleLabel.font = [UIFont systemFontOfSize:12];
     [self.replyButton sizeToFit];
     self.replyButton.origin = CGPointMake(FNScreenW-FNCompensate(40)-YJCommonMargin*2-self.replyButton.width, 0);

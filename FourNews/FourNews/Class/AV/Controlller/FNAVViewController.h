@@ -10,6 +10,6 @@
 
 @interface FNAVViewController : FNAVBaseController
 
-
+@property (nonatomic, weak) UIImageView *screenImgV;
 
 @end

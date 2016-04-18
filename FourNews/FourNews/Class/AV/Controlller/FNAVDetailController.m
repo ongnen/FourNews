@@ -15,6 +15,7 @@
 #import "FNNewsReplyButton.h"
 #import <AVKit/AVKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "FNAVViewController.h"
 #define FNAVMoviewHeight 250
 
 @interface FNAVDetailController () <UITableViewDataSource,UITableViewDelegate>
@@ -37,10 +38,21 @@
 
 @property (nonatomic, strong) UIImageView *replyImgV;
 
+@property (nonatomic, weak) UIButton *backBtn;
+
+@property (nonatomic, weak) UIView *beddingView;
+
+@property (nonatomic, assign) CGPoint firstOffset;
+
 @end
 
 @implementation FNAVDetailController
 static NSString * const ID = @"replyCell";
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 
 - (UIView *)movieView
 {
@@ -59,7 +71,7 @@ static NSString * const ID = @"replyCell";
          UITableView *replyView = [[UITableView alloc] init];
         replyView.delegate = self;
         replyView.dataSource = self;
-        [self.view addSubview:replyView];
+        [self.beddingView addSubview:replyView];
         _replyView = replyView;
     }
     return _replyView;
@@ -80,11 +92,22 @@ static NSString * const ID = @"replyCell";
     return _replyImgV;
 }
 
+- (UIView *)beddingView
+{
+    if (!_beddingView){
+        UIView *beddingView = [[UIView alloc] init];
+        [self.view addSubview:beddingView];
+        _beddingView = beddingView;
+    }
+    return _beddingView;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    self.replyView.frame = CGRectMake(0, FNAVMoviewHeight, FNScreenW, FNScreenH-FNAVMoviewHeight);
+    self.beddingView.frame = CGRectMake(0, FNAVMoviewHeight, FNScreenW, FNScreenH-FNAVMoviewHeight);
+    self.replyView.frame = CGRectMake(0, 0, FNScreenW, FNScreenH-FNAVMoviewHeight);
     self.movieView.frame = CGRectMake(0, 0, FNScreenW, FNAVMoviewHeight);
     
     self.replyView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
@@ -93,7 +116,22 @@ static NSString * const ID = @"replyCell";
     
     [self setPlayerView];
     
+    [self setBackButton];
+    
 }
+
+
+#pragma mark - 返回
+- (void)setBackButton
+{
+    UIButton *backBtn = [[UIButton alloc] init];
+    [backBtn setImage:[UIImage imageNamed:@"weather_back"] forState:UIControlStateNormal];
+    backBtn.frame = CGRectMake(5, 5, 40, 40);
+    [backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.movieView addSubview:backBtn];
+    self.backBtn = backBtn;
+}
+
 #pragma mark - playerVC
 - (void)setPlayerView
 {
@@ -103,15 +141,16 @@ static NSString * const ID = @"replyCell";
     self.playerVC.view.frame = self.movieView.bounds;
     [self.movieView addSubview:self.playerVC.view];
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(playerVCPan:)];
+    
     [self.movieView addGestureRecognizer:pan];
     [self.playerVC.player play];
 }
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//    
+//}
 
 - (void)topDragRefreshData
 {
@@ -213,36 +252,55 @@ static NSString * const ID = @"replyCell";
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
-    [self.replyView.layer renderInContext:ctx];
+    [self.beddingView.layer renderInContext:ctx];
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     
     return image;
     
 }
-
+#pragma mark - 手势 缩放，滑动删除
 - (void)playerVCPan:(UIPanGestureRecognizer *)pan
 {
     self.view.transform = CGAffineTransformIdentity;
     if (pan.state == UIGestureRecognizerStateBegan) {
+        self.backBtn.hidden = YES;
         self.startP = [pan locationInView:self.view];
         if (self.isInBottom) {
-            self.view.frame = CGRectMake(FNScreenW/2, FNScreenH-FNAVMoviewHeight/2, FNScreenW/2, FNAVMoviewHeight/2);
+            self.view.frame = CGRectMake(FNScreenW/2, FNScreenH-FNAVMoviewHeight/2-YJTabBarH, FNScreenW/2, FNScreenH/2);
+            FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
+            // 1.跳转.
+            // 用画的图片遮盖
+            UIImageView *screenImgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, FNScreenW, FNScreenH/2)];
+            screenImgV.image = [self drawScreen];
+            [avVC.view insertSubview:screenImgV belowSubview:self.view];
+            avVC.screenImgV = screenImgV;
+            self.navigationController.navigationBarHidden = YES;
         } else {
-            self.view.frame = CGRectMake(0, 0, FNScreenW, FNAVMoviewHeight);
+            // 将评论区画出来并覆盖评论区
+            self.replyImgV.image = [self setDrawReplyImage];
+            [self.view addSubview:self.replyImgV];
+            self.view.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);
+            NSData *data = UIImagePNGRepresentation([self setDrawReplyImage]);
+                    [data writeToFile:[NSString stringWithFormat:@"/Users/admin/Desktop/imag.png"]atomically:YES];
         }
         
-        // 将评论区画出来并覆盖评论区
-        self.replyImgV.image = [self setDrawReplyImage];
-        [self.view addSubview:self.replyImgV];
-        NSLog(@"%@",NSStringFromCGRect(self.replyImgV.frame));
+        // 将评论区变透明
+        self.view.backgroundColor = [UIColor clearColor];
+        self.replyView.alpha = 0;
     }
     
     CGPoint curP = [pan locationInView:self.view];
     CGFloat scale;
     CGFloat playerViewH = FNAVMoviewHeight;
     
+    // 评论区渐变透明
+    self.replyImgV.alpha = 1-scale;
+    
     if (!self.isInBottom) { //  顶部视频
+        // 评论区渐变透明
+        self.replyImgV.alpha = 1-scale;
+        
         CGPoint offset = CGPointMake(curP.x-self.startP.x, curP.y-self.startP.y);
         scale = (offset.x + offset.y)/500 > 0? (offset.x + offset.y)/500 : 0;
         if (scale>1) {
@@ -252,13 +310,14 @@ static NSString * const ID = @"replyCell";
             scale = 0;
         }
         CGFloat changeW = FNScreenW/2*scale;
-        CGFloat changeH = (FNScreenH-playerViewH/2)*scale;
+        CGFloat changeH = (FNScreenH-playerViewH/2-YJTabBarH)*scale;
         self.view.layer.anchorPoint = CGPointMake(0, 0);
         self.view.layer.position = CGPointMake(0, 0);
         self.view.transform = CGAffineTransformMakeTranslation(changeW, changeH);
         self.view.transform = CGAffineTransformScale(self.view.transform, 1-scale/2, 1-scale/2);
     } else { // 底部视频
-        
+        // 评论区渐变实体
+        self.replyImgV.alpha = scale;
         CGPoint offset = CGPointMake(self.startP.x-curP.x, self.startP.y-curP.y);
         scale = (offset.x + offset.y)/500 > 0? (offset.x + offset.y)/500 : 0;
         if (scale>1) {
@@ -267,14 +326,75 @@ static NSString * const ID = @"replyCell";
         if (scale<0) {
             scale = 0;
         }
-        
-        self.view.layer.anchorPoint = CGPointMake(0, 0);
-        self.view.layer.position = CGPointMake(FNScreenW/2, FNScreenH-playerViewH/2);
-        self.view.transform = CGAffineTransformMakeTranslation(-FNScreenW/2*scale, -(FNScreenH-playerViewH/2)*scale);
-        self.view.transform = CGAffineTransformScale(self.view.transform,1+scale, 1+scale);
+        // 拿到第一个有效的能判断是否左滑的offset
+        if (fabs(offset.x) > offset.y && self.firstOffset.x == 0 && self.firstOffset.y == 0) {
+            self.firstOffset = offset;
+        }
+        if (fabs(self.firstOffset.x)>self.firstOffset.y) { // 左滑删除
+            self.view.layer.anchorPoint = CGPointMake(0, 0);
+            self.view.layer.position = CGPointMake(FNScreenW/2, FNScreenH-playerViewH/2-YJTabBarH);
+            self.view.transform = CGAffineTransformMakeTranslation(-offset.x, 0);
+            // 改变透明度
+            self.view.alpha = 1-fabs(offset.x)/FNScreenW;
+        } else { // 上滑放大
+            self.view.layer.anchorPoint = CGPointMake(0, 0);
+            self.view.layer.position = CGPointMake(FNScreenW/2, FNScreenH-playerViewH/2-YJTabBarH);
+            self.view.transform = CGAffineTransformMakeTranslation(-FNScreenW/2*scale, -(FNScreenH-playerViewH/2-YJTabBarH)*scale);
+            self.view.transform = CGAffineTransformScale(self.view.transform,1+scale, 1+scale);
+        }
     }
     
     if (pan.state == UIGestureRecognizerStateEnded) {
+        CGPoint offset = CGPointMake(self.startP.x-curP.x, self.startP.y-curP.y);
+        // 判断是否是小窗口左右滑动
+        if (self.firstOffset.x) {
+            if (scale>0.2) { // 左滑删除
+                self.view.transform = CGAffineTransformIdentity;
+                self.view.frame = CGRectMake(-FNScreenW/2, FNScreenH-FNAVMoviewHeight/2-YJTabBarH, FNScreenW/2, playerViewH/2);
+                
+                self.view.layer.anchorPoint = CGPointMake(0, 0);
+                self.view.layer.position = CGPointMake(-FNScreenW/2, FNScreenH-playerViewH/2-YJTabBarH);
+                self.view.transform = CGAffineTransformMakeTranslation(FNScreenW*(1-fabs(offset.x)/FNScreenW), 0);
+                [UIView animateWithDuration:0.3 animations:^{
+                    self.view.alpha = 0.001;
+                    self.view.transform = CGAffineTransformMakeTranslation(0, 0);
+                    self.view.transform = CGAffineTransformScale(self.view.transform, 1, 1);
+                    
+                } completion:^(BOOL finished) {
+                    FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
+                    avVC.navigationController.navigationBarHidden = NO;
+                    [avVC.screenImgV removeFromSuperview];
+                    
+                    [self.view removeFromSuperview];
+                    [self removeFromParentViewController];
+                }];
+                return;
+            } else if (offset.x<-FNScreenW/8) {  // 右滑删除
+                self.view.transform = CGAffineTransformIdentity;
+                self.view.frame = CGRectMake(FNScreenW, FNScreenH-FNAVMoviewHeight/2-YJTabBarH, FNScreenW/2, playerViewH/2);
+                
+                self.view.layer.anchorPoint = CGPointMake(0, 0);
+                self.view.layer.position = CGPointMake(FNScreenW, FNScreenH-playerViewH/2-YJTabBarH);
+                self.view.transform = CGAffineTransformMakeTranslation(-FNScreenW/2*(1-fabs(offset.x)/(FNScreenW/2)), 0);
+                [UIView animateWithDuration:0.2 animations:^{
+                    self.view.alpha = 0.001;
+                    self.view.transform = CGAffineTransformMakeTranslation(0, 0);
+                    self.view.transform = CGAffineTransformScale(self.view.transform, 1, 1);
+                    
+                } completion:^(BOOL finished) {
+                    FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
+                    avVC.navigationController.navigationBarHidden = NO;
+                    [avVC.screenImgV removeFromSuperview];
+                    
+                    [self.view removeFromSuperview];
+                    [self removeFromParentViewController];
+                }];
+                return;
+            }
+        }
+        
+        
+        
         if (scale>0.5) { // 缩放到目标位.
             if (self.inBottom) { // 从底部
                 self.view.transform = CGAffineTransformIdentity;
@@ -283,30 +403,39 @@ static NSString * const ID = @"replyCell";
                 self.replyImgV.frame = CGRectMake(0, FNAVMoviewHeight, FNScreenW, FNScreenH-FNAVMoviewHeight);
                 self.view.layer.anchorPoint = CGPointMake(0, 0);
                 self.view.layer.position = CGPointMake(0, 0);
-                self.view.transform = CGAffineTransformMakeTranslation(FNScreenW/2*(1-scale), (FNScreenH-playerViewH/2)*(1-scale));
+                self.view.transform = CGAffineTransformMakeTranslation(FNScreenW/2*(1-scale), (FNScreenH-playerViewH/2-YJTabBarH)*(1-scale));
                 self.view.transform = CGAffineTransformScale(self.view.transform,(1+scale)/2, (1+scale)/2);
                 [UIView animateWithDuration:0.3 animations:^{
                     self.view.transform = CGAffineTransformMakeTranslation(0, 0);
                     self.view.transform = CGAffineTransformScale(self.view.transform, 1, 1);
-                    
+                    self.replyImgV.alpha = 1;
                 } completion:^(BOOL finished) {
                     self.inBottom = NO;
+                    self.backBtn.hidden = NO;
+                    // 将评论区变会实体
+                    self.replyView.alpha = 1;
                     [self.replyImgV removeFromSuperview];
                 }];
             } else { // 从顶部
                 self.view.transform = CGAffineTransformIdentity;
-                self.view.frame = CGRectMake(FNScreenW/2, FNScreenH-FNAVMoviewHeight/2, FNScreenW/2, playerViewH/2);
+                self.view.frame = CGRectMake(FNScreenW/2, FNScreenH-FNAVMoviewHeight/2-YJTabBarH, FNScreenW/2, playerViewH/2);
                 self.movieView.frame = CGRectMake(0, 0, FNScreenW/2, FNAVMoviewHeight/2);
                 self.replyImgV.frame = CGRectMake(0, FNAVMoviewHeight/2, FNScreenW/2, (FNScreenH-FNAVMoviewHeight)/2);
                 self.view.layer.anchorPoint = CGPointMake(0, 0);
-                self.view.layer.position = CGPointMake(FNScreenW/2, FNScreenH-playerViewH/2);
-                self.view.transform = CGAffineTransformMakeTranslation(-FNScreenW/2*(1-scale), -(FNScreenH-playerViewH/2)*(1-scale));
+                self.view.layer.position = CGPointMake(FNScreenW/2, FNScreenH-playerViewH/2-YJTabBarH);
+                self.view.transform = CGAffineTransformMakeTranslation(-FNScreenW/2*(1-scale), -(FNScreenH-playerViewH/2-YJTabBarH)*(1-scale));
                 self.view.transform = CGAffineTransformScale(self.view.transform,(1-scale/2)*2, (1-scale/2)*2);
                 [UIView animateWithDuration:0.3 animations:^{
                     self.view.transform = CGAffineTransformMakeTranslation(0, 0);
                     self.view.transform = CGAffineTransformScale(self.view.transform, 1, 1);
+                    self.replyImgV.alpha = 0;
+                    
                 } completion:^(BOOL finished) {
                     self.inBottom = YES;
+                    FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
+                    avVC.navigationController.navigationBarHidden = NO;
+                    [avVC.screenImgV removeFromSuperview];
+                    self.firstOffset = CGPointZero;
                 }];
             }
         }else{ // 缩放回原位
@@ -314,16 +443,29 @@ static NSString * const ID = @"replyCell";
                 [UIView animateWithDuration:0.3 animations:^{
                     self.view.transform = CGAffineTransformMakeTranslation(0, 0);
                     self.view.transform = CGAffineTransformScale(self.view.transform, 1, 1);
+                    self.replyImgV.alpha = 0;
+                    self.view.alpha = 1;
                 } completion:^(BOOL finished) {
                     self.inBottom = YES;
+                    FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
+                    avVC.navigationController.navigationBarHidden = NO;
+                    [avVC.screenImgV removeFromSuperview];
+                    self.firstOffset = CGPointZero;
+                    
                 }];
             } else { // 从顶部
                 [UIView animateWithDuration:0.3 animations:^{
+                    
                     self.view.transform = CGAffineTransformMakeTranslation(0, 0);
                     self.view.transform = CGAffineTransformScale(self.view.transform, 1, 1);
+                    self.replyImgV.alpha = 1;
                 } completion:^(BOOL finished) {
                     self.inBottom = NO;
+                    // 将评论区变会实体
+                    self.replyView.alpha = 1;
+                    self.view.backgroundColor = [UIColor whiteColor];
                     [self.replyImgV removeFromSuperview];
+                    self.backBtn.hidden = NO;
                 }];
             }
             
@@ -332,107 +474,27 @@ static NSString * const ID = @"replyCell";
     }
 }
 
-//
-//- (void)playerVCPan:(UIPanGestureRecognizer *)pan
-//{
-//    self.movieView.transform = CGAffineTransformIdentity;
-//    if (pan.state == UIGestureRecognizerStateBegan) {
-//        self.startP = [pan locationInView:self.view];
-//        if (self.isInBottom) {
-//            self.movieView.frame = CGRectMake(FNScreenW/2, FNScreenH-FNAVMoviewHeight/2, FNScreenW/2, FNAVMoviewHeight/2);
-//        } else {
-//            self.movieView.frame = CGRectMake(0, 0, FNScreenW, FNAVMoviewHeight);
-//        }
-//    }
-//    
-//    CGPoint curP = [pan locationInView:self.view];
-//    CGFloat scale;
-//    CGFloat playerViewH = FNAVMoviewHeight;
-//    
-//    if (!self.isInBottom) { //  顶部视频
-//        CGPoint offset = CGPointMake(curP.x-self.startP.x, curP.y-self.startP.y);
-//        scale = (offset.x + offset.y)/500 > 0? (offset.x + offset.y)/500 : 0;
-//        if (scale>1) {
-//            scale = 1;
-//        }
-//        if (scale<0) {
-//            scale = 0;
-//        }
-//        CGFloat changeW = FNScreenW/2*scale;
-//        CGFloat changeH = (FNScreenH-playerViewH/2)*scale;
-//        self.movieView.layer.anchorPoint = CGPointMake(0, 0);
-//        self.movieView.layer.position = CGPointMake(0, 0);
-//        self.movieView.transform = CGAffineTransformMakeTranslation(changeW, changeH);
-//        self.movieView.transform = CGAffineTransformScale(self.movieView.transform, 1-scale/2, 1-scale/2);
-//    } else { // 底部视频
-//        
-//        CGPoint offset = CGPointMake(self.startP.x-curP.x, self.startP.y-curP.y);
-//        scale = (offset.x + offset.y)/500 > 0? (offset.x + offset.y)/500 : 0;
-//        if (scale>1) {
-//            scale = 1;
-//        }
-//        if (scale<0) {
-//            scale = 0;
-//        }
-//        
-//        self.movieView.layer.anchorPoint = CGPointMake(0, 0);
-//        self.movieView.layer.position = CGPointMake(FNScreenW/2, FNScreenH-playerViewH/2);
-//        self.movieView.transform = CGAffineTransformMakeTranslation(-FNScreenW/2*scale, -(FNScreenH-playerViewH/2)*scale);
-//        self.movieView.transform = CGAffineTransformScale(self.movieView.transform,1+scale, 1+scale);
-//    }
-//    
-//    if (pan.state == UIGestureRecognizerStateEnded) {
-//        if (scale>0.5) { // 缩放到目标位.
-//            if (self.inBottom) { // 从底部
-//                self.movieView.transform = CGAffineTransformIdentity;
-//                self.movieView.frame = CGRectMake(0, 0, FNScreenW, playerViewH);
-//                self.movieView.layer.anchorPoint = CGPointMake(0, 0);
-//                self.movieView.layer.position = CGPointMake(0, 0);
-//                self.movieView.transform = CGAffineTransformMakeTranslation(FNScreenW/2*(1-scale), (FNScreenH-playerViewH/2)*(1-scale));
-//                self.movieView.transform = CGAffineTransformScale(self.movieView.transform,(1+scale)/2, (1+scale)/2);
-//                [UIView animateWithDuration:0.3 animations:^{
-//                    self.movieView.transform = CGAffineTransformMakeTranslation(0, 0);
-//                    self.movieView.transform = CGAffineTransformScale(self.movieView.transform, 1, 1);
-//                    
-//                } completion:^(BOOL finished) {
-//                    self.inBottom = NO;
-//                }];
-//            } else { // 从顶部
-//                self.movieView.transform = CGAffineTransformIdentity;
-//                self.movieView.frame = CGRectMake(FNScreenW/2, FNScreenH-FNAVMoviewHeight/2, FNScreenW/2, playerViewH/2);
-//                self.movieView.layer.anchorPoint = CGPointMake(0, 0);
-//                self.movieView.layer.position = CGPointMake(FNScreenW/2, FNScreenH-playerViewH/2);
-//                self.movieView.transform = CGAffineTransformMakeTranslation(-FNScreenW/2*(1-scale), -(FNScreenH-playerViewH/2)*(1-scale));
-//                self.movieView.transform = CGAffineTransformScale(self.movieView.transform,(1-scale/2)*2, (1-scale/2)*2);
-//                [UIView animateWithDuration:0.3 animations:^{
-//                    self.movieView.transform = CGAffineTransformMakeTranslation(0, 0);
-//                    self.movieView.transform = CGAffineTransformScale(self.movieView.transform, 1, 1);
-//                } completion:^(BOOL finished) {
-//                    self.inBottom = YES;
-//                }];
-//            }
-//        }else{ // 缩放回原位
-//            if (self.inBottom) { // 从底部
-//                [UIView animateWithDuration:0.3 animations:^{
-//                    self.movieView.transform = CGAffineTransformMakeTranslation(0, 0);
-//                    self.movieView.transform = CGAffineTransformScale(self.movieView.transform, 1, 1);
-//                } completion:^(BOOL finished) {
-//                    self.inBottom = YES;
-//                }];
-//            } else { // 从顶部
-//                [UIView animateWithDuration:0.3 animations:^{
-//                    self.movieView.transform = CGAffineTransformMakeTranslation(0, 0);
-//                    self.movieView.transform = CGAffineTransformScale(self.movieView.transform, 1, 1);
-//                } completion:^(BOOL finished) {
-//                    self.inBottom = NO;
-//                }];
-//            }
-//            
-//        }
-//        
-//    }
-//}
+- (void)back
+{
+    if (self.backBlock) {
+        self.backBlock();
+    }
+}
 
+/** 截屏 */
+- (UIImage *)drawScreen
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(FNScreenW, FNScreenH/2), NO, 0);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
+    [self.navigationController.view.layer renderInContext:ctx];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    NSData *data = UIImagePNGRepresentation(image);
+    [data writeToFile:[NSString stringWithFormat:@"/Users/admin/Desktop/imag.png"]atomically:YES];
+    return image;
+}
 
 
 @end

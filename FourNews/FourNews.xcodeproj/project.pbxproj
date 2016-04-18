@@ -1528,6 +1528,8 @@
 			baseConfigurationReference = 9543368A17A581BB33EDEE55 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Aiping Tang (TWMC5J46PY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aiping Tang (TWMC5J46PY)";
 				GCC_PREFIX_HEADER = FourNews/Class/Other/GlobalFiles/FourNews.pch;
 				INFOPLIST_FILE = FourNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1541,6 +1543,7 @@
 			baseConfigurationReference = 99C3B20065B3BF8ECFF53E59 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Aiping Tang (TWMC5J46PY)";
 				GCC_PREFIX_HEADER = FourNews/Class/Other/GlobalFiles/FourNews.pch;
 				INFOPLIST_FILE = FourNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
