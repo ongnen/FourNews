@@ -14,7 +14,8 @@
 #import "FNNewsReplyController.h"
 #import <MJRefresh.h>
 #import "FNTabBarController.h"
-#import "FNPlayerViewController.h"
+#import "FNAVDetailController.h"
+#import "FNAVViewController.h"
 
 @interface FNAVListController ()
 
@@ -53,6 +54,7 @@ static NSString * const ID = @"cell";
     self.tableView.rowHeight = 290;
     [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     [super viewDidLoad];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // 设置下拉刷新
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
@@ -70,6 +72,13 @@ static NSString * const ID = @"cell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
 }
+
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//}
+
 
 #pragma mark - tabBarButton被点击调用的方法
 - (void)tabBarButtonRepeatClick
@@ -127,8 +136,8 @@ static NSString * const ID = @"cell";
     cell.movieBlock = ^(NSString *urlStr,UIView *playerV){
         [self playMovieWithUrlStr:urlStr :playerV];
     };
-    cell.replyBlock = ^(NSString *boardid,NSString *replyid){
-        [self replyClickWith:boardid :replyid];
+    cell.replyBlock = ^(FNAVListItem *item){
+        [self replyClickWithListItem:item];
     };
     return cell;
 }
@@ -163,13 +172,38 @@ static NSString * const ID = @"cell";
 }
 
 #pragma mark -  跳转评论界面
-- (void)replyClickWith:(NSString *)boardid :(NSString *)replyid
+- (void)replyClickWithListItem:(FNAVListItem *)item
 {
     // 1.跳转
-    FNNewsReplyController *replyVC = [[FNNewsReplyController alloc] init];
-    replyVC.docid = replyid;
-    replyVC.boardid = boardid;
-    [self.navigationController pushViewController:replyVC animated:YES];
+
+    
+    FNAVDetailController *avDetailVC = [[FNAVDetailController alloc] init];
+    avDetailVC.item = item;
+    avDetailVC.view.frame = CGRectMake(FNScreenW, 0, FNScreenW, FNScreenH);
+    FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
+    [avVC addChildViewController:avDetailVC];
+    [avVC.view addSubview:avDetailVC.view];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        avDetailVC.view.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);
+    }];
+    
+//    [self.navigationController pushViewController:avDetailVC animated:YES];
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

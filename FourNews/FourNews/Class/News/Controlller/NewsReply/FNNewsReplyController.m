@@ -61,10 +61,6 @@ static NSString * const ID = @"replyCell";
         self.hReplys = (NSMutableArray *)array;
         [self.tableView reloadData];
     }];
-//    [FNNewsGetReply newReplyWithDetailItem:item :_newReplyPage :^(NSArray *array) {
-//        self.nReplys = (NSMutableArray *)array;
-//        [self.tableView reloadData];
-//    }];
 }
 
 - (void)didReceiveMemoryWarning {
