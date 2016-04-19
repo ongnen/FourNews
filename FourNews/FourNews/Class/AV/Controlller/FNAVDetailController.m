@@ -243,7 +243,6 @@ static NSString * const ID = @"replyCell";
     return headerV;
 }
 
-#pragma mark - 手势
 
 /** 拿到评论区截图 */
 - (UIImage *)setDrawReplyImage
@@ -271,7 +270,7 @@ static NSString * const ID = @"replyCell";
             FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
             // 1.跳转.
             // 用画的图片遮盖
-            UIImageView *screenImgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, FNScreenW, FNScreenH/2)];
+            UIImageView *screenImgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, FNScreenW, YJNavBarMaxY+YJTitlesViewH)];
             screenImgV.image = [self drawScreen];
             [avVC.view insertSubview:screenImgV belowSubview:self.view];
             avVC.screenImgV = screenImgV;
@@ -398,7 +397,7 @@ static NSString * const ID = @"replyCell";
         if (scale>0.5) { // 缩放到目标位.
             if (self.inBottom) { // 从底部
                 self.view.transform = CGAffineTransformIdentity;
-                self.view.frame = CGRectMake(0, 0, FNScreenW, playerViewH);
+                self.view.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);
                 self.movieView.frame = CGRectMake(0, 0, FNScreenW, FNAVMoviewHeight);
                 self.replyImgV.frame = CGRectMake(0, FNAVMoviewHeight, FNScreenW, FNScreenH-FNAVMoviewHeight);
                 self.view.layer.anchorPoint = CGPointMake(0, 0);
@@ -412,7 +411,8 @@ static NSString * const ID = @"replyCell";
                 } completion:^(BOOL finished) {
                     self.inBottom = NO;
                     self.backBtn.hidden = NO;
-                    // 将评论区变会实体
+                    // 将评论区变回实体
+                    self.view.backgroundColor = [UIColor whiteColor];
                     self.replyView.alpha = 1;
                     [self.replyImgV removeFromSuperview];
                 }];
@@ -484,7 +484,7 @@ static NSString * const ID = @"replyCell";
 /** 截屏 */
 - (UIImage *)drawScreen
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(FNScreenW, FNScreenH/2), NO, 0);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(FNScreenW, YJNavBarMaxY+YJTitlesViewH), NO, 0);
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
