@@ -243,7 +243,6 @@ static NSString * const ID = @"replyCell";
     return headerV;
 }
 
-#pragma mark - 手势
 
 /** 拿到评论区截图 */
 - (UIImage *)setDrawReplyImage
@@ -259,6 +258,7 @@ static NSString * const ID = @"replyCell";
     return image;
     
 }
+
 #pragma mark - 手势 缩放，滑动删除
 - (void)playerVCPan:(UIPanGestureRecognizer *)pan
 {
@@ -271,7 +271,7 @@ static NSString * const ID = @"replyCell";
             FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
             // 1.跳转.
             // 用画的图片遮盖
-            UIImageView *screenImgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, FNScreenW, FNScreenH/2)];
+            UIImageView *screenImgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, FNScreenW, YJNavBarMaxY+YJTitlesViewH)];
             screenImgV.image = [self drawScreen];
             [avVC.view insertSubview:screenImgV belowSubview:self.view];
             avVC.screenImgV = screenImgV;
@@ -298,15 +298,13 @@ static NSString * const ID = @"replyCell";
     self.replyImgV.alpha = 1-scale;
     
     if (!self.isInBottom) { //  顶部视频
-        // 评论区渐变透明
-        self.replyImgV.alpha = 1-scale;
         
         CGPoint offset = CGPointMake(curP.x-self.startP.x, curP.y-self.startP.y);
         scale = (offset.x + offset.y)/500 > 0? (offset.x + offset.y)/500 : 0;
-        if (scale>1) {
+        if (scale > 1) {
             scale = 1;
         }
-        if (scale<0) {
+        if (scale < 0) {
             scale = 0;
         }
         CGFloat changeW = FNScreenW/2*scale;
@@ -315,15 +313,18 @@ static NSString * const ID = @"replyCell";
         self.view.layer.position = CGPointMake(0, 0);
         self.view.transform = CGAffineTransformMakeTranslation(changeW, changeH);
         self.view.transform = CGAffineTransformScale(self.view.transform, 1-scale/2, 1-scale/2);
+        
+        // 评论区渐变透明
+        self.replyImgV.alpha = 1-scale;
     } else { // 底部视频
         // 评论区渐变实体
         self.replyImgV.alpha = scale;
         CGPoint offset = CGPointMake(self.startP.x-curP.x, self.startP.y-curP.y);
         scale = (offset.x + offset.y)/500 > 0? (offset.x + offset.y)/500 : 0;
-        if (scale>1) {
+        if (scale > 1) {
             scale = 1;
         }
-        if (scale<0) {
+        if (scale < 0) {
             scale = 0;
         }
         // 拿到第一个有效的能判断是否左滑的offset
@@ -340,15 +341,20 @@ static NSString * const ID = @"replyCell";
             self.view.layer.anchorPoint = CGPointMake(0, 0);
             self.view.layer.position = CGPointMake(FNScreenW/2, FNScreenH-playerViewH/2-YJTabBarH);
             self.view.transform = CGAffineTransformMakeTranslation(-FNScreenW/2*scale, -(FNScreenH-playerViewH/2-YJTabBarH)*scale);
+            
             self.view.transform = CGAffineTransformScale(self.view.transform,1+scale, 1+scale);
         }
+        
+        
+        // 评论区渐变实体
+        self.replyImgV.alpha = scale;
     }
     
     if (pan.state == UIGestureRecognizerStateEnded) {
         CGPoint offset = CGPointMake(self.startP.x-curP.x, self.startP.y-curP.y);
         // 判断是否是小窗口左右滑动
         if (self.firstOffset.x) {
-            if (scale>0.2) { // 左滑删除
+            if (scale > 0.2) { // 左滑删除
                 self.view.transform = CGAffineTransformIdentity;
                 self.view.frame = CGRectMake(-FNScreenW/2, FNScreenH-FNAVMoviewHeight/2-YJTabBarH, FNScreenW/2, playerViewH/2);
                 
@@ -369,7 +375,7 @@ static NSString * const ID = @"replyCell";
                     [self removeFromParentViewController];
                 }];
                 return;
-            } else if (offset.x<-FNScreenW/8) {  // 右滑删除
+            } else if (offset.x < -FNScreenW/8) {  // 右滑删除
                 self.view.transform = CGAffineTransformIdentity;
                 self.view.frame = CGRectMake(FNScreenW, FNScreenH-FNAVMoviewHeight/2-YJTabBarH, FNScreenW/2, playerViewH/2);
                 
@@ -395,10 +401,10 @@ static NSString * const ID = @"replyCell";
         
         
         
-        if (scale>0.5) { // 缩放到目标位.
+        if (scale > 0.5) { // 缩放到目标位.
             if (self.inBottom) { // 从底部
                 self.view.transform = CGAffineTransformIdentity;
-                self.view.frame = CGRectMake(0, 0, FNScreenW, playerViewH);
+                self.view.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);
                 self.movieView.frame = CGRectMake(0, 0, FNScreenW, FNAVMoviewHeight);
                 self.replyImgV.frame = CGRectMake(0, FNAVMoviewHeight, FNScreenW, FNScreenH-FNAVMoviewHeight);
                 self.view.layer.anchorPoint = CGPointMake(0, 0);
@@ -412,7 +418,8 @@ static NSString * const ID = @"replyCell";
                 } completion:^(BOOL finished) {
                     self.inBottom = NO;
                     self.backBtn.hidden = NO;
-                    // 将评论区变会实体
+                    // 将评论区变回实体
+                    self.view.backgroundColor = [UIColor whiteColor];
                     self.replyView.alpha = 1;
                     [self.replyImgV removeFromSuperview];
                 }];
@@ -484,7 +491,7 @@ static NSString * const ID = @"replyCell";
 /** 截屏 */
 - (UIImage *)drawScreen
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(FNScreenW, FNScreenH/2), NO, 0);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(FNScreenW, YJNavBarMaxY+YJTitlesViewH), NO, 0);
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
