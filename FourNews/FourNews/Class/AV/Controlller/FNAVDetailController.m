@@ -215,12 +215,12 @@ static NSString * const ID = @"replyCell";
         return [FNNewsReplyCell totalHeightWithItem:replyItem];
     }
 }
-// 设置footer高度
+// 设置header高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 20;
 }
-// 设置footer样式
+// 设置header样式
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 

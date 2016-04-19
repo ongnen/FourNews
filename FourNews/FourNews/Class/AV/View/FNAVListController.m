@@ -79,19 +79,10 @@ static NSString * const ID = @"cell";
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(avListendDecelerating) name:AVListEndDecelerating object:nil];
     
-//    UIImageView *navigationImgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, FNScreenW, 44)];
-//    navigationImgV.image = [self drawNavigationBar];
-//    self.navigationController.navigationBarHidden = YES;
-//    [self.parentViewController.view addSubview:navigationImgV];
 }
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    
-//    self.navigationController.navigationBarHidden = YES;
-//}
 /** 截屏 */
 - (UIImage *)drawScreen
 {
@@ -189,15 +180,15 @@ static NSString * const ID = @"cell";
     if (self.previousIndexPath && indexPath.row != self.previousIndexPath.row) {
         [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
+    
+    self.player = nil;
     // 保存当前indexPath
     self.previousIndexPath = indexPath;
     
-    playerV.subviews.count ? [playerV.subviews[0] removeFromSuperview] : playerV.subviews.count;
     [self.playerVC.view removeFromSuperview];
     self.playerVC = nil;
     
     self.playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:urlStr]];
-    [self.playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
     self.playerVC.view.translatesAutoresizingMaskIntoConstraints = YES;
     self.playerVC.showsPlaybackControls = YES;
@@ -215,6 +206,9 @@ static NSString * const ID = @"cell";
     if (self.previousIndexPath) {
         [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
+    [self.avDetailVc.view removeFromSuperview];
+    [self.avDetailVc removeFromParentViewController];
+    self.player = nil;
     [self.playerVC.view removeFromSuperview];
     self.playerVC = nil;
     
@@ -256,11 +250,21 @@ static NSString * const ID = @"cell";
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
-    NSLog(@"%@",change);
 }
 
-
-
+/** AVList栏目左右滑动改变 */
+- (void)avListendDecelerating
+{
+    if (!self.player) return;
+    
+    
+    [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    [self.avDetailVc.view removeFromSuperview];
+    [self.avDetailVc removeFromParentViewController];
+    [self.playerVC.view removeFromSuperview];
+    self.player = nil;
+    self.playerVC = nil;
+}
 
 
 

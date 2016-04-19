@@ -21,4 +21,7 @@ NSString * const FNTabBarButtonRepeatClickNotification = @"FNTabBarButtonRepeatC
 /** titleButton被重复点击的通知 */
 NSString * const FNTitleButtonRepeatClickNotification = @"FNTitleButtonRepeatClickNotification";
 
+/** AV模块左右滑动跳转栏目的通知 */
+NSString * const AVListEndDecelerating = @"AVListEndDecelerating";
+
 CGFloat const YJMargin = 10;

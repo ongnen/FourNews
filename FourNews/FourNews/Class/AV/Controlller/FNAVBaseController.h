@@ -12,4 +12,6 @@
 
 - (void)setAllPrepare;
 
+@property (nonatomic, assign) NSInteger previousIndex;
+
 @end

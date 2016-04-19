@@ -164,6 +164,7 @@
     UITableViewController *tableVC = (UITableViewController*)self.childViewControllers[index];
     // 如果已经添加了View,不做重复操作
     if (!tableVC.tableView.window) {
+        tableVC.view.tag = index;
         [self.contentScrollView addSubview:tableVC.view];
         tableVC.view.frame = CGRectMake(FNScreenW * index, 0, FNScreenW, FNScreenH);
         tableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
@@ -179,11 +180,14 @@
 {
     NSInteger index = scrollView.contentOffset.x / YJScreenW;
     
+    
     UIButton *btn = self.titleBtnArray[index];
     // 如果滑动减速后的页面还是当前页面，就不调用下面的方法
     if (self.selectedBtn == btn) return;
     
     [self titleViewBtnClick:btn];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:AVListEndDecelerating object:nil];
 }
 @end
 

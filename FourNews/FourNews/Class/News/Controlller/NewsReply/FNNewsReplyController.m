@@ -10,6 +10,7 @@
 #import "FNNewsGetReply.h"
 #import "FNNewsDetailItem.h"
 #import "FNNewsReplyCell.h"
+#import "FNNewsReplyButton.h"
 
 #import <MJRefresh.h>
 @interface FNNewsReplyController ()
@@ -96,6 +97,35 @@ static NSString * const ID = @"replyCell";
     
     return cell;
 }
+
+// 设置header高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 20;
+}
+// 设置header样式
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    UIView *headerV = [[UIView alloc] init];
+    
+    headerV.frame = CGRectMake(0, 0, FNScreenW, 20);
+    
+    headerV.backgroundColor = [UIColor clearColor];
+    
+    FNNewsReplyButton *replyBtn = [[FNNewsReplyButton alloc] init];
+    replyBtn.frame = CGRectMake(0, 0, 70, 20);
+    replyBtn.backgroundColor = [UIColor redColor];
+    replyBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    if (section == 0) {
+        [replyBtn setTitle:@"最热评论" forState:UIControlStateNormal];
+    } else {
+        [replyBtn setTitle:@"最新评论" forState:UIControlStateNormal];
+    }
+    [headerV addSubview:replyBtn];
+    return headerV;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FNNewsReplyItem *replyItem;

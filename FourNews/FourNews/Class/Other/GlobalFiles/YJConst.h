@@ -23,3 +23,6 @@ UIKIT_EXTERN NSString * const FNTabBarButtonRepeatClickNotification;
 UIKIT_EXTERN NSString * const FNTitleButtonRepeatClickNotification;
 
 UIKIT_EXTERN CGFloat const YJMargin;
+
+/** AV模块左右滑动跳转栏目的通知 */
+UIKIT_EXTERN NSString * const AVListEndDecelerating;
