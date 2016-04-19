@@ -28,6 +28,12 @@
 @property (nonatomic, strong) NSIndexPath *previousIndexPath;
 
 @property (nonatomic, weak) FNAVDetailController *avDetailVc;
+
+@property (nonatomic, weak) FNAVViewController *avVC;
+
+@property (nonatomic, strong) AVPlayerItem *playerItem;
+
+@property (nonatomic, strong) AVPlayer *player;
 @end
 
 @implementation FNAVListController
@@ -48,6 +54,7 @@ static NSString * const ID = @"cell";
     }
     return _playerVC;
 }
+
 
 - (void)viewDidLoad
 {
@@ -160,6 +167,7 @@ static NSString * const ID = @"cell";
     cell.replyBlock = ^(FNAVListItem *item){
         [self replyClickWithListItem:item];
     };
+//    NSLog(@"cell.frame%@",NSStringFromCGRect(cell.frame));
     return cell;
 }
 
@@ -185,19 +193,19 @@ static NSString * const ID = @"cell";
     self.previousIndexPath = indexPath;
     
     playerV.subviews.count ? [playerV.subviews[0] removeFromSuperview] : playerV.subviews.count;
-    [self.playerVC.player pause];
-    _playerVC = nil;
+    [self.playerVC.view removeFromSuperview];
+    self.playerVC = nil;
     
+    self.playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:urlStr]];
+    [self.playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
+    self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
     self.playerVC.view.translatesAutoresizingMaskIntoConstraints = YES;
     self.playerVC.showsPlaybackControls = YES;
-    AVPlayer *player = [AVPlayer playerWithURL:[NSURL URLWithString:urlStr]];
-    self.playerVC.player = player;
+    self.playerVC.player = self.player;
     self.playerVC.view.frame = playerV.bounds;
     [playerV addSubview:self.playerVC.view];
     
     [self.playerVC.player play];
-    
-    
 }
 
 #pragma mark -  跳转评论界面
@@ -207,8 +215,8 @@ static NSString * const ID = @"cell";
     if (self.previousIndexPath) {
         [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
-    [self.playerVC.player pause];
-    _playerVC = nil;
+    [self.playerVC.view removeFromSuperview];
+    self.playerVC = nil;
     
     FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
     // 1.跳转.
@@ -243,13 +251,13 @@ static NSString * const ID = @"cell";
         avDetailVC.view.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);
     }];
     
-//    [self.navigationController pushViewController:avDetailVC animated:YES];
-    
 }
 
 
-
-
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    NSLog(@"%@",change);
+}
 
 
 

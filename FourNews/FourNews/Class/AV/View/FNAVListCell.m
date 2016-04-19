@@ -88,6 +88,7 @@
     // 设置分割线与分隔View
     self.marginV.frame = CGRectMake(0, 280, FNScreenW, YJMargin);
     
+    // 移除playerV中的playerVC的View防止被循环利用
     self.playerV.subviews.count ? [self.playerV.subviews[0] removeFromSuperview] : self.playerV;
 }
 
