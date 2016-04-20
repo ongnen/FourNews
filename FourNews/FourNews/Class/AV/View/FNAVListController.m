@@ -161,7 +161,7 @@ static NSString * const ID = @"cell";
 //    NSLog(@"cell.frame%@",NSStringFromCGRect(cell.frame));
     return cell;
 }
-
+#pragma mark - 点击coverImg
 - (void)playMovieWithUrlStr:(NSString *)urlStr :(UIView *)playerV
 {
     // 移除正在播放的窗口视频
@@ -180,13 +180,14 @@ static NSString * const ID = @"cell";
     if (self.previousIndexPath && indexPath.row != self.previousIndexPath.row) {
         [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
-    
-    self.player = nil;
     // 保存当前indexPath
     self.previousIndexPath = indexPath;
     
+    self.playerItem = nil;
+    self.player = nil;
     [self.playerVC.view removeFromSuperview];
     self.playerVC = nil;
+    
     
     self.playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:urlStr]];
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
@@ -203,13 +204,14 @@ static NSString * const ID = @"cell";
 - (void)replyClickWithListItem:(FNAVListItem *)item
 {
     // 移除正在播放的非窗口视频
-    if (self.previousIndexPath) {
+    if (self.previousIndexPath) { // 刷新对应的cell
         [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     }
     [self.avDetailVc.view removeFromSuperview];
     [self.avDetailVc removeFromParentViewController];
     self.player = nil;
     [self.playerVC.view removeFromSuperview];
+    [self.playerVC removeFromParentViewController];
     self.playerVC = nil;
     
     FNAVViewController *avVC = (FNAVViewController *)[self parentViewController];
