@@ -30,9 +30,7 @@
 
 @property (nonatomic, assign) NSInteger replyCount;
 
-@property (nonatomic, strong) NSString *prompt;
-
-@property (nonatomic, assign) NSInteger clkNum;
+@property (nonatomic, strong) NSString *ptime;
 
 @property (nonatomic, strong) NSString *pixel;
 
