@@ -16,6 +16,8 @@
 #import "FNNewsRelativeView.h"
 #import "FNNewsGetReply.h"
 #import "NSString+YJ.h"
+#import "AppDelegate.h"
+
 
 @interface FNNewsDetailContView ()
 
@@ -116,6 +118,8 @@
 
     UIView *shareV = [[UIView alloc] init];
     UIImageView *shareImgV = [[UIImageView alloc] init];
+    shareImgV.userInteractionEnabled = YES;
+    [shareImgV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shareToWeibo)]];
     shareImgV.image = [UIImage imageNamed:@"news_share"];
     [shareV addSubview:shareImgV];
     self.shareV = shareV;
@@ -267,5 +271,9 @@
         self.lastKeyWordBtnClick(keyWord);
     }
 }
+
+// 微博分享
+
+
 
 @end

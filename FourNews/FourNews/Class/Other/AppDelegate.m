@@ -11,6 +11,7 @@
 #import "NewFeatureController.h"
 #import "FNADViewController.h"
 
+
 @interface AppDelegate ()
 
 @end
@@ -27,6 +28,8 @@
 //    
 //    self.window.rootViewController = feature;
 //    self.window.rootViewController = [ChooseRootVC chooseRootViewController];
+//    [WeiboSDK enableDebugMode:YES];
+    
     self.window.rootViewController = [[FNADViewController alloc] init];
     // 窗口显示
     [self.window makeKeyAndVisible];
@@ -54,5 +57,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return YES;
+}
+
 
 @end

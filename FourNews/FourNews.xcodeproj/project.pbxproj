@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		148FB712AD7EC97AB9D8DD5B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE3CB63C7B3D0A5B2F274AC /* libPods.a */; };
 		841EE6241CB5330F004A62F1 /* FNFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 841EE6231CB5330F004A62F1 /* FNFileManager.m */; };
+		8442B6FC1CC79C6600B90DCB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442B6FE1CC79C6600B90DCB /* InfoPlist.strings */; };
 		846967631CB60FA500747CF7 /* UIBarButtonItem+YJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 846967621CB60FA500747CF7 /* UIBarButtonItem+YJ.m */; };
 		846C5B5B1CAE276200880168 /* FNLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 846C5B5A1CAE276200880168 /* FNLabel.m */; };
 		84736E1D1CBB479100E0B72A /* FNTopicDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84736E1C1CBB479100E0B72A /* FNTopicDetailController.m */; };
@@ -144,6 +145,12 @@
 		6FE3CB63C7B3D0A5B2F274AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		841EE6221CB5330F004A62F1 /* FNFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNFileManager.h; sourceTree = "<group>"; };
 		841EE6231CB5330F004A62F1 /* FNFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNFileManager.m; sourceTree = "<group>"; };
+		8442B6FB1CC79C5600B90DCB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		8442B6FD1CC79C6600B90DCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8442B6FF1CC79C6700B90DCB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8442B7001CC79C6800B90DCB /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8442B7011CC79C6900B90DCB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8442B7021CC79DE900B90DCB /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		846967611CB60FA500747CF7 /* UIBarButtonItem+YJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+YJ.h"; sourceTree = "<group>"; };
 		846967621CB60FA500747CF7 /* UIBarButtonItem+YJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+YJ.m"; sourceTree = "<group>"; };
 		846C5B591CAE276200880168 /* FNLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNLabel.h; sourceTree = "<group>"; };
@@ -758,6 +765,7 @@
 				84BCD3E11CA7BE040019F1A4 /* GlobalFiles */,
 				84BCD3E41CA7BE040019F1A4 /* Tool_Funtion */,
 				84BCD3E51CA7BE040019F1A4 /* Tool_lib */,
+				8442B6FE1CC79C6600B90DCB /* InfoPlist.strings */,
 			);
 			name = 8Other;
 			path = Other;
@@ -1221,6 +1229,9 @@
 			knownRegions = (
 				en,
 				Base,
+				zh,
+				ja,
+				ko,
 			);
 			mainGroup = 84BCD21B1CA78A660019F1A4;
 			productRefGroup = 84BCD2251CA78A670019F1A4 /* Products */;
@@ -1254,6 +1265,7 @@
 				8473DDFB1CBA3C45007362F2 /* FNAVListCell.xib in Resources */,
 				8E5D3F291CBD36ED00003B4A /* FNTopicDetailCell.xib in Resources */,
 				8E9030401CB155CB001F005D /* FNNewsDetailHotReplyView.xib in Resources */,
+				8442B6FC1CC79C6600B90DCB /* InfoPlist.strings in Resources */,
 				8E5D3F1E1CBD36BB00003B4A /* FNTopicDetailHeaderView.xib in Resources */,
 				848AAC731CBF2647009401C2 /* FNReadListSglImgCell.xib in Resources */,
 				84BCD2371CA78A670019F1A4 /* LaunchScreen.storyboard in Resources */,
@@ -1431,11 +1443,24 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8442B6FE1CC79C6600B90DCB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8442B6FD1CC79C6600B90DCB /* Base */,
+				8442B6FF1CC79C6700B90DCB /* en */,
+				8442B7001CC79C6800B90DCB /* zh */,
+				8442B7011CC79C6900B90DCB /* ja */,
+				8442B7021CC79DE900B90DCB /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		84BCD2351CA78A670019F1A4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				84BCD2361CA78A670019F1A4 /* Base */,
 				847C2A411CB7772800826337 /* zh */,
+				8442B6FB1CC79C5600B90DCB /* ja */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1533,6 +1558,10 @@
 				GCC_PREFIX_HEADER = FourNews/Class/Other/GlobalFiles/FourNews.pch;
 				INFOPLIST_FILE = FourNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FourNews/Class/libWeiboSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.520it.FourNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1547,6 +1576,10 @@
 				GCC_PREFIX_HEADER = FourNews/Class/Other/GlobalFiles/FourNews.pch;
 				INFOPLIST_FILE = FourNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FourNews/Class/libWeiboSDK",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.520it.FourNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
