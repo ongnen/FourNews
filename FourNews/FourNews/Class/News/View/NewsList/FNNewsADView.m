@@ -125,7 +125,6 @@ static NSString * const ADCollecID = @"newsAD";
     if (self.adClickBlock) {
         self.adClickBlock(_contItem,index);
     }
-        
 }
 
 @end
