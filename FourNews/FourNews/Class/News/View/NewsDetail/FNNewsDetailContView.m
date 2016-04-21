@@ -17,6 +17,9 @@
 #import "FNNewsGetReply.h"
 #import "NSString+YJ.h"
 #import "AppDelegate.h"
+#import "FNNewsDetailShareView.h"
+#import <OpenShareHeader.h>
+#import "MBProgressHUD+MJ.h"
 
 
 @interface FNNewsDetailContView ()
@@ -29,7 +32,7 @@
 
 @property (nonatomic, weak) FNLabel *contentL;
 
-@property (nonatomic, weak) UIView *shareV;
+@property (nonatomic, weak) FNNewsDetailShareView *shareV;
 
 @property (nonatomic, weak) UILabel *ecL;
 
@@ -116,21 +119,27 @@
     self.ecL = ecL;
     [self addSubview:ecL];
 
-    UIView *shareV = [[UIView alloc] init];
-    UIImageView *shareImgV = [[UIImageView alloc] init];
-    shareImgV.userInteractionEnabled = YES;
-    [shareImgV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shareToWeibo)]];
-    shareImgV.image = [UIImage imageNamed:@"news_share"];
-    [shareV addSubview:shareImgV];
+    FNNewsDetailShareView *shareV = [[NSBundle mainBundle] loadNibNamed:@"FNNewsDetailShareView" owner:nil options:0].lastObject;
+    shareV.sinaWeiboShareBlock = ^{
+        [self shareTosinaWeibo];
+    };
+    shareV.weiCharShare = ^{
+        [self shareToWeiChar];
+    };
+    shareV.qqZoneShare = ^{
+        [self shareToQQZone];
+    };
     self.shareV = shareV;
     [self addSubview:shareV];
 
+    
     FNNewsDetailHotReplyView *replyV = [[NSBundle mainBundle] loadNibNamed:@"FNNewsDetailHotReplyView" owner:nil options:nil].lastObject;
     UITapGestureRecognizer *replyTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(replyViewClick)];
     [replyV addGestureRecognizer:replyTap];
     self.replyV = replyV;
     [self addSubview:replyV];
 
+    
     FNNewsRelativeView *relativeV = [[NSBundle mainBundle] loadNibNamed:@"FNNewsRelativeView" owner:nil options:nil].lastObject;
     relativeV.keyWordBlock = ^(NSString *keyWord){
         [self lastKeyWordBtnClick:keyWord];
@@ -272,7 +281,44 @@
     }
 }
 
-// 微博分享
+// 分享
+
+- (void)shareTosinaWeibo
+{
+    OSMessage *message = [[OSMessage alloc] init];
+    
+    message.title = [NSString stringWithFormat:@"%@ %@",_detailItem.title,_detailItem.shareLink];
+    
+    [OpenShare shareToWeibo:message Success:^(OSMessage *message) {
+        [MBProgressHUD showSuccess:@"分享成功"];
+    } Fail:^(OSMessage *message, NSError *error) {
+        [MBProgressHUD showError:@"分享失败"];
+    }];
+}
+
+- (void)shareToWeiChar
+{
+    OSMessage *message = [[OSMessage alloc] init];
+    
+    message.title = [NSString stringWithFormat:@"%@ %@",_detailItem.title,_detailItem.shareLink];
+    [OpenShare shareToWeixinTimeline:message Success:^(OSMessage *message) {
+        [MBProgressHUD showSuccess:@"分享成功"];
+    } Fail:^(OSMessage *message, NSError *error) {
+        [MBProgressHUD showError:@"分享失败"];
+    }];
+}
+
+- (void)shareToQQZone
+{
+    OSMessage *message = [[OSMessage alloc] init];
+    
+    message.title = [NSString stringWithFormat:@"%@ %@",_detailItem.title,_detailItem.shareLink];
+    [OpenShare shareToQQZone:message Success:^(OSMessage *message) {
+        [MBProgressHUD showSuccess:@"分享成功"];
+    } Fail:^(OSMessage *message, NSError *error) {
+        [MBProgressHUD showError:@"分享失败"];
+    }];
+}
 
 
 

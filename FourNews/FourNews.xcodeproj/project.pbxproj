@@ -37,6 +37,8 @@
 		847520861CB646A10008B8DC /* FNNewsHotWordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 847520851CB646A10008B8DC /* FNNewsHotWordButton.m */; };
 		8478B6971CAD3D81000F510D /* UIButton+FN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8478B6961CAD3D81000F510D /* UIButton+FN.m */; };
 		8478B69A1CAD3DC8000F510D /* UILabel+FN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8478B6991CAD3DC8000F510D /* UILabel+FN.m */; };
+		848531831CC866750077AD39 /* FNNewsDetailShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 848531821CC866750077AD39 /* FNNewsDetailShareView.m */; };
+		848531851CC866810077AD39 /* FNNewsDetailShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848531841CC866810077AD39 /* FNNewsDetailShareView.xib */; };
 		848740C31CBF5AE00053C787 /* FNADViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848740C21CBF5AE00053C787 /* FNADViewController.m */; };
 		848740C51CBF5B3F0053C787 /* FNADViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848740C41CBF5B3F0053C787 /* FNADViewController.xib */; };
 		848740C91CBF5CA60053C787 /* FNADItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 848740C81CBF5CA60053C787 /* FNADItem.m */; };
@@ -203,6 +205,9 @@
 		8478B6981CAD3DC8000F510D /* UILabel+FN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+FN.h"; sourceTree = "<group>"; };
 		8478B6991CAD3DC8000F510D /* UILabel+FN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+FN.m"; sourceTree = "<group>"; };
 		847C2A411CB7772800826337 /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		848531811CC866750077AD39 /* FNNewsDetailShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsDetailShareView.h; sourceTree = "<group>"; };
+		848531821CC866750077AD39 /* FNNewsDetailShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNNewsDetailShareView.m; sourceTree = "<group>"; };
+		848531841CC866810077AD39 /* FNNewsDetailShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FNNewsDetailShareView.xib; sourceTree = "<group>"; };
 		848740C11CBF5AE00053C787 /* FNADViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNADViewController.h; sourceTree = "<group>"; };
 		848740C21CBF5AE00053C787 /* FNADViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNADViewController.m; sourceTree = "<group>"; };
 		848740C41CBF5B3F0053C787 /* FNADViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FNADViewController.xib; sourceTree = "<group>"; };
@@ -1136,6 +1141,9 @@
 				8EDB8DD21CB5540800B001FE /* FNNewsPhotoDescView.h */,
 				8EDB8DD31CB5540800B001FE /* FNNewsPhotoDescView.m */,
 				8EDB8DD51CB5541600B001FE /* FNNewsPhotoDescView.xib */,
+				848531811CC866750077AD39 /* FNNewsDetailShareView.h */,
+				848531821CC866750077AD39 /* FNNewsDetailShareView.m */,
+				848531841CC866810077AD39 /* FNNewsDetailShareView.xib */,
 			);
 			path = NewsDetail;
 			sourceTree = "<group>";
@@ -1271,6 +1279,7 @@
 				84BCD2371CA78A670019F1A4 /* LaunchScreen.storyboard in Resources */,
 				8E5D3F241CBD36BB00003B4A /* FNTopicListCell.xib in Resources */,
 				84BCD2341CA78A670019F1A4 /* Assets.xcassets in Resources */,
+				848531851CC866810077AD39 /* FNNewsDetailShareView.xib in Resources */,
 				8475207E1CB639930008B8DC /* FNNewsHistoryView.xib in Resources */,
 				848740E81CBF7DB10053C787 /* FNWKWebController.xib in Resources */,
 				8EDB8DD61CB5541600B001FE /* FNNewsPhotoDescView.xib in Resources */,
@@ -1402,6 +1411,7 @@
 				8E9030381CB155CB001F005D /* FNNewsADView.m in Sources */,
 				8E90302F1CB155CB001F005D /* FNNewsListItem.m in Sources */,
 				848AAC7A1CBF266F009401C2 /* FNReadListThreeImgCell.m in Sources */,
+				848531831CC866750077AD39 /* FNNewsDetailShareView.m in Sources */,
 				84BCD4041CA7BF550019F1A4 /* ChooseRootVC.m in Sources */,
 				8E9030351CB155CB001F005D /* FNGetNewsListDatas.m in Sources */,
 				8E9030281CB155CB001F005D /* FNNewsBaseController.m in Sources */,

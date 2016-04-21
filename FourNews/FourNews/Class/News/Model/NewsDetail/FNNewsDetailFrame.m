@@ -90,7 +90,7 @@
     CGFloat shareX = 0;
     CGFloat shareY = _ecF.origin.y+_ecF.size.height+FNNewsDetailTopBorder;
     CGFloat shareW = FNScreenW;
-    CGFloat shareH = FNScreenW * 252/750;
+    CGFloat shareH = FNScreenW * 180/750;
     _shareF = CGRectMake(shareX, shareY, shareW, shareH);
     
     // 评论

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FNNewsDetailShareView">
+            <rect key="frame" x="0.0" y="0.0" width="384" height="100"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分享给朋友" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DrS-iv-S6X">
+                    <rect key="frame" x="0.0" y="0.0" width="384" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.48108033459999999" green="0.48108033459999999" blue="0.48108033459999999" alpha="0.87" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="NSR-MI-HUv">
+                    <rect key="frame" x="0.0" y="18" width="384" height="57"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zpd-5q-JKV">
+                            <rect key="frame" x="0.0" y="0.0" width="128" height="57"/>
+                            <state key="normal" image="share_platform_sina"/>
+                            <connections>
+                                <action selector="sinaWeiboShare:" destination="iN0-l3-epB" eventType="touchUpInside" id="AOl-1N-zeN"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hzb-y9-j2i">
+                            <rect key="frame" x="128" y="0.0" width="128" height="57"/>
+                            <state key="normal" image="share_platform_wechattimeline"/>
+                            <connections>
+                                <action selector="weiCharShare:" destination="iN0-l3-epB" eventType="touchUpInside" id="KFV-U8-ALv"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTk-g4-Rv7">
+                            <rect key="frame" x="256" y="0.0" width="128" height="57"/>
+                            <state key="normal" image="share_platform_qzone"/>
+                            <connections>
+                                <action selector="qqZoneShare:" destination="iN0-l3-epB" eventType="touchUpInside" id="iaa-Jy-vGF"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="YOk-5Z-dgK">
+                    <rect key="frame" x="0.0" y="75" width="384" height="25"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新浪微博" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZUg-FH-I99">
+                            <rect key="frame" x="0.0" y="0.0" width="128" height="25"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.48108033459999999" green="0.48108033459999999" blue="0.48108033459999999" alpha="0.87" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信朋友圈" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbr-vU-rTZ">
+                            <rect key="frame" x="128" y="0.0" width="128" height="25"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.48108033459999999" green="0.48108033459999999" blue="0.48108033459999999" alpha="0.87" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QQ空间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vC7-nX-P0a">
+                            <rect key="frame" x="256" y="0.0" width="128" height="25"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" red="0.48108033459999999" green="0.48108033459999999" blue="0.48108033459999999" alpha="0.87" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="AJr-N0-8bX"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="NSR-MI-HUv" secondAttribute="bottom" id="54l-Tk-ioX"/>
+                <constraint firstItem="YOk-5Z-dgK" firstAttribute="top" secondItem="NSR-MI-HUv" secondAttribute="bottom" id="7be-3K-zZm"/>
+                <constraint firstItem="DrS-iv-S6X" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Fjs-Jl-8Hw"/>
+                <constraint firstAttribute="trailing" secondItem="YOk-5Z-dgK" secondAttribute="trailing" id="US4-T6-JBo"/>
+                <constraint firstAttribute="bottom" secondItem="YOk-5Z-dgK" secondAttribute="bottom" id="ihl-QR-reY"/>
+                <constraint firstAttribute="trailing" secondItem="DrS-iv-S6X" secondAttribute="trailing" id="lHB-It-c6I"/>
+                <constraint firstItem="YOk-5Z-dgK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ol2-Zv-RDN"/>
+                <constraint firstItem="NSR-MI-HUv" firstAttribute="top" secondItem="DrS-iv-S6X" secondAttribute="bottom" id="pc4-Ki-bQh"/>
+                <constraint firstItem="DrS-iv-S6X" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rZA-8Q-ofc"/>
+                <constraint firstAttribute="trailing" secondItem="NSR-MI-HUv" secondAttribute="trailing" id="xbV-Oz-FMr"/>
+                <constraint firstItem="NSR-MI-HUv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zW4-RV-uHn"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="54l-Tk-ioX"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="443" y="202"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="share_platform_qzone" width="40" height="40"/>
+        <image name="share_platform_sina" width="40" height="40"/>
+        <image name="share_platform_wechattimeline" width="40" height="40"/>
+    </resources>
+</document>
