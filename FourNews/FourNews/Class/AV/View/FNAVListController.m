@@ -34,6 +34,9 @@
 @property (nonatomic, strong) AVPlayerItem *playerItem;
 
 @property (nonatomic, strong) AVPlayer *player;
+
+@property (nonatomic, weak) UIImageView *plshdImgV;
+
 @end
 
 @implementation FNAVListController
@@ -55,13 +58,23 @@ static NSString * const ID = @"cell";
     return _playerVC;
 }
 
+- (UIImageView *)plshdImgV
+{
+    if (!_plshdImgV){
+        UIImageView *placeholderImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell_image_background"]];
+        [self.view addSubview:placeholderImgV];
+        [placeholderImgV sizeToFit];
+        placeholderImgV.center = CGPointMake(FNScreenW/2, FNScreenH/2-100);
+        _plshdImgV = placeholderImgV;
+    }
+    return _plshdImgV;
+}
 
 - (void)viewDidLoad
 {
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    self.tableView.rowHeight = 290;
-    [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     [super viewDidLoad];
+    self.tableView.rowHeight = 290;
+    [self.view addSubview:self.plshdImgV];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // 设置下拉刷新
@@ -94,10 +107,9 @@ static NSString * const ID = @"cell";
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     NSData *data = UIImagePNGRepresentation(image);
-            [data writeToFile:[NSString stringWithFormat:@"/Users/admin/Desktop/imag.png"]atomically:YES];
+    [data writeToFile:[NSString stringWithFormat:@"/Users/admin/Desktop/imag.png"]atomically:YES];
     return image;
 }
-
 
 #pragma mark - tabBarButton被点击调用的方法
 - (void)tabBarButtonRepeatClick
@@ -122,6 +134,7 @@ static NSString * const ID = @"cell";
 - (void)bottomDragRefreshData
 {
     [FNAVGetAVNewsList getAVNewsListWithTid:self.tid :0 :^(NSArray *array) {
+        [self.plshdImgV removeFromSuperview];
         self.listItemArray = (NSMutableArray *)array;
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
@@ -165,7 +178,6 @@ static NSString * const ID = @"cell";
 - (void)playMovieWithUrlStr:(NSString *)urlStr :(UIView *)playerV
 {
     // 移除正在播放的窗口视频
-    
     [self.avDetailVc.view removeFromSuperview];
     [self.avDetailVc removeFromParentViewController];
     
