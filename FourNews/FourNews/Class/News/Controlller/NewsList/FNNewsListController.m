@@ -31,6 +31,8 @@
 
 @property (nonatomic, strong) NSArray *replyArray;
 
+@property (nonatomic, weak) UIImageView *plshdImgV;
+
 @end
 
 @implementation FNNewsListController
@@ -45,10 +47,22 @@
     
     return _newsListArray;
 }
+- (UIImageView *)plshdImgV
+{
+    if (!_plshdImgV){
+        UIImageView *placeholderImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell_image_background"]];
+        [self.view addSubview:placeholderImgV];
+        [placeholderImgV sizeToFit];
+        placeholderImgV.center = CGPointMake(FNScreenW/2, FNScreenH/2-100);
+        _plshdImgV = placeholderImgV;
+    }
+    return _plshdImgV;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.tableView.backgroundColor = FNColor(50, 50, 50);
+    [self.view addSubview:self.plshdImgV];
+
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.refreshCount = 1;
     // 设置估算高度，减少heightForRowAtIndexPath调用频率
@@ -112,6 +126,8 @@
 - (void)bottomDragRefreshData
 {
     [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :^(NSArray *array) {
+        [self.plshdImgV removeFromSuperview];
+
         self.newsListArray = (NSMutableArray *)array;
         [self.tableView.mj_header endRefreshing];
         // 设置广告

@@ -28,4 +28,6 @@
 #define FNADCellHeight 200
 #define FNCompensate(a) (a)
 
+#define kAppKey   @"2038940895"
+
 #endif /* Common_h */

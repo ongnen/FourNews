@@ -122,7 +122,7 @@
     UIScrollView *contentScrollView = [[UIScrollView alloc] init];
     contentScrollView.delegate = self;
     contentScrollView.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);
-    contentScrollView.backgroundColor = [UIColor grayColor];
+    contentScrollView.backgroundColor = [UIColor whiteColor];
     
     CGFloat contentW = self.childViewControllers.count * FNScreenW;
     contentScrollView.contentSize = CGSizeMake(contentW, 0);
@@ -181,7 +181,42 @@
         tableVC.view.frame = CGRectMake(FNScreenW * index, 0, FNScreenW, FNScreenH);
         tableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
     }
+    // 对左右两个新闻界面进行缓存
+    if (index == 0) {
+        UITableViewController *rightTableVC = (UITableViewController*)self.childViewControllers[index+1];
+        if (rightTableVC.tableView.window) return;
+        [self.contentScrollView addSubview:rightTableVC.view];
+        rightTableVC.view.frame = CGRectMake(FNScreenW * (index+1), 0, FNScreenW, FNScreenH);
+        rightTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+    } else if (index == self.childViewControllers.count-1) {
+        UITableViewController *leftTableVC = (UITableViewController*)self.childViewControllers[index-1];
+        if (leftTableVC.tableView.window) return;
+        [self.contentScrollView addSubview:leftTableVC.view];
+        leftTableVC.view.frame = CGRectMake(FNScreenW * (index-1), 0, FNScreenW, FNScreenH);
+        leftTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+    } else {
+        UITableViewController *rightTableVC = (UITableViewController*)self.childViewControllers[index+1];
+        if (!rightTableVC.tableView.window) {
+            [self.contentScrollView addSubview:rightTableVC.view];
+            rightTableVC.view.frame = CGRectMake(FNScreenW * (index+1), 0, FNScreenW, FNScreenH);
+            rightTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+        }
+        UITableViewController *leftTableVC = (UITableViewController*)self.childViewControllers[index-1];
+        if (!leftTableVC.tableView.window) {
+            [self.contentScrollView addSubview:leftTableVC.view];
+            leftTableVC.view.frame = CGRectMake(FNScreenW * (index-1), 0, FNScreenW, FNScreenH);
+            leftTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+        }
+    }
     
+    // 保持最多5个控制器的View存在
+    NSInteger tableVCIndex = 0;
+    for (UITableViewController *tableVC in self.childViewControllers) {
+        if (fabs((double)(tableVCIndex-index)) > 2) {
+            [tableVC.view removeFromSuperview];
+        }
+        tableVCIndex++;
+    }
     
     for (int i = 0;i < self.childViewControllers.count ;i++) {
         UITableViewController *tableVC = self.childViewControllers[i];

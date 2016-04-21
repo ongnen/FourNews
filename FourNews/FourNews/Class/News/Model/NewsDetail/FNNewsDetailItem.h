@@ -36,7 +36,8 @@
 @property (nonatomic, strong) NSString *replyBoard;
 // 详情页的热门评论
 @property (nonatomic, strong) NSArray *replys;
-
+// 分享链接
+@property (nonatomic, strong) NSString *shareLink;
 
 @property (nonatomic, strong) NSString *tid;
 //@property (nonatomic, strong) NSArray *boboList;replyBoard

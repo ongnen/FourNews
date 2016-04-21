@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) NSMutableArray<FNReadListItem *> *newsListArray;
 
+@property (nonatomic, weak) UIImageView *plshdImgV;
+
 @end
 
 @implementation FNReadViewController
@@ -36,11 +38,23 @@
     return _newsListArray;
 }
 
+- (UIImageView *)plshdImgV
+{
+    if (!_plshdImgV){
+        UIImageView *placeholderImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell_image_background"]];
+        [self.view addSubview:placeholderImgV];
+        [placeholderImgV sizeToFit];
+        placeholderImgV.center = CGPointMake(FNScreenW/2, FNScreenH/2-100);
+        _plshdImgV = placeholderImgV;
+    }
+    return _plshdImgV;
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self.view addSubview:self.plshdImgV];
     // 设置刷新控件
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
@@ -78,7 +92,7 @@
 - (void)bottomDragRefreshData
 {
     [FNReadGetNewsListItem getNewsListItemsWithCount:1 :^(NSArray *array) {
-        [self.tableView.mj_header endRefreshing];
+        [self.plshdImgV removeFromSuperview];
         self.newsListArray = (NSMutableArray *)array;
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];

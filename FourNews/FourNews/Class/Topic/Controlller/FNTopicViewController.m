@@ -18,6 +18,9 @@
 
 @property (nonatomic, strong) NSMutableArray *listItems;
 
+@property (nonatomic, weak) UIImageView *plshdImgV;
+
+
 @end
 
 @implementation FNTopicViewController
@@ -30,10 +33,23 @@ static NSString * const FOOT = @"footer";
     }
     return _listItems;
 }
+- (UIImageView *)plshdImgV
+{
+    if (!_plshdImgV){
+        UIImageView *placeholderImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell_image_background"]];
+        [self.view addSubview:placeholderImgV];
+        [placeholderImgV sizeToFit];
+        placeholderImgV.center = CGPointMake(FNScreenW/2, FNScreenH/2-100);
+        _plshdImgV = placeholderImgV;
+    }
+    return _plshdImgV;
+}
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view addSubview:self.plshdImgV];
+
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // 设置下拉刷新
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
@@ -70,6 +86,8 @@ static NSString * const FOOT = @"footer";
 - (void)bottomDragRefreshData
 {
     [FNTopicGetListItem getTopicNewsListWithPageCount:0 :^(NSArray *array) {
+        [self.plshdImgV removeFromSuperview];
+
         self.listItems = (NSMutableArray*)array;
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];

@@ -10,6 +10,8 @@
 #import "ChooseRootVC.h"
 #import "NewFeatureController.h"
 #import "FNADViewController.h"
+#import <OpenShareHeader.h>
+
 
 @interface AppDelegate ()
 
@@ -27,6 +29,11 @@
 //    
 //    self.window.rootViewController = feature;
 //    self.window.rootViewController = [ChooseRootVC chooseRootViewController];
+    
+    [OpenShare connectQQWithAppId:@"1103194207"];
+    [OpenShare connectWeiboWithAppKey:@"402180334"];
+    [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];
+    
     self.window.rootViewController = [[FNADViewController alloc] init];
     // 窗口显示
     [self.window makeKeyAndVisible];
@@ -54,5 +61,19 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    //第二步：添加回调
+    if ([OpenShare handleOpenURL:url]) {
+        return YES;
+    }
+    //这里可以写上其他OpenShare不支持的客户端的回调，比如支付宝等。
+    return YES;
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    NSLog(@"%s",__func__);
+}
+
 
 @end
