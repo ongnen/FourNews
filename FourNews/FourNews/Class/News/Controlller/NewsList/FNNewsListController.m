@@ -149,6 +149,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    self.tableView.mj_header.hidden = !self.newsListArray.count;
     return self.newsListArray.count;
 }
 

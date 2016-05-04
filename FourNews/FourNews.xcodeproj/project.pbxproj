@@ -37,6 +37,7 @@
 		847520861CB646A10008B8DC /* FNNewsHotWordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 847520851CB646A10008B8DC /* FNNewsHotWordButton.m */; };
 		8478B6971CAD3D81000F510D /* UIButton+FN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8478B6961CAD3D81000F510D /* UIButton+FN.m */; };
 		8478B69A1CAD3DC8000F510D /* UILabel+FN.m in Sources */ = {isa = PBXBuildFile; fileRef = 8478B6991CAD3DC8000F510D /* UILabel+FN.m */; };
+		8483FBB71CCA45AF009DF5AF /* YJRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8483FBB61CCA45AF009DF5AF /* YJRefreshHeader.m */; };
 		848531831CC866750077AD39 /* FNNewsDetailShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 848531821CC866750077AD39 /* FNNewsDetailShareView.m */; };
 		848531851CC866810077AD39 /* FNNewsDetailShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848531841CC866810077AD39 /* FNNewsDetailShareView.xib */; };
 		848740C31CBF5AE00053C787 /* FNADViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848740C21CBF5AE00053C787 /* FNADViewController.m */; };
@@ -206,6 +207,8 @@
 		8478B6981CAD3DC8000F510D /* UILabel+FN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+FN.h"; sourceTree = "<group>"; };
 		8478B6991CAD3DC8000F510D /* UILabel+FN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+FN.m"; sourceTree = "<group>"; };
 		847C2A411CB7772800826337 /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		8483FBB51CCA45AF009DF5AF /* YJRefreshHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJRefreshHeader.h; sourceTree = "<group>"; };
+		8483FBB61CCA45AF009DF5AF /* YJRefreshHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJRefreshHeader.m; sourceTree = "<group>"; };
 		848531811CC866750077AD39 /* FNNewsDetailShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsDetailShareView.h; sourceTree = "<group>"; };
 		848531821CC866750077AD39 /* FNNewsDetailShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNNewsDetailShareView.m; sourceTree = "<group>"; };
 		848531841CC866810077AD39 /* FNNewsDetailShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FNNewsDetailShareView.xib; sourceTree = "<group>"; };
@@ -427,6 +430,8 @@
 				846C5B5A1CAE276200880168 /* FNLabel.m */,
 				84B90AEE1CC8F36100AD5367 /* YJInfiniteScrollView.h */,
 				84B90AEF1CC8F36100AD5367 /* YJInfiniteScrollView.m */,
+				8483FBB51CCA45AF009DF5AF /* YJRefreshHeader.h */,
+				8483FBB61CCA45AF009DF5AF /* YJRefreshHeader.m */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -1395,6 +1400,7 @@
 				84BCD3F61CA7BE040019F1A4 /* FNAVViewController.m in Sources */,
 				848740C31CBF5AE00053C787 /* FNADViewController.m in Sources */,
 				848AAC841CBF31BF009401C2 /* FNReadChooseListCell.m in Sources */,
+				8483FBB71CCA45AF009DF5AF /* YJRefreshHeader.m in Sources */,
 				8E09862B1CB2853600EE5B21 /* FNNewsReplyController.m in Sources */,
 				8E90302A1CB155CB001F005D /* FNNewsViewController.m in Sources */,
 				84736E2C1CBB4FB900E0B72A /* FNTopicQuesItem.m in Sources */,

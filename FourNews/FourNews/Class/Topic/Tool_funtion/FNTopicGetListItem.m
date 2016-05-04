@@ -14,7 +14,7 @@
 
 + (void)getTopicNewsListWithPageCount:(NSInteger)pageCount :(void (^)(NSArray *))complete
 {
-    NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/newstopic/list/expert/%ld0-10.html",pageCount];
+    NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/newstopic/list/expert/%ld0-10.html",pageCount+1];
     [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {
     } success:^(id responseObject, NSURLSessionDataTask *task) {
         NSArray *items = [FNTopicListItem mj_objectArrayWithKeyValuesArray:responseObject[@"data"][@"expertList"]];
