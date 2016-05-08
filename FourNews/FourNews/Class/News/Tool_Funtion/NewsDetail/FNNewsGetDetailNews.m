@@ -17,7 +17,6 @@
     NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/nc/article/%@/full.html",docid];
     [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {
     } success:^(id responseObject, NSURLSessionDataTask *task) {
-//        NSLog(@"%@",responseObject);
         
         FNNewsDetailItem *item = [FNNewsDetailItem mj_objectWithKeyValues:responseObject[docid]];
         complete(item);

@@ -56,15 +56,15 @@
     [super pushViewController:viewController animated:animated];
 }
 
-- (UIViewController *)popViewControllerAnimated:(BOOL)animated
-{
-    // 在FNNewsPhotoSetController控制器下导航栏隐藏
-    if ([self.topViewController isKindOfClass:[FNNewsPhotoSetController class]]) {
-        self.navigationBarHidden = NO;
-    }
-    [super popViewControllerAnimated:animated];
-    return self.topViewController;
-}
+//- (UIViewController *)popViewControllerAnimated:(BOOL)animated
+//{
+//    // 在FNNewsPhotoSetController控制器下导航栏隐藏
+//    if ([self.topViewController isKindOfClass:[FNNewsPhotoSetController class]]) {
+//        self.navigationBarHidden = NO;
+//    }
+//    [super popViewControllerAnimated:animated];
+//    return self.topViewController;
+//}
 
 - (void)back
 {

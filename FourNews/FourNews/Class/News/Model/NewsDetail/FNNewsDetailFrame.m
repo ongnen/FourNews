@@ -72,7 +72,6 @@
             
             _totalPicH += (topImgH + altF.size.height + 2 * FNNewsDetailLeftBorder);
         } else {
-            NSLog(@"frame");
         }
     }
 

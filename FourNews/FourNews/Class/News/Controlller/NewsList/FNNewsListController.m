@@ -78,7 +78,7 @@
     
     // 右边内容条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated

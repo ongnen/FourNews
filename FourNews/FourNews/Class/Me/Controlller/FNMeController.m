@@ -60,13 +60,6 @@ static NSString *const ID = @"cell";
         // 设置footView为collectionView
         [self setupFooterView];
         
-//        // 补齐空位
-//        NSInteger addCount = 4- ((array.count-1)%4+1);
-//        for (int i = 0; i<addCount; i++) {
-//            [self.squareArray addObject:[[FNMeSquareItem alloc] init]];
-//        }
-//        // 在这里拿到真正的collectionV高度
-//        self.collectionV.frame = CGRectMake(0, 0, 0, ((self.squareArray.count-1)/4+1)*FNCollecWH);
         // 刷新内容
         [self.tableView reloadData];
     }];
@@ -81,20 +74,7 @@ static NSString *const ID = @"cell";
 // 设置tableView.footView为自己定义的collectionView
 - (void)setupFooterView
 {
-    // 创建设置好collectionView
-//    UICollectionViewFlowLayout *flowLy = [[UICollectionViewFlowLayout alloc] init];
-//    flowLy.itemSize = CGSizeMake(FNCollecWH, FNCollecWH);
-//    flowLy.minimumInteritemSpacing = 0;
-//    flowLy.minimumLineSpacing = 1;
-//    
-//    UICollectionView *collectionV = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLy];
-//    collectionV.backgroundColor = FNColor(215, 215, 215);
-//    [collectionV registerNib:[UINib nibWithNibName:@"FNMeSquareViewCell" bundle:nil] forCellWithReuseIdentifier:ID];
-//    collectionV.dataSource = self;
-//    collectionV.delegate = self;
-//    collectionV.scrollEnabled = NO;
-//    _collectionV = collectionV;
-    
+
     NSMutableArray *itemArray = [NSMutableArray array];
     
     for (int i = 0; i<self.squareArray.count; i++) {
@@ -142,15 +122,6 @@ static NSString *const ID = @"cell";
     [self.navigationController pushViewController:webVC animated:YES];
     
     
-    // 用SFSafariViewController实现打开webView
-    /*
-     if (![self.squareArray[indexPath.row].url containsString:@"http"]) return;
-     
-     SFSafariViewController *sfVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:self.squareArray[indexPath.row].url]];
-     sfVC.delegate = self;
-     // 设置SFSafari为madel弹出模式，它会自动设置点击Done为dismiss
-     [self presentViewController:sfVC animated:YES completion:nil];
-     */
 }
 
 - (void)btnClick:(YJGridItemListButton *)btn

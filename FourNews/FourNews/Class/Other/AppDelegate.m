@@ -72,7 +72,6 @@
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-    NSLog(@"%s",__func__);
 }
 
 
