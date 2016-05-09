@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -14,12 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="361" height="335"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jzj-sr-jRc">
-                        <rect key="frame" x="0.0" y="40" width="361" height="180"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="180" id="M35-2R-37P"/>
-                        </constraints>
-                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bCx-4a-bmZ">
                         <rect key="frame" x="15" y="15" width="40" height="40"/>
                         <constraints>
@@ -75,6 +69,12 @@
                             <constraint firstAttribute="trailing" secondItem="Qai-v2-uR7" secondAttribute="trailing" constant="8" id="y0k-zo-bUk"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jzj-sr-jRc">
+                        <rect key="frame" x="0.0" y="40" width="361" height="180"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="180" id="M35-2R-37P"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="bCx-4a-bmZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="0Qs-aw-thu"/>
