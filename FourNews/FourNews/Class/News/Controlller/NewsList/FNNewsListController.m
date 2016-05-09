@@ -33,6 +33,8 @@
 
 @property (nonatomic, weak) UIImageView *plshdImgV;
 
+@property (nonatomic, assign) NSInteger lastTimeid;
+
 @end
 
 @implementation FNNewsListController
@@ -125,24 +127,31 @@
 #pragma mark - 上下拉刷新的方法
 - (void)bottomDragRefreshData
 {
-    [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :^(NSArray *array) {
+    [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :self.lastTimeid :^(NSArray *array) {
         [self.plshdImgV removeFromSuperview];
-
-        self.newsListArray = (NSMutableArray *)array;
+        
+        if (array) {
+            [self.newsListArray removeAllObjects];
+            [self.newsListArray addObjectsFromArray:array];
+        }
+        if (self.newsListArray.count == 0)return ;
         [self.tableView.mj_header endRefreshing];
         // 设置广告
         [self setADHeaderView];
         
         [self.tableView reloadData];
-                
+        // 设置timeid
+        self.lastTimeid = self.newsListArray.lastObject.timeid;
     }];
 }
 - (void)topDragRefreshData
 {
-    [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :++self.refreshCount :^(NSArray *array) {
+    [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :++self.refreshCount :self.lastTimeid :^(NSArray *array) {
         [self.newsListArray addObjectsFromArray:(NSMutableArray *)array];
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
+        // 设置timeid
+        self.lastTimeid = self.newsListArray.lastObject.timeid;
     }];
 }
 

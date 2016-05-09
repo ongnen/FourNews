@@ -10,6 +10,6 @@
 
 @interface FNGetNewsListDatas : NSObject
 
-+ (void)getNewsListItemsWithProgramaid:(NSString *)pgmid :(NSInteger)count :(void(^)(NSArray *))complete;
++ (void)getNewsListItemsWithProgramaid:(NSString *)pgmid :(NSInteger)count :(NSInteger)timeid :(void(^)(NSArray *nullable))complete;
 
 @end

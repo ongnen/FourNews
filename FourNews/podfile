@@ -6,3 +6,4 @@ pod 'MJExtension'
 pod 'MBProgressHUD', '~> 0.9.2'
 pod 'AFNetworking', '~> 3.0’
 pod 'OpenShare', '~> 0.0.1'
+pod 'FMDB', '~> 2.6.2'
