@@ -24,5 +24,6 @@
 // 图集描述
 @property (nonatomic, strong) NSString *setname;
 
+@property (nonatomic, strong) NSString *photosetID;
 
 @end

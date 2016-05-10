@@ -20,6 +20,7 @@
 #import "FNNewsGetPhotoSetItem.h"
 #import "FNNewsADView.h"
 #import "FNNewsADsItem.h"
+#import <AFNetworking.h>
 #import <MJRefresh.h>
 
 
@@ -73,19 +74,25 @@
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
     [self.tableView.mj_header beginRefreshing];
-    
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
     
     // 右边内容条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    AFNetworkReachabilityManager *mgr = [AFNetworkReachabilityManager sharedManager];
+//    
+//    if (mgr.isReachable) {
+//        [self.tableView.mj_header beginRefreshing];
+//    } else {
+//        [self.tableView.mj_header beginRefreshing];
+//        [UILabel label].text = @"暂无网络";
+//    }
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -134,8 +141,9 @@
             [self.newsListArray removeAllObjects];
             [self.newsListArray addObjectsFromArray:array];
         }
-        if (self.newsListArray.count == 0)return ;
         [self.tableView.mj_header endRefreshing];
+        
+        if (self.newsListArray.count == 0)return ;
         // 设置广告
         [self setADHeaderView];
         

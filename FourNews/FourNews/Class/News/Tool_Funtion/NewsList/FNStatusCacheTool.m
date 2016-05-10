@@ -17,10 +17,8 @@ static FMDatabaseQueue *_queue;
 {
     // 1.在沙盒中创建数据库文件
     NSString *file = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"statuses.sqlite"];
-    
     // 2.创建队列
     _queue = [FMDatabaseQueue databaseQueueWithPath:file];
-    
     // 3.创表
     [_queue inDatabase:^(FMDatabase *db) { // 这句代码内部包含了创建数据库实例
         [db executeUpdate:[NSString stringWithFormat:@"create table if not exists %@ (id integer primary key autoincrement, timeid integer, dic blob, isread real);",tName]];
@@ -36,12 +34,12 @@ static FMDatabaseQueue *_queue;
     [self setupWithName:t_name];
     
     for (NSObject *status in dicArray) {
-        NSInteger pTimeid = (long)[status valueForKey:@"timeid"];
+        long pTimeid = [[status valueForKey:@"timeid"] longValue];
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:status];
         [_queue inDatabase:^(FMDatabase *db) {
             
-            [db executeUpdate:[NSString stringWithFormat:@"insert into %@ (timeid, dic,isread) values(?,?,1);",t_name],pTimeid,data];
-            [db executeUpdate:[NSString stringWithFormat:@"UPDATE %@ SET isread = 1 where timeid = %ld;",tName,pTimeid]];
+            [db executeUpdate:[NSString stringWithFormat:@"insert into %@ (timeid, dic,isread) values(%ld,?,1);",t_name,pTimeid],data];
+            [db executeUpdate:[NSString stringWithFormat:@"UPDATE %@ SET isread = 1 where timeid = %ld;",t_name,pTimeid]];
             // 删除重复记录
             [db executeUpdate:[NSString stringWithFormat:@"delete from %@ where id not in(select max(id) from %@ group by timeid)",t_name,t_name]];
         }];

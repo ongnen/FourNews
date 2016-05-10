@@ -16,27 +16,13 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="gb2-CV-cJw">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="gb2-CV-cJw" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="aCu-IY-gjV"/>
-                            <constraint firstAttribute="trailing" secondItem="gb2-CV-cJw" secondAttribute="trailing" id="awg-8k-H5Q"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="gb2-CV-cJw" secondAttribute="bottom" id="bXB-CK-7Lb"/>
-                            <constraint firstItem="gb2-CV-cJw" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="onb-vn-j8s"/>
-                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="274.5" y="385.5"/>
+            <point key="canvasLocation" x="324" y="356"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="1" width="640" height="960"/>
-    </resources>
 </document>

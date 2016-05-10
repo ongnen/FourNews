@@ -8,6 +8,7 @@
 
 #import "FNNewsGetPhotoSetItem.h"
 #import "FNNewsPhotoSetItem.h"
+#import "FNNewsGetCacheDetailNewsTool.h"
 #import <MJExtension.h>
 
 
@@ -15,6 +16,13 @@
 
 + (void)getNewsDetailWithPhotoid:(NSString *)photoid :(void (^)(id))complete
 {
+    // 检查缓存，有的话拿到返回
+    NSArray<FNNewsGetPhotoSetItem *> *items = (NSArray *)[FNNewsGetCacheDetailNewsTool getStatusCache:photoid];
+    if (items) {
+        complete(items);
+        return;
+    }
+    
     NSArray *param = [[photoid substringFromIndex:4] componentsSeparatedByString:@"|"];
     
     NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/photo/api/set/%@/%@.json",param.firstObject,param.lastObject];
@@ -28,8 +36,11 @@
             item.datatime = responseObject[@"datatime"];
             item.creator = responseObject[@"creator"];
             item.setname = responseObject[@"setname"];
+            item.photosetID = photoid;
         }
         complete(photos);
+        // 加入缓存
+        [FNNewsGetCacheDetailNewsTool addStatusCache:photos];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
     }];

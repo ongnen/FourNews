@@ -32,13 +32,19 @@
                 // 转模型
                 NSInteger loc = [pgmid rangeOfString:@"/"].location+1;
                 NSArray *dicArray = responseObject[[pgmid substringFromIndex:loc]];
-                NSMutableArray *array = [FNNewsListItem mj_objectArrayWithKeyValuesArray:dicArray];
+                NSMutableArray<FNNewsListItem *> *array = [FNNewsListItem mj_objectArrayWithKeyValuesArray:dicArray];
                 
                 // 给timeid赋值
                 [FNNewsListItem setTimeidAttributeWithModelArray:array timeName:@"ptime"];
                 
+                // 全部模型添加广告字段
+                for (int i = 0; i<array.count; i++) {
+                    array[i].ads = array[0].ads;
+                }
+                
                 // 加入缓存
                 [FNStatusCacheTool addStatusCache:array :newPgmid];
+                
                 
                 // 数组根据timeid排序
                 NSArray *newArray = [array sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
@@ -70,6 +76,7 @@
                 return;
             } else { // 没网络没缓存
                 complete(nil);
+                [[NSNotificationCenter defaultCenter] postNotificationName:FNNewsNetInvalid object:nil];
                 return;
             }
         }
@@ -92,10 +99,15 @@
         // 转模型
         NSInteger loc = [pgmid rangeOfString:@"/"].location+1;
         NSArray *dicArray = responseObject[[pgmid substringFromIndex:loc]];
-        NSMutableArray *array = [FNNewsListItem mj_objectArrayWithKeyValuesArray:dicArray];
+        NSMutableArray<FNNewsListItem *> *array = [FNNewsListItem mj_objectArrayWithKeyValuesArray:dicArray];
         
         // 给timeid赋值
         [FNNewsListItem setTimeidAttributeWithModelArray:array timeName:@"ptime"];
+        
+        // 全部模型添加广告字段
+        for (int i = 0; i<array.count; i++) {
+            array[i].ads = array[0].ads;
+        }
         
         // 加入缓存
         [FNStatusCacheTool addStatusCache:array :newPgmid];
@@ -110,12 +122,11 @@
                 return NSOrderedDescending;
             }
         }];
-        
         complete(newArray);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
     }];
-    
 }
+
 
 @end

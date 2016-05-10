@@ -24,4 +24,7 @@ NSString * const FNTitleButtonRepeatClickNotification = @"FNTitleButtonRepeatCli
 /** AV模块左右滑动跳转栏目的通知 */
 NSString * const AVListEndDecelerating = @"AVListEndDecelerating";
 
+/** 无网络且无缓存的通知 */
+NSString * const FNNewsNetInvalid = @"FNNewsNetInvalid";
+
 CGFloat const YJMargin = 10;
