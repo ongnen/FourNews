@@ -7,7 +7,10 @@
 //
 
 #import "FNNewsPhotoSetItem.h"
+#import <MJExtension.h>
 
 @implementation FNNewsPhotoSetItem
+
+MJCodingImplementation
 
 @end

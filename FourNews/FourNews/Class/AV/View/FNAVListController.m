@@ -171,7 +171,6 @@ static NSString * const ID = @"cell";
     cell.replyBlock = ^(FNAVListItem *item){
         [self replyClickWithListItem:item];
     };
-//    NSLog(@"cell.frame%@",NSStringFromCGRect(cell.frame));
     return cell;
 }
 #pragma mark - 点击coverImg

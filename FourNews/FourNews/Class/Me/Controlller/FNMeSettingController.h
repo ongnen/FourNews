@@ -6,8 +6,8 @@
 //  Copyright © 2016年 天涯海北. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "YJSettingBaseController.h"
 
-@interface FNMeSettingController : UITableViewController
+@interface FNMeSettingController : YJSettingBaseController
 
 @end

@@ -11,6 +11,7 @@
 #import "NewFeatureController.h"
 #import "FNADViewController.h"
 #import <OpenShareHeader.h>
+#import <AFNetworking.h>
 
 
 @interface AppDelegate ()
@@ -33,6 +34,8 @@
     [OpenShare connectQQWithAppId:@"1103194207"];
     [OpenShare connectWeiboWithAppKey:@"402180334"];
     [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     self.window.rootViewController = [[FNADViewController alloc] init];
     // 窗口显示
@@ -72,7 +75,6 @@
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-    NSLog(@"%s",__func__);
 }
 
 

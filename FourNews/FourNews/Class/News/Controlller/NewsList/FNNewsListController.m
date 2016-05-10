@@ -20,6 +20,7 @@
 #import "FNNewsGetPhotoSetItem.h"
 #import "FNNewsADView.h"
 #import "FNNewsADsItem.h"
+#import <AFNetworking.h>
 #import <MJRefresh.h>
 
 
@@ -32,6 +33,8 @@
 @property (nonatomic, strong) NSArray *replyArray;
 
 @property (nonatomic, weak) UIImageView *plshdImgV;
+
+@property (nonatomic, assign) NSInteger lastTimeid;
 
 @end
 
@@ -71,19 +74,25 @@
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
     [self.tableView.mj_header beginRefreshing];
-    
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
     
     // 右边内容条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    AFNetworkReachabilityManager *mgr = [AFNetworkReachabilityManager sharedManager];
+//    
+//    if (mgr.isReachable) {
+//        [self.tableView.mj_header beginRefreshing];
+//    } else {
+//        [self.tableView.mj_header beginRefreshing];
+//        [UILabel label].text = @"暂无网络";
+//    }
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -125,30 +134,39 @@
 #pragma mark - 上下拉刷新的方法
 - (void)bottomDragRefreshData
 {
-    [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :^(NSArray *array) {
+    [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :self.lastTimeid :^(NSArray *array) {
         [self.plshdImgV removeFromSuperview];
-
-        self.newsListArray = (NSMutableArray *)array;
+        
+        if (array) {
+            [self.newsListArray removeAllObjects];
+            [self.newsListArray addObjectsFromArray:array];
+        }
         [self.tableView.mj_header endRefreshing];
+        
+        if (self.newsListArray.count == 0)return ;
         // 设置广告
         [self setADHeaderView];
         
         [self.tableView reloadData];
-                
+        // 设置timeid
+        self.lastTimeid = self.newsListArray.lastObject.timeid;
     }];
 }
 - (void)topDragRefreshData
 {
-    [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :++self.refreshCount :^(NSArray *array) {
+    [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :++self.refreshCount :self.lastTimeid :^(NSArray *array) {
         [self.newsListArray addObjectsFromArray:(NSMutableArray *)array];
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
+        // 设置timeid
+        self.lastTimeid = self.newsListArray.lastObject.timeid;
     }];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    self.tableView.mj_header.hidden = !self.newsListArray.count;
     return self.newsListArray.count;
 }
 

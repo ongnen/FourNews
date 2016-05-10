@@ -64,9 +64,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
     
-    // 右边滚动条设置
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 #pragma mark - tabBarButton被点击调用的方法

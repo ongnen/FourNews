@@ -40,15 +40,11 @@
             if (items.count%4 == 0) continue;
             if (i == lineCount-1) {
                 view.frame = CGRectMake(0, FNScreenW/4 * (i-4), FNScreenW/4*(items.count%4), 0.5);
-                NSLog(@"%@",NSStringFromCGRect(view.frame));
             }
         }
         view.backgroundColor = FNColor(200, 200, 200);
         [gridView addSubview:view];
     }
-    
-    
-    
     return gridView;
 }
 
@@ -117,15 +113,12 @@
 // 交换位置的核心方法
 - (void)reSetListViewFrame:(NSInteger)fromIndex :(NSInteger)toIndex
 {
-    NSLog(@"%ld----%ld",fromIndex,toIndex);
     for (YJGridItemListView *view in self.subviews) {
         if ([view isKindOfClass:[YJGridItemListView class]] && view.index >= fromIndex && view.index <= toIndex) {
             if (view.index == fromIndex) {
                 view.index = toIndex;
                 self.fromIndex = toIndex;
-                NSLog(@"cur %ld",view.index);
             } else {
-                NSLog(@"%ld",view.index);
                 view.index--;
                 [UIView animateWithDuration:0.2 animations:^{
                     view.frame = [self frameWithIndex:view.index];
@@ -135,9 +128,7 @@
             if (view.index == fromIndex) {
                 view.index = toIndex;
                 self.fromIndex = toIndex;
-                NSLog(@"cur %ld",view.index);
             } else {
-                NSLog(@"%ld",view.index);
                 view.index++;
                 [UIView animateWithDuration:0.2 animations:^{
                     view.frame = [self frameWithIndex:view.index];

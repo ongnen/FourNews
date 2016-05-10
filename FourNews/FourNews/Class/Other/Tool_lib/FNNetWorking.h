@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FNNetWorking : UIViewController
+@interface FNNetWorking : NSObject
 
 + (NSURLSessionDataTask *)GET:(NSString *)url parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject,NSURLSessionDataTask * task))success failure:(void(^)(NSURLSessionDataTask *task,NSError *error))taskError;
 

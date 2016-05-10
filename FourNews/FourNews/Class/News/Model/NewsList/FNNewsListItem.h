@@ -47,4 +47,7 @@ typedef NS_ENUM(NSUInteger, FNNewsListCellHeightType) {
 
 @property (nonatomic, assign) CGFloat totalHeight;
 
+// 时间唯一标识
+@property (nonatomic, assign) long timeid;
+
 @end

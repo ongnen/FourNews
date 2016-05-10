@@ -10,6 +10,7 @@
 #import <UIImageView+WebCache.h>
 #import "FNNewsADsItem.h"
 #import <MJExtension.h>
+#import "YJInfiniteScrollView.h"
 
 @interface FNNewsADView() <UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -96,6 +97,9 @@ static NSString * const ADCollecID = @"newsAD";
 {
     self.indexPath = indexPath;
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ADCollecID forIndexPath:indexPath];
+    if (cell.contentView.subviews.count) {
+        [cell.contentView.subviews[0] removeFromSuperview];
+    }
     UIImageView *ADImageV = [[UIImageView alloc] init];
     ADImageV.userInteractionEnabled = YES;
     
@@ -107,6 +111,7 @@ static NSString * const ADCollecID = @"newsAD";
     
     return cell;
 }
+
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -125,7 +130,6 @@ static NSString * const ADCollecID = @"newsAD";
     if (self.adClickBlock) {
         self.adClickBlock(_contItem,index);
     }
-        
 }
 
 @end

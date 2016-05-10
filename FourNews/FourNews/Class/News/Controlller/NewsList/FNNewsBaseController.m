@@ -222,11 +222,7 @@
         UITableViewController *tableVC = self.childViewControllers[i];
         tableVC.tableView.scrollsToTop = (i == index);
     }
-//    NSLog(@"%@",tableVC.tableView);
-//    for (int i = 0;i < self.contentScrollView.subviews.count ;i++) {
-//        UIScrollView *scrollV = self.contentScrollView.subviews[i];
-//        scrollV.scrollsToTop = (i == index);
-//    }
+
 }
 
 
