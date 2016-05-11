@@ -16,6 +16,7 @@
 #import "FNTabBarController.h"
 #import "FNAVDetailController.h"
 #import "FNAVViewController.h"
+#import "UIImage+FN.h"
 
 @interface FNAVListController ()
 
@@ -36,6 +37,8 @@
 @property (nonatomic, strong) AVPlayer *player;
 
 @property (nonatomic, weak) UIImageView *plshdImgV;
+// 毛玻璃
+@property (nonatomic, weak) UIImageView *blurView;
 
 @end
 
@@ -171,6 +174,9 @@ static NSString * const ID = @"cell";
     cell.replyBlock = ^(FNAVListItem *item){
         [self replyClickWithListItem:item];
     };
+    cell.shareBlock = ^(FNAVListItem *item){
+        [self shareBtnClickWithListItem:item];
+    };
     return cell;
 }
 #pragma mark - 点击coverImg
@@ -258,6 +264,24 @@ static NSString * const ID = @"cell";
         avDetailVC.view.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);
     }];
     
+}
+
+- (void)shareBtnClickWithListItem:(FNAVListItem *)item {
+    //毛玻璃
+    UIGraphicsBeginImageContext([UIScreen mainScreen].bounds.size);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [self.tabBarController.view.layer renderInContext:ctx];
+    // 拿到屏幕截图
+    UIImage *snipImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // 模糊处理
+    UIImage *newImage = [UIImage blurryImage:snipImage];
+    
+    UIImageView *blurImgView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    blurImgView.image = newImage;
+    [self.tabBarController.view addSubview:blurImgView];
+    self.blurView = blurImgView;
 }
 
 

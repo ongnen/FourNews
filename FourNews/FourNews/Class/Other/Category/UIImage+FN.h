@@ -30,4 +30,8 @@
 // 由颜色产生一张图片
 
 + (UIImage *)colorImageWithColor:(UIColor *)color;
+
+// 产生一张带毛玻璃效果的图片
++ (UIImage *)blurryImage:(UIImage *)image;
+
 @end

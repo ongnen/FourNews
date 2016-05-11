@@ -41,6 +41,12 @@
     [self.tabBar setTintColor:[UIColor redColor]];
     
 }
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self startAppearAnimation];
+}
 
 - (void)setChildControllers
 {
@@ -87,6 +93,17 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:FNTabBarButtonRepeatClickNotification object:nil];
     }
     self.selectedItem = item;
+}
+
+// 启动动画
+- (void)startAppearAnimation
+{
+    [UIView animateWithDuration:1.0 animations:^{
+        self.coverImgView.alpha = 0;
+        self.coverImgView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+    } completion:^(BOOL finished) {
+        [self.coverImgView removeFromSuperview];
+    }];
 }
 
 @end

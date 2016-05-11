@@ -21,5 +21,7 @@
 
 @property (nonatomic, strong) void(^replyBlock)(FNAVListItem *);
 
+@property (nonatomic, strong) void(^shareBlock)(FNAVListItem *);
+
 
 @end

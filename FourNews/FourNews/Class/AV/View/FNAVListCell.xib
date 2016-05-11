@@ -26,26 +26,24 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t9o-GG-ApL">
                         <rect key="frame" x="8" y="238" width="343" height="40"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_share" translatesAutoresizingMaskIntoConstraints="NO" id="HAH-Rt-ZGC">
-                                <rect key="frame" x="319" y="4" width="24" height="24"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Sr-le-81f">
+                                <rect key="frame" x="318" y="5" width="25" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="JKm-PF-jqq"/>
-                                    <constraint firstAttribute="width" constant="24" id="kIy-nv-HL0"/>
+                                    <constraint firstAttribute="width" constant="25" id="phg-Pb-M3r"/>
+                                    <constraint firstAttribute="height" constant="25" id="v0r-B7-9md"/>
                                 </constraints>
-                            </imageView>
+                                <state key="normal" title="Button" image="icon_share"/>
+                                <connections>
+                                    <action selector="shareBtnClick" destination="5hp-Qn-DhC" eventType="touchUpInside" id="BnM-7x-bIs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="HAH-Rt-ZGC" secondAttribute="trailing" id="267-SP-tlV"/>
+                            <constraint firstAttribute="trailing" secondItem="4Sr-le-81f" secondAttribute="trailing" id="1Z8-kl-eSO"/>
+                            <constraint firstItem="4Sr-le-81f" firstAttribute="top" secondItem="t9o-GG-ApL" secondAttribute="top" constant="5" id="9lA-UM-5qn"/>
                             <constraint firstAttribute="height" constant="40" id="YGf-Wf-59h"/>
-                            <constraint firstItem="HAH-Rt-ZGC" firstAttribute="top" secondItem="t9o-GG-ApL" secondAttribute="top" constant="4" id="eFf-h8-55K"/>
-                            <constraint firstAttribute="bottom" secondItem="HAH-Rt-ZGC" secondAttribute="bottom" constant="8" id="p3f-Ew-BBp"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="p3f-Ew-BBp"/>
-                            </mask>
-                        </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FoU-IH-uFI">
                         <rect key="frame" x="8" y="48" width="343" height="182"/>

@@ -31,6 +31,7 @@
 		8473DDFB1CBA3C45007362F2 /* FNAVListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8473DDFA1CBA3C45007362F2 /* FNAVListCell.xib */; };
 		8473DE0D1CBA7A3F007362F2 /* NewFeatureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8473DE0A1CBA7A3F007362F2 /* NewFeatureCell.m */; };
 		8473DE0E1CBA7A3F007362F2 /* NewFeatureController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8473DE0C1CBA7A3F007362F2 /* NewFeatureController.m */; };
+		847468C01CE2C1C20097F29C /* FNNewsQRCodeScanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847468BF1CE2C1C20097F29C /* FNNewsQRCodeScanController.m */; };
 		8475206F1CB631C90008B8DC /* FNNewsSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475206E1CB631C90008B8DC /* FNNewsSearchController.m */; };
 		847520721CB636CE0008B8DC /* FNNewsGetHotWordsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 847520711CB636CE0008B8DC /* FNNewsGetHotWordsList.m */; };
 		847520751CB6378A0008B8DC /* FNNewsHotWordItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 847520741CB6378A0008B8DC /* FNNewsHotWordItem.m */; };
@@ -210,6 +211,8 @@
 		8473DE0A1CBA7A3F007362F2 /* NewFeatureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewFeatureCell.m; path = ../Controlller/NewFeatureCell.m; sourceTree = "<group>"; };
 		8473DE0B1CBA7A3F007362F2 /* NewFeatureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeatureController.h; sourceTree = "<group>"; };
 		8473DE0C1CBA7A3F007362F2 /* NewFeatureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFeatureController.m; sourceTree = "<group>"; };
+		847468BE1CE2C1C20097F29C /* FNNewsQRCodeScanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsQRCodeScanController.h; sourceTree = "<group>"; };
+		847468BF1CE2C1C20097F29C /* FNNewsQRCodeScanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNNewsQRCodeScanController.m; sourceTree = "<group>"; };
 		8475206D1CB631C90008B8DC /* FNNewsSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsSearchController.h; sourceTree = "<group>"; };
 		8475206E1CB631C90008B8DC /* FNNewsSearchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNNewsSearchController.m; sourceTree = "<group>"; };
 		847520701CB636CE0008B8DC /* FNNewsGetHotWordsList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsGetHotWordsList.h; sourceTree = "<group>"; };
@@ -517,6 +520,16 @@
 				8473DE0A1CBA7A3F007362F2 /* NewFeatureCell.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		847468BD1CE2C1680097F29C /* NewsQRCode */ = {
+			isa = PBXGroup;
+			children = (
+				847468BE1CE2C1C20097F29C /* FNNewsQRCodeScanController.h */,
+				847468BF1CE2C1C20097F29C /* FNNewsQRCodeScanController.m */,
+			);
+			name = NewsQRCode;
+			path = NewsReply/NewsQRCode;
 			sourceTree = "<group>";
 		};
 		847520761CB6392F0008B8DC /* NewsSearch */ = {
@@ -1072,6 +1085,7 @@
 				8E902FEB1CB155CB001F005D /* NewsList */,
 				8E902FE81CB155CB001F005D /* NewsDetail */,
 				8E902FF21CB155CB001F005D /* NewsReply */,
+				847468BD1CE2C1680097F29C /* NewsQRCode */,
 			);
 			path = Controlller;
 			sourceTree = "<group>";
@@ -1497,6 +1511,7 @@
 				8E09862B1CB2853600EE5B21 /* FNNewsReplyController.m in Sources */,
 				846E6C7E1CDDEA3B006DE4CD /* FNSettingMostCacheController.m in Sources */,
 				8E90302A1CB155CB001F005D /* FNNewsViewController.m in Sources */,
+				847468C01CE2C1C20097F29C /* FNNewsQRCodeScanController.m in Sources */,
 				848A43F81CDD8B7800ABDF68 /* YJSettingCellArrowItem.m in Sources */,
 				84736E2C1CBB4FB900E0B72A /* FNTopicQuesItem.m in Sources */,
 				8ECEA9FD1CB156B70047B035 /* FNNewsSglReplyView.m in Sources */,
@@ -1669,7 +1684,7 @@
 			baseConfigurationReference = 9543368A17A581BB33EDEE55 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Aiping Tang (TWMC5J46PY)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Yaogang Li (B97JB7KURN)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Aiping Tang (TWMC5J46PY)";
 				GCC_PREFIX_HEADER = FourNews/Class/Other/GlobalFiles/FourNews.pch;
 				INFOPLIST_FILE = FourNews/Info.plist;
@@ -1678,7 +1693,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FourNews/Class/libWeiboSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.520it.FourNews;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myit.FourNews201604201549;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1688,7 +1703,7 @@
 			baseConfigurationReference = 99C3B20065B3BF8ECFF53E59 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Aiping Tang (TWMC5J46PY)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Yaogang Li (B97JB7KURN)";
 				GCC_PREFIX_HEADER = FourNews/Class/Other/GlobalFiles/FourNews.pch;
 				INFOPLIST_FILE = FourNews/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1696,7 +1711,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FourNews/Class/libWeiboSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.520it.FourNews;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myit.FourNews201604201549;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

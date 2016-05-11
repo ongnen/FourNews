@@ -1,5 +1,5 @@
-//
-//  1.直接修改view的x,y,width,height,size,origin
+
+
 
 #import <UIKit/UIKit.h>
 

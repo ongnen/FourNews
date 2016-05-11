@@ -17,6 +17,7 @@
 #import "FNNewsGetSearchNews.h"
 #import "FNNewsSearchListController.h"
 #import "FNNewsHistorySkimController.h"
+#import "FNNewsQRCodeScanController.h"
 
 @interface FNNewsSearchController () <UISearchBarDelegate>
 
@@ -58,6 +59,7 @@
     searchBar.placeholder = @"搜索";
     searchBar.delegate = self;
     self.searchBar = searchBar;
+    [self setSearchBarQRButton];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchBar];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:0 target:self action:@selector(cancelBtnClick)];
     self.navigationController.navigationBar.tintColor = FNColor(150, 150, 150);
@@ -159,5 +161,27 @@
 {
     [self hotWordSearchWithWord:searchBar.text];
 }
+#pragma mark - 二维码按钮的添加及点击
+- (void)setSearchBarQRButton
+{
+    UIButton *qrBtn = [[UIButton alloc] init];
+    [qrBtn setImage:[UIImage imageNamed:@"QR_code_icon"] forState:UIControlStateNormal];
+    qrBtn.bounds = CGRectMake(0, 0, 30, 30);
+    qrBtn.center = CGPointMake(self.searchBar.size.width-15, self.searchBar.size.height/2+2);
+    [qrBtn addTarget:self action:@selector(qrCodeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.searchBar addSubview:qrBtn];
+}
+- (void)qrCodeBtnClick{
+    FNNewsQRCodeScanController *qrCodeVC = [[FNNewsQRCodeScanController alloc] init];
+    // 扫描到二维码信息
+    qrCodeVC.receiveQRCodeInformate = ^(NSString *message){
+        
+    };
+    
+    [self.navigationController pushViewController:qrCodeVC animated:YES];
+    
+    
+}
+
 
 @end

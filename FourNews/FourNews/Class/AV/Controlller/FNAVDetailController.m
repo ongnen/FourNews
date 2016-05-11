@@ -498,8 +498,8 @@ static NSString * const ID = @"replyCell";
     [self.navigationController.view.layer renderInContext:ctx];
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    NSData *data = UIImagePNGRepresentation(image);
-    [data writeToFile:[NSString stringWithFormat:@"/Users/admin/Desktop/imag.png"]atomically:YES];
+//    NSData *data = UIImagePNGRepresentation(image);
+//    [data writeToFile:[NSString stringWithFormat:@"/Users/admin/Desktop/imag.png"]atomically:YES];
     return image;
 }
 
