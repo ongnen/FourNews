@@ -14,13 +14,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="361" height="335"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bCx-4a-bmZ">
-                        <rect key="frame" x="15" y="15" width="40" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="40" id="WVX-0g-vcP"/>
-                            <constraint firstAttribute="width" constant="40" id="vxL-fe-ehR"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeS-4Z-hc1">
                         <rect key="frame" x="63" y="15" width="200" height="25"/>
                         <constraints>
@@ -69,10 +62,17 @@
                             <constraint firstAttribute="trailing" secondItem="Qai-v2-uR7" secondAttribute="trailing" constant="8" id="y0k-zo-bUk"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jzj-sr-jRc">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jzj-sr-jRc">
                         <rect key="frame" x="0.0" y="40" width="361" height="180"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="180" id="M35-2R-37P"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bCx-4a-bmZ">
+                        <rect key="frame" x="15" y="15" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="WVX-0g-vcP"/>
+                            <constraint firstAttribute="width" constant="40" id="vxL-fe-ehR"/>
                         </constraints>
                     </imageView>
                 </subviews>

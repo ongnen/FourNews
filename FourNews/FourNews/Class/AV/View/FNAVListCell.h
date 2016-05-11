@@ -19,7 +19,8 @@
 
 @property (nonatomic, strong) void(^movieBlock)(NSString *,UIView *);
 
-@property (nonatomic, strong) void(^replyBlock)(FNAVListItem *);
+
+@property (nonatomic, strong) void(^shareBlock)(FNAVListItem *);
 
 
 @end

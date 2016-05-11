@@ -13,7 +13,6 @@
 #import "FNTopicViewController.h"
 #import "FNMeController.h"
 #import "FNNavigationController.h"
-#import "FNTopicNavgationController.h"
 
 @interface FNTabBarController () <UITabBarControllerDelegate>
 
@@ -38,10 +37,17 @@
     [self setChildControllers];
     // 给初值
     self.selectedItem = self.childViewControllers[0].tabBarItem;
+    // 设置tabBar按钮的选中颜色
     [self.tabBar setTintColor:[UIColor redColor]];
     
 }
-
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // 广告界面与首页交接时的动画
+    [self startAppearAnimation];
+}
+// 创建设置子控制器，并抽取方法统一配置
 - (void)setChildControllers
 {
     FNNewsViewController *newsVC = [[FNNewsViewController alloc] init];
@@ -64,14 +70,12 @@
     self.meVC = meVC;
     [self setupChildController:self.meVC title:@"我" image:@"tabbar_icon_me_normal" selectedImage:@"tabbar_icon_me_highlight"];
 }
-
+// 抽取的方法，并包装上了导航控制器
 - (void)setupChildController:(UIViewController *)controller title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selectesImage
 {
     controller.title = title;
     FNNavigationController *nav = [[FNNavigationController alloc] initWithRootViewController:controller];
-    if ([controller isKindOfClass:[FNTopicViewController class]]) {
-        nav = [[FNTopicNavgationController alloc] initWithRootViewController:controller];
-    }
+    
     nav.tabBarItem.image = [UIImage imageWithOriginImage:[UIImage imageNamed:image]];
     nav.tabBarItem.selectedImage = [UIImage imageWithOriginImage:[UIImage imageNamed:selectesImage]];
     
@@ -81,12 +85,23 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    
     if (self.selectedItem == item) {
-        // object = nil 匿名通知
+        // 发布tabBarButton被点击的通知
+        // 这个通知的回调是在点击它的时候直接刷新对应模块的数据
         [[NSNotificationCenter defaultCenter] postNotificationName:FNTabBarButtonRepeatClickNotification object:nil];
     }
     self.selectedItem = item;
+}
+
+// 交接动画
+- (void)startAppearAnimation
+{
+    [UIView animateWithDuration:1.0 animations:^{
+        self.coverImgView.alpha = 0;
+        self.coverImgView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+    } completion:^(BOOL finished) {
+        [self.coverImgView removeFromSuperview];
+    }];
 }
 
 @end

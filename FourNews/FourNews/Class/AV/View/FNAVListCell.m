@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *coverImgV;
 @property (weak, nonatomic) IBOutlet UIView *bottomBar;
 @property (weak, nonatomic) IBOutlet UIView *playerV;
+
+
 @property (nonatomic, weak) UIImageView *topicImgV;
 @property (nonatomic, weak) UILabel *topicL;
 @property (nonatomic, weak) UIView *topicView;
@@ -164,12 +166,7 @@
     self.topicL.frame = CGRectMake(self.topicImgV.width + FNCompensate(5), 0, topicW, FNAVTopicImgWH);
 }
 
-- (void)replyBtnClick
-{
-    if (self.replyBlock) {
-        self.replyBlock(_listItem);
-    }
-}
+
 
 + (CGFloat)totalHeightWithTitle:(NSString *)title
 {
@@ -178,4 +175,9 @@
     return 180+40+8*4+titleLH;
 }
 
+- (IBAction)shareBtnClick {
+    if (self.shareBlock) {
+        self.shareBlock(_listItem);
+    }
+}
 @end

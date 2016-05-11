@@ -16,6 +16,8 @@
 #import "FNTabBarController.h"
 #import "FNAVDetailController.h"
 #import "FNAVViewController.h"
+#import "UIImage+FN.h"
+#import "FNAVShareView.h"
 
 @interface FNAVListController ()
 
@@ -36,6 +38,10 @@
 @property (nonatomic, strong) AVPlayer *player;
 
 @property (nonatomic, weak) UIImageView *plshdImgV;
+// 毛玻璃
+@property (nonatomic, strong) UIToolbar *blurView;
+
+@property (nonatomic, weak) UIView *shareV;
 
 @end
 
@@ -56,6 +62,21 @@ static NSString * const ID = @"cell";
         _playerVC = [[AVPlayerViewController alloc] init];
     }
     return _playerVC;
+}
+
+- (UIToolbar *)blurView
+{
+    if (!_blurView){
+        // 加毛玻璃效果
+        UIToolbar *blurView = [[UIToolbar alloc] init];
+        blurView.barStyle = UIBarStyleBlackOpaque;
+        blurView.frame = self.tabBarController.view.bounds;
+        _blurView = blurView;
+        // 点击返回手势
+        [_blurView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(back)]];
+    }
+    return _blurView;
+    
 }
 
 - (UIImageView *)plshdImgV
@@ -168,52 +189,19 @@ static NSString * const ID = @"cell";
     cell.movieBlock = ^(NSString *urlStr,UIView *playerV){
         [self playMovieWithUrlStr:urlStr :playerV];
     };
-    cell.replyBlock = ^(FNAVListItem *item){
-        [self replyClickWithListItem:item];
+    
+    cell.shareBlock = ^(FNAVListItem *item){
+        [self shareBtnClickWithListItem:item];
     };
     return cell;
 }
-#pragma mark - 点击coverImg
-- (void)playMovieWithUrlStr:(NSString *)urlStr :(UIView *)playerV
-{
-    // 移除正在播放的窗口视频
-    [self.avDetailVc.view removeFromSuperview];
-    [self.avDetailVc removeFromParentViewController];
-    
-    // 取出当前indexPath
-    NSIndexPath *indexPath;
-    for (int i = 0; i<self.listItemArray.count; i++) { // 遍历取出
-        if ([self.listItemArray[i].mp4_url isEqualToString:urlStr]) {
-            indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        }
-    }
-    // 存在上一个indexPath，则刷新上一次播放的视频的cell
-    if (self.previousIndexPath && indexPath.row != self.previousIndexPath.row) {
-        [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
-    // 保存当前indexPath
-    self.previousIndexPath = indexPath;
-    
-    self.playerItem = nil;
-    self.player = nil;
-    [self.playerVC.view removeFromSuperview];
-    self.playerVC = nil;
-    
-    
-    self.playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:urlStr]];
-    self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
-    self.playerVC.view.translatesAutoresizingMaskIntoConstraints = YES;
-    self.playerVC.showsPlaybackControls = YES;
-    self.playerVC.player = self.player;
-    self.playerVC.view.frame = playerV.bounds;
-    [playerV addSubview:self.playerVC.view];
-    
-    [self.playerVC.player play];
-}
 
-#pragma mark -  跳转评论界面
-- (void)replyClickWithListItem:(FNAVListItem *)item
+#pragma mark - TableViewDelegate
+// 跳转评论界面
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    FNAVListItem *item = self.listItemArray[indexPath.row];
+    
     // 移除正在播放的非窗口视频
     if (self.previousIndexPath) { // 刷新对应的cell
         [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -257,20 +245,86 @@ static NSString * const ID = @"cell";
     [UIView animateWithDuration:0.2 animations:^{
         avDetailVC.view.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);
     }];
+}
+
+#pragma mark - 点击coverImg
+- (void)playMovieWithUrlStr:(NSString *)urlStr :(UIView *)playerV
+{
+    // 移除正在播放的窗口视频
+    [self.avDetailVc.view removeFromSuperview];
+    [self.avDetailVc removeFromParentViewController];
     
+    // 取出当前indexPath
+    NSIndexPath *indexPath;
+    for (int i = 0; i<self.listItemArray.count; i++) { // 遍历取出
+        if ([self.listItemArray[i].mp4_url isEqualToString:urlStr]) {
+            indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        }
+    }
+    // 存在上一个indexPath，则刷新上一次播放的视频的cell
+    if (self.previousIndexPath && indexPath.row != self.previousIndexPath.row) {
+        [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    // 保存当前indexPath
+    self.previousIndexPath = indexPath;
+    
+    self.playerItem = nil;
+    self.player = nil;
+    [self.playerVC.view removeFromSuperview];
+    self.playerVC = nil;
+    
+    
+    self.playerItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:urlStr]];
+    self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
+    self.playerVC.view.translatesAutoresizingMaskIntoConstraints = YES;
+    self.playerVC.showsPlaybackControls = YES;
+    self.playerVC.player = self.player;
+    self.playerVC.view.frame = playerV.bounds;
+    [playerV addSubview:self.playerVC.view];
+    
+    [self.playerVC.player play];
 }
 
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
-{
+- (void)shareBtnClickWithListItem:(FNAVListItem *)item {
+    [self.tabBarController.view addSubview:self.blurView];
+    // close按钮回调
+    FNAVShareView *shareV = [FNAVShareView avShareView];
+    shareV.closeBlock = ^{
+        [self back];
+    };
+    // 分享框动画
+    shareV.item = item;
+    shareV.center = self.blurView.center;
+    shareV.hidden = YES;
+    self.shareV = shareV;
+    UIImageView *coverImgV = [[UIImageView alloc] init];
+    coverImgV.image = [UIImage imageNamed:@"snip1"];
+    coverImgV.frame = shareV.frame;
+    coverImgV.backgroundColor = [UIColor redColor];
+    
+    [self.blurView addSubview:coverImgV];
+    [self.tabBarController.view addSubview:shareV];
+    coverImgV.size = CGSizeMake(0.1, 0.1);
+    coverImgV.layer.position = _blurView.center;
+    [UIView animateWithDuration:1.0 animations:^{
+        coverImgV.bounds = shareV.bounds;
+    } completion:^(BOOL finished) {
+        [coverImgV removeFromSuperview];
+        shareV.hidden = NO;
+    }];
+    
+}
+
+- (void)back {
+    [self.blurView removeFromSuperview];
+    [self.shareV removeFromSuperview];
 }
 
 /** AVList栏目左右滑动改变 */
 - (void)avListendDecelerating
 {
     if (!self.player) return;
-    
-    
     [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
     [self.avDetailVc.view removeFromSuperview];
     [self.avDetailVc removeFromParentViewController];

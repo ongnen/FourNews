@@ -74,6 +74,7 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
 
 - (void)setADImageV
 {
+    // 对启动图片做屏幕适配
     switch ((int)FNScreenH) {
         case FNScreenTypeIphone4:
             self.launchImageV.image = [UIImage imageNamed:@"LaunchImage@2x"];
@@ -120,8 +121,7 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
     
     [self.timer invalidate];
     self.title = nil;
-    FNTabBarController *tabBarVC = [[FNTabBarController alloc]init];
-    [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
+    [self dropRootViewController];
 }
 // 控制跳过时间
 - (void)timeFlow
@@ -129,12 +129,37 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
     [self.adTimeBtn setTitle:[NSString stringWithFormat:@"跳过 (%lds)",3-self.timeSeconed] forState:UIControlStateNormal];
     
     self.timeSeconed++;
-    if (self.timeSeconed == 5) {
+    
+    if (self.timeSeconed == 4) {
         [self.timer invalidate];
         self.title = nil;
-        
-        FNTabBarController *tabBarVC = [[FNTabBarController alloc]init];
-        [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
+        // 跳转根控制器
+        [self dropRootViewController];
     }
+    
+}
+// 跳转根控制器
+- (void)dropRootViewController
+{
+    FNTabBarController *tabBarVC = [[FNTabBarController alloc]init];
+    tabBarVC.view.frame = [UIScreen mainScreen].bounds;
+    UIImageView *coverImgV = [[UIImageView alloc] initWithFrame:tabBarVC.view.bounds];
+    coverImgV.image = [self drawScreen];
+    [tabBarVC.view addSubview:coverImgV];
+    tabBarVC.coverImgView = coverImgV;
+    [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
+}
+/** 截屏 */
+- (UIImage *)drawScreen
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(FNScreenW, FNScreenH), NO, 0);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
+    [self.view.layer renderInContext:ctx];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 @end

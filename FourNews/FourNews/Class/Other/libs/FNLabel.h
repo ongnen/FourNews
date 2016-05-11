@@ -11,10 +11,10 @@
 @interface FNLabel : UIView
 
 
-@property (nonatomic, strong)NSMutableAttributedString* string;
-@property (nonatomic, strong)UIFont* font;
-@property (nonatomic, strong)UIColor* textColor;
+@property (nonatomic, strong) NSMutableAttributedString* string;
+@property (nonatomic, strong) NSString* text;
 
-- (void)setText:(NSString*)text;
+@property (nonatomic, strong) UIFont* font;
+@property (nonatomic, strong) UIColor* textColor;
 
 @end

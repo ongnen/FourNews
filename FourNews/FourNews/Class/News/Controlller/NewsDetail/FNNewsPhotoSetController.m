@@ -15,7 +15,7 @@
 #define FNNewsPhotoBorder50 50
 
 
-@interface FNNewsPhotoSetController () <UICollectionViewDataSource,UIScrollViewDelegate>
+@interface FNNewsPhotoSetController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (nonatomic, weak) UICollectionView *imageCollecV;
 @property(nonatomic, weak) FNNewsPhotoDescView *descView;
