@@ -74,6 +74,7 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
 
 - (void)setADImageV
 {
+    // 对启动图片做屏幕适配
     switch ((int)FNScreenH) {
         case FNScreenTypeIphone4:
             self.launchImageV.image = [UIImage imageNamed:@"LaunchImage@2x"];
@@ -158,7 +159,7 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
     [self.view.layer renderInContext:ctx];
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-
+    UIGraphicsEndImageContext();
     return image;
 }
 @end

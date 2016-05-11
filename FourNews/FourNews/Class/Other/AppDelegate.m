@@ -7,8 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "ChooseRootVC.h"
-#import "NewFeatureController.h"
 #import "FNADViewController.h"
 #import <OpenShareHeader.h>
 #import <AFNetworking.h>
@@ -24,19 +22,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // 设置窗口
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // 设置窗口根控制器
-    //设置我们的新特性
-//    NewFeatureController *feature = [[NewFeatureController alloc]init];
-//    
-//    self.window.rootViewController = feature;
-//    self.window.rootViewController = [ChooseRootVC chooseRootViewController];
     
+    // 分享功能所需
     [OpenShare connectQQWithAppId:@"1103194207"];
     [OpenShare connectWeiboWithAppKey:@"402180334"];
     [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-    
+    // 设置窗口根控制器
     self.window.rootViewController = [[FNADViewController alloc] init];
     // 窗口显示
     [self.window makeKeyAndVisible];

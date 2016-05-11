@@ -18,61 +18,35 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // 实现全屏滑动的核心方法
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self.interactivePopGestureRecognizer.delegate action:@selector(handleNavigationTransition:)];
     [self.view addGestureRecognizer:pan];
 }
-
-+ (void)setNavBarTheme
-{
-    UINavigationBar *navBar = [UINavigationBar appearance];
-    [navBar setBarTintColor:[UIColor redColor]];
-    
-}
-
-+ (void)setNavBarButtonTheme
-{
-    UIBarButtonItem *item = [UIBarButtonItem appearance];
-    
-    NSMutableDictionary *attres = [NSMutableDictionary dictionary];
-    attres[NSForegroundColorAttributeName] = [UIColor whiteColor];
-    attres[NSFontAttributeName] = [UIFont systemFontOfSize:20];
-    [item setTintColor:[UIColor whiteColor]];
-}
-
+// 重写push方法进行某些设置
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
+    // 1.在非根控制器下隐藏tabBar
+    // 2.在非根控制器下设置全局统一样式的返回按钮
     if (self.childViewControllers.count>0) {
         viewController.hidesBottomBarWhenPushed = YES;
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithOriginImage:[UIImage imageNamed:@"navigationbar_back"]] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
        
     }
-    // 在FNNewsPhotoSetController控制器下导航栏隐藏
+    // 3.在图集展示控制器下导航栏隐藏
     if ([viewController isKindOfClass:[FNNewsPhotoSetController class]]) {
         self.navigationBarHidden = YES;
     } else {
         self.navigationBarHidden = NO;
     }
-    
+    // 4.实现父类方法
     [super pushViewController:viewController animated:animated];
 }
-
-//- (UIViewController *)popViewControllerAnimated:(BOOL)animated
-//{
-//    // 在FNNewsPhotoSetController控制器下导航栏隐藏
-//    if ([self.topViewController isKindOfClass:[FNNewsPhotoSetController class]]) {
-//        self.navigationBarHidden = NO;
-//    }
-//    [super popViewControllerAnimated:animated];
-//    return self.topViewController;
-//}
-
+// 返回的方法
 - (void)back
 {
     [self popViewControllerAnimated:YES];
 }
-
-
-#pragma mark - UIGestureRecognizerDelegate
 
 
 @end

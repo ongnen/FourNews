@@ -11,8 +11,9 @@
 
 
 @interface FNNewsBaseController () <UIScrollViewDelegate>
-
+// 顶部栏目标题scrollView
 @property (nonatomic, weak) UIScrollView *titleScrollView;
+// 内容的scrollView，存放tableView
 @property (nonatomic, weak) UIScrollView *contentScrollView;
 @property (nonatomic, strong) UIButton *selectedBtn;
 @property (nonatomic, strong) NSMutableArray *titleBtnArray;
@@ -30,11 +31,6 @@
         self.titleBtnArray = [[NSMutableArray alloc] init];
     }
     return _titleBtnArray;
-    
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
     
 }
 
@@ -156,19 +152,18 @@
     [leftbtnBtn setTitleColor:[UIColor colorWithRed:leftScale green:0 blue:0 alpha:1] forState:UIControlStateNormal];
     
 }
-
+// 滑动结束时调用的代理方法
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSInteger index = scrollView.contentOffset.x / FNScreenW;
     
     UIButton *btn = self.titleBtnArray[index];
     
-    // 如果滑动减速后的页面还是当前页面，就不调用下面的方法
+    // 如果滑动减速后的页面还是当前页面，就不调用下面的方法，直接返回
     if (self.selectedBtn == btn) return;
     
     [self titleViewBtnClick:btn];
-    
-    
+
 }
 
 #pragma mark - 展示点击的目标View
@@ -181,7 +176,7 @@
         tableVC.view.frame = CGRectMake(FNScreenW * index, 0, FNScreenW, FNScreenH);
         tableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
     }
-    // 对左右两个新闻界面进行缓存
+    // 对左右两个新闻界面进行提前缓存
     if (index == 0) {
         UITableViewController *rightTableVC = (UITableViewController*)self.childViewControllers[index+1];
         if (rightTableVC.tableView.window) return;
@@ -209,7 +204,7 @@
         }
     }
     
-    // 保持最多5个控制器的View存在
+    // 保持最多5个控制器的View存在，性能优化
     NSInteger tableVCIndex = 0;
     for (UITableViewController *tableVC in self.childViewControllers) {
         if (fabs((double)(tableVCIndex-index)) > 2) {
@@ -220,6 +215,8 @@
     
     for (int i = 0;i < self.childViewControllers.count ;i++) {
         UITableViewController *tableVC = self.childViewControllers[i];
+        
+        // 当scrollsToTop属性为yes时，再点击顶部状态栏
         tableVC.tableView.scrollsToTop = (i == index);
     }
 

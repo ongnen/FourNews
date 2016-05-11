@@ -166,12 +166,7 @@
     self.topicL.frame = CGRectMake(self.topicImgV.width + FNCompensate(5), 0, topicW, FNAVTopicImgWH);
 }
 
-- (void)replyBtnClick
-{
-    if (self.replyBlock) {
-        self.replyBlock(_listItem);
-    }
-}
+
 
 + (CGFloat)totalHeightWithTitle:(NSString *)title
 {
