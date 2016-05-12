@@ -19,9 +19,11 @@
 {
     [super viewDidLoad];
     
+    
+    
     // 实现全屏滑动的核心方法
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self.interactivePopGestureRecognizer.delegate action:@selector(handleNavigationTransition:)];
-    [self.view addGestureRecognizer:pan];
+//    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self.interactivePopGestureRecognizer.delegate action:@selector(handleNavigationTransition:)];
+//    [self.view addGestureRecognizer:pan];
 }
 // 重写push方法进行某些设置
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
@@ -34,11 +36,11 @@
        
     }
     // 3.在图集展示控制器下导航栏隐藏
-    if ([viewController isKindOfClass:[FNNewsPhotoSetController class]]) {
-        self.navigationBarHidden = YES;
-    } else {
-        self.navigationBarHidden = NO;
-    }
+//    if ([viewController isKindOfClass:[FNNewsPhotoSetController class]]) {
+//        [self setNavigationBarHidden:YES];
+//    } else {
+//        [self setNavigationBarHidden:NO];
+//    }
     // 4.实现父类方法
     [super pushViewController:viewController animated:animated];
 }

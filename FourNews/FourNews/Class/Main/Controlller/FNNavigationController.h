@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JTNavigationController.h"
 
-@interface FNNavigationController : UINavigationController
+@interface FNNavigationController : JTNavigationController
 
 @end

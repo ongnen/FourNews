@@ -28,6 +28,9 @@
     [OpenShare connectWeiboWithAppKey:@"402180334"];
     [OpenShare connectWeixinWithAppId:@"wxd930ea5d5a258f4f"];
     
+    //  修复全屏滑动时navBar右侧有黑块的BUG
+    self.window.backgroundColor = [UIColor whiteColor];
+    
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     // 设置窗口根控制器
     self.window.rootViewController = [[FNADViewController alloc] init];

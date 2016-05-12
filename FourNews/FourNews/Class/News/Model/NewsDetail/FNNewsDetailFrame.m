@@ -37,7 +37,7 @@
     // 标题
     CGFloat titleX = FNNewsDetailLeftBorder;
     CGFloat titleY = FNNewsDetailTopBorder;
-    CGSize titleSize = [detailItem.title sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:FNNewsDetailContentTitleFont]}];
+    CGSize titleSize = [detailItem.title boundingRectWithSize:CGSizeMake(FNScreenW - 2*FNNewsDetailLeftBorder, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:FNNewsDetailContentTitleFont]} context:nil].size;
     _titleF = (CGRect){titleX,titleY,titleSize};
     // 时间
     CGFloat pTimeX = FNNewsDetailLeftBorder;

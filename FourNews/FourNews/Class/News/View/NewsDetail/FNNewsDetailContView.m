@@ -91,6 +91,7 @@
 - (void)setAllSubviews
 {
     UILabel *titleL = [[UILabel alloc] init];
+    titleL.numberOfLines = 0;
     titleL.font = [UIFont systemFontOfSize:FNNewsDetailContentTitleFont];
     self.titleL = titleL;
     [self addSubview:titleL];
@@ -251,8 +252,6 @@
             
             CGRect altF = [frame.altFs[frameIndex] CGRectValue];
             self.altLs[i].frame = altF;
-        } else {
-            frameIndex--;
         }
     }
 }

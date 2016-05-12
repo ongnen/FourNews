@@ -73,8 +73,10 @@
 // 抽取的方法，并包装上了导航控制器
 - (void)setupChildController:(UIViewController *)controller title:(NSString *)title image:(NSString *)image selectedImage:(NSString *)selectesImage
 {
-    controller.title = title;
     FNNavigationController *nav = [[FNNavigationController alloc] initWithRootViewController:controller];
+    controller.title = title;
+    nav.title = title;
+    nav.fullScreenPopGestureEnabled = YES;
     
     nav.tabBarItem.image = [UIImage imageWithOriginImage:[UIImage imageNamed:image]];
     nav.tabBarItem.selectedImage = [UIImage imageWithOriginImage:[UIImage imageNamed:selectesImage]];
