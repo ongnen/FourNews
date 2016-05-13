@@ -53,7 +53,7 @@
         [FNUserDefaults setObject:historySkim forKey:@"historySkim"];
     }
 }
-
+// 创建首页的九个模块
 - (void)setAllChildController
 {
     FNNewsListController *headVC = [[FNNewsListController alloc] init];
@@ -96,7 +96,7 @@
     scienceVC.title = @"科技";
     [self addChildViewController:scienceVC];
 }
-
+// 点击搜索弹出搜索界面
 - (void)searchBtnClick
 {
     FNNewsSearchController *searchVC = [[FNNewsSearchController alloc] init];

@@ -71,8 +71,7 @@ static NSString * const FOOT = @"footer";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = NO;
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 #pragma mark - tabBarButton被点击调用的方法
 - (void)tabBarButtonRepeatClick

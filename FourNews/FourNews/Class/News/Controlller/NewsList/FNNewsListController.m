@@ -32,7 +32,6 @@
 
 @property (nonatomic, strong) NSArray *replyArray;
 
-@property (nonatomic, weak) UIImageView *plshdImgV;
 
 @property (nonatomic, assign) NSInteger lastTimeid;
 
@@ -50,21 +49,10 @@
     
     return _newsListArray;
 }
-- (UIImageView *)plshdImgV
-{
-    if (!_plshdImgV){
-        UIImageView *placeholderImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell_image_background"]];
-        [self.view addSubview:placeholderImgV];
-        [placeholderImgV sizeToFit];
-        placeholderImgV.center = CGPointMake(FNScreenW/2, FNScreenH/2-100);
-        _plshdImgV = placeholderImgV;
-    }
-    return _plshdImgV;
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addSubview:self.plshdImgV];
 
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.refreshCount = 1;
@@ -73,8 +61,9 @@
     // 设置刷新控件
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
+    // 第一次进入时刷新不需要显示刷新控件
     [self launchRefresh];
-    // 监听通知
+    // 监听首页按钮及首页标题按钮被点击的通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
     
@@ -85,14 +74,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    AFNetworkReachabilityManager *mgr = [AFNetworkReachabilityManager sharedManager];
-//    
-//    if (mgr.isReachable) {
-//        [self.tableView.mj_header beginRefreshing];
-//    } else {
-//        [self.tableView.mj_header beginRefreshing];
-//        [UILabel label].text = @"暂无网络";
-//    }
+
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -135,8 +117,6 @@
 - (void)bottomDragRefreshData
 {
     [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :self.lastTimeid :^(NSArray *array) {
-        [self.plshdImgV removeFromSuperview];
-        
         if (array) {
             [self.newsListArray removeAllObjects];
             [self.newsListArray addObjectsFromArray:array];
@@ -178,7 +158,6 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    self.tableView.mj_header.hidden = !self.newsListArray.count;
     return self.newsListArray.count;
 }
 
