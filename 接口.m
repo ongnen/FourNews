@@ -3,10 +3,7 @@ github地址 https://github.com/ongnen/FourNews
 
 1"首页新闻模块
 // 获取子模块的参数tid
-http://c.m.163.com/nc/topicset/ios/subscribe/manage/listspecial.html
-// 获取子模块新闻列表
-http://c.3g.163.com/nc/article/headline/%@/0-20.html
-参数tid 示例 头条T1348647853363
+http://c.m=zZ在战争中ZzZZ中心在这种在zz47853363
 // 拿到新闻详情的接口
 http://c.m.163.com/nc/article/%@/full.html
 参数docid

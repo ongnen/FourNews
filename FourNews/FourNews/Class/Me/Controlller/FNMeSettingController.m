@@ -73,10 +73,10 @@
     YJSettingGroupItem *group1 = [[YJSettingGroupItem alloc] init];
     YJSettingCellBaseItem *item1 = [YJSettingCellBaseItem settingRowItemWithTitle:@"清理缓存" image:nil];
     // 计算缓存大小
-    NSString *cache = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-   item1.detailTitle = [NSString stringWithFormat:@"%.1lfM",[FNFileManager getSizeWithFilePath:cache]/1000000.0];
+//    NSString *cache = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+//   item1.detailTitle = [NSString stringWithFormat:@"%.1lfM",[FNFileManager getSizeWithFilePath:cache]/1000000.0];
     // 模拟缓存大小
-//    item1.detailTitle = @"80.0M";
+    item1.detailTitle = @"80.0M";
     self.persentL.text = item1.detailTitle;
     self.cacheContent = [self.persentL.text floatValue];
     

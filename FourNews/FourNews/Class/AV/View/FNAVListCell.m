@@ -140,7 +140,7 @@
     [self.replyButton setImage:[UIImage imageNamed:@"pluginmanager_icon_message"] forState:UIControlStateNormal];
     [self.replyButton setImage:[UIImage imageNamed:@"pluginmanager_icon_message"] forState:UIControlStateHighlighted];
     NSString *replyCount = [NSString stringWithFormat:@"%@",_listItem.replyCount];
-    [self.replyButton addTarget:self action:@selector(replyBtnClick) forControlEvents:UIControlEventTouchUpInside];
+
     [self.replyButton setTitle:replyCount forState:UIControlStateNormal];
     [self.replyButton setTitleColor:FNColor(150, 150, 150) forState:UIControlStateNormal];
     [self.replyButton setTitleColor:FNColor(150, 150, 150) forState:UIControlStateHighlighted];
