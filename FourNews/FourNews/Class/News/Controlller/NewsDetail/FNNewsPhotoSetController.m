@@ -129,7 +129,7 @@ static NSString * const ID = @"collec";
     descView.descItem = _photoSet[0];
     CGFloat descViewH = [FNNewsPhotoDescView heightWithPhotoSet:_photoSet];
     descView.frame = CGRectMake(0, self.view.height-FNBottomBarHeight-descViewH, FNScreenW, descViewH);
-    descView.indexL.text = [NSString stringWithFormat:@"1/%ld",_photoSet.count];
+    descView.indexL.text = [NSString stringWithFormat:@"1/%ld",(unsigned long)_photoSet.count];
     self.descView = descView;
     [self.view addSubview:descView];
 }
@@ -154,7 +154,7 @@ static NSString * const ID = @"collec";
     [self.view addSubview:backBtn];
     // 右边评论按钮
     FNNewsReplyButton *replyBtn = [[FNNewsReplyButton alloc] init];
-    NSString *replyStr = [NSString stringWithFormat:@"%ld评论",_listItem.replyCount];
+    NSString *replyStr = [NSString stringWithFormat:@"%ld评论",(long)_listItem.replyCount];
     CGSize replyBtnSize = [replyStr sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}];
     [replyBtn addTarget:self action:@selector(replyBtnClick) forControlEvents:UIControlEventTouchUpInside];
     replyBtn.frame = (CGRect){FNScreenW-replyBtnSize.width-10, 25,replyBtnSize.width+10,30};

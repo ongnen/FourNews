@@ -19,12 +19,18 @@ CGFloat const YJStateBarH = 20;
 NSString * const FNTabBarButtonRepeatClickNotification = @"FNTabBarButtonRepeatClickNotification";
 
 /** titleButton被重复点击的通知 */
-NSString * const FNTitleButtonRepeatClickNotification = @"FNTitleButtonRepeatClickNotification";
+NSString * const FNNewsTitleButtonRepeatClickNotification = @"FNTitleButtonRepeatClickNotification";
+/** titleButton被重复点击的通知 */
+NSString * const FNAVTitleButtonRepeatClickNotification = @"FNTitleButtonRepeatClickNotification";
+/** 准备好刷新的通知 */
+NSString * const FNRefreshReady = @"FNReadTabBarRefreshReady";
 
 /** AV模块左右滑动跳转栏目的通知 */
 NSString * const AVListEndDecelerating = @"AVListEndDecelerating";
 
 /** 无网络且无缓存的通知 */
 NSString * const FNNewsNetInvalid = @"FNNewsNetInvalid";
+
+
 
 CGFloat const YJMargin = 10;

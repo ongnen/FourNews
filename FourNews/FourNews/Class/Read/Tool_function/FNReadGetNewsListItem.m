@@ -16,10 +16,13 @@
 + (void)getNewsListItemsWithCount:(NSInteger)count :(void (^)(NSArray *))complete
 {
     NSString *str = [NSString stringWithFormat:@"http://c.3g.163.com/recommend/getSubDocPic?from=yuedu&passport=&devId=MXMBjPFGwQtsVvvyqiU4T%%2FwBdkQM4meyMjoBvP7QRADOvWNXF4MglqFoOcM%%2Fy4na&size=yingjie0&version=5.6.0&spever=false&net=wifi&lat=&lon=&ts=1460206079&sign=OSD0%%2FJHZ9TcMrgys4VRhqKQkwU5u9%%2Fv0n4Dzzr8TzIl48ErR02zJ6%%2FKXOnxX046I&encryption=1&canal=appstore"];
-    NSString *urlStr = [str stringByReplacingOccurrencesOfString:@"yingjie" withString:[NSString stringWithFormat:@"%ld",count]];
+    NSString *urlStr = [str stringByReplacingOccurrencesOfString:@"yingjie" withString:[NSString stringWithFormat:@"%ld",(long)count]];
     [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {
     } success:^(id responseObject, NSURLSessionDataTask *task) {
         NSArray *items = [FNReadListItem mj_objectArrayWithKeyValuesArray:responseObject[@"推荐"]];
+        // 请求成功后重置isReady
+        [[NSNotificationCenter defaultCenter] postNotificationName:FNRefreshReady object:nil];
+        
         complete(items);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);

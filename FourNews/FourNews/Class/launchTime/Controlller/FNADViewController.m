@@ -148,6 +148,7 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
     [tabBarVC.view addSubview:coverImgV];
     tabBarVC.coverImgView = coverImgV;
     [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
+    [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
 }
 /** 截屏 */
 - (UIImage *)drawScreen

@@ -43,19 +43,19 @@
     NSDateComponents *componentNews = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:newsDate];
     
     if ((componentNow.day-componentNews.day)==1) {
-        return [NSString stringWithFormat:@"昨天 %ld:%ld",componentNews.hour,componentNews.minute];
+        return [NSString stringWithFormat:@"昨天 %ld:%ld",(long)componentNews.hour,componentNews.minute];
     } else if ((componentNow.day-componentNews.day)==2) {
-        return [NSString stringWithFormat:@"前天 %ld:%ld",componentNews.hour,componentNews.minute];
+        return [NSString stringWithFormat:@"前天 %ld:%ld",(long)componentNews.hour,componentNews.minute];
     } else if ((componentNow.day-componentNews.day)>2 | (componentNow.month-componentNews.month)>0 | (componentNow.year-componentNews.year)>0) {
         if ((componentNow.year-componentNews.year)>0) {
-            return [NSString stringWithFormat:@"%ld.%ld.%ld %ld:%ld",componentNews.year,componentNews.month,componentNews.day,componentNews.hour,componentNews.minute];
+            return [NSString stringWithFormat:@"%ld.%ld.%ld %ld:%ld",(long)componentNews.year,componentNews.month,componentNews.day,componentNews.hour,componentNews.minute];
         }
-        return [NSString stringWithFormat:@"%ld.%ld %ld:%ld",componentNews.month,componentNews.day,componentNews.hour,componentNews.minute];
+        return [NSString stringWithFormat:@"%ld.%ld %ld:%ld",(long)componentNews.month,componentNews.day,componentNews.hour,componentNews.minute];
         
     } else {
         NSTimeInterval timeInterval = [localDate timeIntervalSinceDate:newsDate];
         if (timeInterval < 60) {
-            return [NSString stringWithFormat:@"%ld秒前",(NSInteger)timeInterval];
+            return [NSString stringWithFormat:@"%ld秒前",(long)timeInterval];
         } else if (timeInterval < 60*60) {
             return [NSString stringWithFormat:@"%ld分前",(NSInteger)timeInterval/60];
         } else {

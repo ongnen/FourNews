@@ -59,11 +59,11 @@ static FMDatabaseQueue *_queue;
         // 读取数据库
         __block FMResultSet *rs = nil;
         if (params.timeid == 0) {
-            NSString *sql = [NSString stringWithFormat:@"select * from %@ WHERE isread = 0 ORDER BY timeid DESC LIMIT 0,%ld;",t_name,params.count];
+            NSString *sql = [NSString stringWithFormat:@"select * from %@ WHERE isread = 0 ORDER BY timeid DESC LIMIT 0,%ld;",t_name,(long)params.count];
             rs = [db executeQuery:sql];
             
         } else {
-            NSString *sql = [NSString stringWithFormat:@"select * from %@ WHERE isread = 0 ORDER BY timeid DESC LIMIT 0,%ld;",t_name,params.count];
+            NSString *sql = [NSString stringWithFormat:@"select * from %@ WHERE isread = 0 ORDER BY timeid DESC LIMIT 0,%ld;",t_name,(long)params.count];
             rs = [db executeQuery:sql];
         }
         
@@ -77,13 +77,13 @@ static FMDatabaseQueue *_queue;
     if (params.timeid != 0) {
         // 给取出的数据添加阅读记录
         [_queue inDatabase:^(FMDatabase *db) {
-            NSString *sql1 = [NSString stringWithFormat:@"UPDATE %@ SET isread = 1 WHERE isread = 0 ORDER BY timeid DESC LIMIT 0,%ld;",t_name,params.count];
+            NSString *sql1 = [NSString stringWithFormat:@"UPDATE %@ SET isread = 1 WHERE isread = 0 ORDER BY timeid DESC LIMIT 0,%ld;",t_name,(long)params.count];
             [db executeUpdate:sql1];
         }];
     } else {
         // 为读取的数据加阅读记录
         [_queue inDatabase:^(FMDatabase *db) {
-            NSString *sql1 = [NSString stringWithFormat:@"UPDATE %@ SET isread = 1 WHERE isread = 0 ORDER BY timeid DESC LIMIT 0,%ld;",t_name,params.count];
+            NSString *sql1 = [NSString stringWithFormat:@"UPDATE %@ SET isread = 1 WHERE isread = 0 ORDER BY timeid DESC LIMIT 0,%ld;",t_name,(long)params.count];
             [db executeUpdate:sql1];
         }];
     }

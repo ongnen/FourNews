@@ -77,11 +77,6 @@ static NSString * const FOOT = @"footer";
 #pragma mark - tabBarButton被点击调用的方法
 - (void)tabBarButtonRepeatClick
 {
-    // 不在当前窗口 返回
-    if (self.view.window == nil) return;
-    // 不再屏幕中间 返回
-    if (self.tableView.scrollsToTop == NO) return;
-    
     [self.tableView.mj_header beginRefreshing];
 }
 - (void)bottomDragRefreshData

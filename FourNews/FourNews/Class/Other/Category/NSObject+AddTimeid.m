@@ -31,7 +31,7 @@
         customFormat1.dateFormat = @"yyyyMMddHHmmss";
         NSString *customDateStr1 = [customFormat1 stringFromDate:newsDate1];
      
-        long timeIndex = [customDateStr1 longLongValue];
+        long timeIndex = (long)[customDateStr1 longLongValue];
         
         NSNumber *timeid = [item valueForKey:@"timeid"];
         timeid = @(timeIndex);

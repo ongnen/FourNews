@@ -59,16 +59,25 @@
     }
     [self setNeedsDisplay];
 }
-//#pragma mark - 保存整体文字颜色
-//- (void)setTextColor:(UIColor *)textColor
-//{
-//    _textColor = textColor;
-//}
-//#pragma mark - 保存整体字体
-//- (void)setFont:(UIFont *)font
-//{
-//    _font = font;
-//}
+#pragma mark - 保存整体文字颜色
+- (void)setTextColor:(UIColor *)textColor
+{
+    _textColor = textColor;
+    [_string addAttribute:NSForegroundColorAttributeName value:_textColor range:NSMakeRange(0, [_string length])];
+    [self setNeedsDisplay];
+}
+#pragma mark - 保存整体字体
+- (void)setFont:(UIFont *)font
+{
+    _font = font;
+    [_string addAttribute:NSFontAttributeName value:_font range:NSMakeRange(0, [_string length])];
+    [self setNeedsDisplay];
+}
+- (void)setLineSpace:(CGFloat)lineSpace
+{
+    [self setNeedsDisplay];
+}
+
 #pragma mark - 添加所有富文本属性
 - (void)setString:(NSMutableAttributedString *)string
 {
@@ -107,7 +116,11 @@
 {
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     style.alignment = NSTextAlignmentJustified;
-    style.lineSpacing = 5;
+    if (_lineSpace == 0) {
+        style.lineSpacing = 5;
+    } else {
+        style.lineSpacing = _lineSpace;
+    }
     [_string addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, _string.length)];
 }
 

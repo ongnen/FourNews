@@ -35,7 +35,7 @@
 @property (nonatomic, weak) UIImageView *plshdImgV;
 
 @property (nonatomic, assign) NSInteger lastTimeid;
-
+@property (nonatomic, assign) BOOL isReady;
 @end
 
 @implementation FNNewsListController
@@ -68,6 +68,8 @@
 
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.refreshCount = 1;
+    // 初始化
+    _isReady = YES;
     // 设置估算高度，减少heightForRowAtIndexPath调用频率
     self.tableView.estimatedRowHeight = 100.0;
     // 设置刷新控件
@@ -76,7 +78,8 @@
     [self launchRefresh];
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNNewsTitleButtonRepeatClickNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isReadyChange) name:FNRefreshReady object:nil];
     
     // 右边内容条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
@@ -129,7 +132,12 @@
     // 不再屏幕中间 返回
     if (self.tableView.scrollsToTop == NO) return;
     
-    [self.tableView.mj_header beginRefreshing];
+    // 防止数据返回前重复刷新
+    if (_isReady == YES) {
+        [self.tableView.mj_header beginRefreshing];
+        _isReady = NO;
+    }
+    
 }
 #pragma mark - 上下拉刷新的方法
 - (void)bottomDragRefreshData
@@ -250,5 +258,8 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
+- (void)isReadyChange
+{
+    _isReady = YES;
+}
 @end

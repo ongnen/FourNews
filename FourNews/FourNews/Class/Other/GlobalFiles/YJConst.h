@@ -20,7 +20,11 @@ UIKIT_EXTERN NSString * const FNTabBarButtonRepeatClickNotification;
 
 
 /** titleButton被重复点击的通知 */
-UIKIT_EXTERN NSString * const FNTitleButtonRepeatClickNotification;
+UIKIT_EXTERN NSString * const FNNewsTitleButtonRepeatClickNotification;
+/** titleButton被重复点击的通知 */
+UIKIT_EXTERN NSString * const FNAVTitleButtonRepeatClickNotification;
+/** 准备好刷新的通知 */
+UIKIT_EXTERN NSString * const FNRefreshReady;
 
 UIKIT_EXTERN CGFloat const YJMargin;
 
@@ -30,3 +34,7 @@ UIKIT_EXTERN NSString * const AVListEndDecelerating;
 /** 无网络且无缓存的通知 */
 UIKIT_EXTERN NSString * const FNNewsNetInvalid;
 
+/** 准备好刷新的通知 */
+UIKIT_EXTERN NSString * const FNNewsTabBarRefreshReady;
+/** 准备好刷新的通知 */
+UIKIT_EXTERN NSString * const FNNewsTitleRefreshReady;

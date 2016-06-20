@@ -55,7 +55,7 @@
     YJSettingGroupItem *group = self.groupArray[0];
     YJSettingCellArrowItem *item2 = group.items[2];
     YJSettingCellBaseItem *item0 = group.items[0];
-    item2.detailTitle = [NSString stringWithFormat:@"%ldM",[FNUserDefaults integerForKey:@"mostCache"]];
+    item2.detailTitle = [NSString stringWithFormat:@"%ldM",(long)[FNUserDefaults integerForKey:@"mostCache"]];
     self.realPersent = [item0.detailTitle floatValue]/[item2.detailTitle floatValue];
     if ([item2.detailTitle isEqualToString:@"1024M"]) {
         item2.detailTitle = @"1G";
@@ -98,7 +98,7 @@
     // 历史记录模型
     YJSettingCellBaseItem *item2 = [YJSettingCellBaseItem settingRowItemWithTitle:@"清除历史记录" image:nil];
     NSMutableArray *historySkim = [[FNUserDefaults objectWithKey:@"historySkim"] mutableCopy];
-    item2.detailTitle = [NSString stringWithFormat:@"%ld条",historySkim.count];
+    item2.detailTitle = [NSString stringWithFormat:@"%ld条",(unsigned long)historySkim.count];
     __weak typeof(YJSettingCellBaseItem *) weakItem2 = item2;
     item2.option = ^{
         // 清除历史记录
@@ -106,7 +106,7 @@
         [FNUserDefaults setObject:historySkim forKey:@"historySkim"];
         // 重新给模型赋值
         NSMutableArray *historySkim1 = [[FNUserDefaults objectWithKey:@"historySkim"] mutableCopy];
-        weakItem2.detailTitle = [NSString stringWithFormat:@"%ld条",historySkim1.count];
+        weakItem2.detailTitle = [NSString stringWithFormat:@"%ld条",(unsigned long)historySkim1.count];
         // 刷新
         [weakSelf.tableView reloadData];
     };
@@ -117,7 +117,7 @@
     if ([FNUserDefaults integerForKey:@"mostCache"] == 0) {
         item3.detailTitle = @"100M";
     } else {
-        item3.detailTitle = [NSString stringWithFormat:@"%ldM",[FNUserDefaults integerForKey:@"mostCache"]];
+        item3.detailTitle = [NSString stringWithFormat:@"%ldM",(long)[FNUserDefaults integerForKey:@"mostCache"]];
         if ([item3.detailTitle isEqualToString:@"1024M"]) {
             item3.detailTitle = @"1G";
         }

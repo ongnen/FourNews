@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSMutableArray<FNReadListItem *> *newsListArray;
 
 @property (nonatomic, weak) UIImageView *plshdImgV;
+@property (nonatomic, assign) BOOL isReady;
 
 @end
 
@@ -55,6 +56,8 @@
 {
     [super viewDidLoad];
     [self.view addSubview:self.plshdImgV];
+    // 初始化
+    _isReady = YES;
     // 设置刷新控件
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
@@ -62,29 +65,20 @@
     
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNTitleButtonRepeatClickNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isReadyChange) name:FNRefreshReady object:nil];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 #pragma mark - tabBarButton被点击调用的方法
 - (void)tabBarButtonRepeatClick
 {
-    // 不在当前窗口 返回
-    if (self.view.window == nil) return;
-    // 不再屏幕中间 返回
-    if (self.tableView.scrollsToTop == NO) return;
-    
-    [self.tableView.mj_header beginRefreshing];
+    // 防止数据返回前重复刷新
+    if (_isReady == YES) {
+        [self.tableView.mj_header beginRefreshing];
+        _isReady = NO;
+    }
 }
-- (void)titleButtonRepeatClick
-{
-    // 不在当前窗口 返回
-    if (self.view.window == nil) return;
-    // 不再屏幕中间 返回
-    if (self.tableView.scrollsToTop == NO) return;
-    
-    [self.tableView.mj_header beginRefreshing];
-}
+
 #pragma mark - 上下拉刷新的方法
 - (void)bottomDragRefreshData
 {
@@ -158,7 +152,10 @@
         
     }];
 }
-
-
+#pragma mark - 准备刷新
+- (void)isReadyChange
+{
+    _isReady = YES;
+}
 
 @end

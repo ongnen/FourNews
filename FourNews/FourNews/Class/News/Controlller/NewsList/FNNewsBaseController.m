@@ -39,7 +39,8 @@
     [self setContentScrollView];
     [self setTitleScrollView];
     [self setTitleScrollViewBtn];
-    [self titleViewBtnClick:self.titleBtnArray[0]];
+//    [self titleViewBtnClick:self.titleBtnArray[0]];
+    [self showTargetViewWithIndex:0];
 }
 #pragma mark - 设置标题scrollView
 - (void)setTitleScrollView
@@ -86,7 +87,7 @@
     // 发布通知
     if (self.selectedBtn == btn) {
         // object = nil 匿名通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:FNTitleButtonRepeatClickNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:FNNewsTitleButtonRepeatClickNotification object:nil];
     }
     // 1.标题状态改变
     self.selectedBtn.transform = CGAffineTransformIdentity;
@@ -179,16 +180,18 @@
     // 对左右两个新闻界面进行提前缓存
     if (index == 0) {
         UITableViewController *rightTableVC = (UITableViewController*)self.childViewControllers[index+1];
-        if (rightTableVC.tableView.window) return;
-        [self.contentScrollView addSubview:rightTableVC.view];
-        rightTableVC.view.frame = CGRectMake(FNScreenW * (index+1), 0, FNScreenW, FNScreenH);
-        rightTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+        if (!rightTableVC.tableView.window) {
+            [self.contentScrollView addSubview:rightTableVC.view];
+            rightTableVC.view.frame = CGRectMake(FNScreenW * (index+1), 0, FNScreenW, FNScreenH);
+            rightTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+        }
     } else if (index == self.childViewControllers.count-1) {
         UITableViewController *leftTableVC = (UITableViewController*)self.childViewControllers[index-1];
-        if (leftTableVC.tableView.window) return;
-        [self.contentScrollView addSubview:leftTableVC.view];
-        leftTableVC.view.frame = CGRectMake(FNScreenW * (index-1), 0, FNScreenW, FNScreenH);
-        leftTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+        if (!leftTableVC.tableView.window) {
+            [self.contentScrollView addSubview:leftTableVC.view];
+            leftTableVC.view.frame = CGRectMake(FNScreenW * (index-1), 0, FNScreenW, FNScreenH);
+            leftTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+        };
     } else {
         UITableViewController *rightTableVC = (UITableViewController*)self.childViewControllers[index+1];
         if (!rightTableVC.tableView.window) {

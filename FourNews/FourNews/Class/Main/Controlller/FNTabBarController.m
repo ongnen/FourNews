@@ -21,6 +21,7 @@
 @property (nonatomic, strong) FNAVViewController *avVC;
 @property (nonatomic, strong) FNTopicViewController *topicVC;
 @property (nonatomic, strong) FNMeController *meVC;
+@property (nonatomic, assign) BOOL isReady;
 
 
 @property (nonatomic, strong) UITabBarItem *selectedItem;
@@ -39,11 +40,21 @@
     self.selectedItem = self.childViewControllers[0].tabBarItem;
     // 设置tabBar按钮的选中颜色
     [self.tabBar setTintColor:[UIColor redColor]];
+    // isReady初始值为yes
+    _isReady = YES;
+    // 准备好刷新的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isReadyChange) name:FNRefreshReady object:nil];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
     
+    [super viewWillAppear:animated];
+    NSLog(@"viewWillAppear");
 }
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    NSLog(@"viewDidAppear");
     // 广告界面与首页交接时的动画
     [self startAppearAnimation];
 }
@@ -87,10 +98,13 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    if (self.selectedItem == item) {
+    
+    if (self.selectedItem == item && _isReady == YES) {
         // 发布tabBarButton被点击的通知
         // 这个通知的回调是在点击它的时候直接刷新对应模块的数据
         [[NSNotificationCenter defaultCenter] postNotificationName:FNTabBarButtonRepeatClickNotification object:nil];
+        // 未准备好再次刷新
+        _isReady = NO;
     }
     self.selectedItem = item;
 }
@@ -104,6 +118,11 @@
     } completion:^(BOOL finished) {
         [self.coverImgView removeFromSuperview];
     }];
+}
+
+- (void)isReadyChange
+{
+    _isReady = YES;
 }
 
 @end

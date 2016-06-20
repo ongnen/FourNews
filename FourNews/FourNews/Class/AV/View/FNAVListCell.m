@@ -117,7 +117,7 @@
     // 图片内部时间及播放次数Label
     NSString *timeStr = [NSString stringWithFormat:@"%02d:%02d",[_listItem.length  intValue]/60,[_listItem.length  intValue]%60];
     
-    NSString *playCountStr = [NSString stringWithFormat:@"%ld播放",_listItem.playCount];
+    NSString *playCountStr = [NSString stringWithFormat:@"%ld播放",(long)_listItem.playCount];
     if (_listItem.playCount >9999) {
         playCountStr =  [NSString stringWithFormat:@"%0.1f万播放",_listItem.playCount/10000.0];
     }

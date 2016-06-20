@@ -27,6 +27,7 @@
         // 如果有网络则刷新最新数据
         if (mgr.isReachable) {
             NSString *urlStr = [NSString stringWithFormat:@"http://c.3g.163.com/nc/article/%@/%ld0-20.html",pgmid,count*2];
+            
             [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {
             } success:^(id responseObject, NSURLSessionDataTask *task) {
                 // 转模型
@@ -56,6 +57,8 @@
                         return NSOrderedDescending;
                     }
                 }];
+                // 请求成功后重置isReady
+                [[NSNotificationCenter defaultCenter] postNotificationName:FNRefreshReady object:nil];
                 
                 complete(newArray);
             } failure:^(NSURLSessionDataTask *task, NSError *error) {

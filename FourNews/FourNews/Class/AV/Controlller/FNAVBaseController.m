@@ -46,7 +46,8 @@
     [self setContentScrollView];
     [self setTitleScrollView];
     [self setTitleScrollViewBtn];
-    [self titleViewBtnClick:self.titleBtnArray[0]];
+//    [self titleViewBtnClick:self.titleBtnArray[0]];
+    [self showTargetViewWithIndex:0];
 }
 #pragma mark - 设置标题scrollView
 - (void)setTitleScrollView
@@ -93,7 +94,7 @@
     // 发布通知
     if (self.selectedBtn == btn) {
         // object = nil 匿名通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:FNTitleButtonRepeatClickNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:FNAVTitleButtonRepeatClickNotification object:nil];
     }
     self.selectedBtn.transform = CGAffineTransformIdentity;
     self.selectedBtn.selected = NO;

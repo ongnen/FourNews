@@ -146,7 +146,7 @@
 - (void)setTopReplyBtn
 {
     FNNewsReplyButton *replyBtn = [[FNNewsReplyButton alloc] init];
-    NSString *replyStr = [NSString stringWithFormat:@"%ld评论",_detailItem.replyCount];
+    NSString *replyStr = [NSString stringWithFormat:@"%ld评论",(long)_detailItem.replyCount];
     CGSize replyBtnSize = [replyStr sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}];
     [replyBtn addTarget:self action:@selector(replyClick) forControlEvents:UIControlEventTouchUpInside];
     replyBtn.bounds = (CGRect){0, 0,replyBtnSize.width+10,30};

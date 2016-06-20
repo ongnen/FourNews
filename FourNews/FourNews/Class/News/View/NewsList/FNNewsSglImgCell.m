@@ -48,7 +48,7 @@
 - (void)setupReplyBtn
 {
     
-    NSString *replyStr = [NSString stringWithFormat:@"%ld评论",_contItem.replyCount];
+    NSString *replyStr = [NSString stringWithFormat:@"%ld评论",(long)_contItem.replyCount];
     if (_contItem.replyCount>9999) {
         replyStr = [NSString stringWithFormat:@"%.1lf万评论",_contItem.replyCount/10000.0];
     }

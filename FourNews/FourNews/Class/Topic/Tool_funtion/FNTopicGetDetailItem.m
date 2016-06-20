@@ -25,7 +25,7 @@
 
 + (void)getTopicNewsHotDetailWithExpertId:(NSString *)expertId :(NSInteger)pageCount :(void (^)(NSMutableArray *))complete
 {
-    NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/newstopic/list/latestqa/%@/%ld0-10.html",expertId,pageCount];
+    NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/newstopic/list/latestqa/%@/%ld0-10.html",expertId,(long)pageCount];
     [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {
     } success:^(id responseObject, NSURLSessionDataTask *task) {
         NSMutableArray *quesAnsArray = [NSMutableArray array];
