@@ -22,6 +22,8 @@
 @property (nonatomic, assign) CGPoint firstP;
 @property (nonatomic, assign) BOOL isFirstP;
 @property (nonatomic, assign) BOOL isEdgeGes;
+@property (nonatomic, assign) BOOL isSlide;
+@property (nonatomic, assign) BOOL isChanging;
 @end
 
 @implementation FNNavigationController
@@ -41,8 +43,6 @@
     popRecognizer.delegate = self;
     popRecognizer.maximumNumberOfTouches = 1;
     [gestureView addGestureRecognizer:popRecognizer];
-    // 监听通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SettingAnimaControllerPop) name:FNSettingAnimaControllerPop object:nil];
 }
 // 重写push方法进行某些设置
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
@@ -68,10 +68,19 @@
 
     
 }
-// 返回的方法
-- (void)back
+
+//// 返回的方法
+//- (void)back
+//{
+//    [self popViewControllerAnimated:YES];
+//    // 发出设置控制器出栈的通知
+//    [[NSNotificationCenter defaultCenter] postNotificationName:FNSettingBackBtnClick object:nil];
+//}
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
-    [self popViewControllerAnimated:YES];
+    _isChanging = YES;
+    return [super popViewControllerAnimated:animated];
 }
 
 - (void)pan:(UIPanGestureRecognizer *)pan
@@ -85,25 +94,32 @@
     if (![_currentVC isKindOfClass:[FNMeSettingController class]] && ![_currentVC isKindOfClass:[FNSettingMostCacheController class]]) return;
     if ([_currentVC isKindOfClass:[FNMeSettingController class]]) {
         if (pan.state == UIGestureRecognizerStateBegan) {
+            _isSlide = YES;
             _waveAnimaView = _settingVC.standHeader;
-            
             [FNWindow addSubview:_waveAnimaView];
             // 正在拖拽，改变坐标
             [FNWindow bringSubviewToFront:_waveAnimaView];
             _waveAnimaView.frame = CGRectMake(panOffsetX, 64, FNScreenW, 300);
         }
+        // 修复动画BUG
+        if (!_isChanging) {
+            [_waveAnimaView removeFromSuperview];
+            return;
+        }
         if (pan.state == UIGestureRecognizerStateChanged) {
             if (_isFirstP) {
+                [FNWindow addSubview:_waveAnimaView];
+                // 正在拖拽，改变坐标
+                [FNWindow bringSubviewToFront:_waveAnimaView];
                 _isFirstP = NO;
                 CGPoint panOffset = [pan translationInView:pan.view];
-                if (panOffset.x&&(panOffset.x/panOffset.y>1 || panOffset.x/panOffset.y>1)) {
+                NSLog(@"%@",NSStringFromCGPoint(panOffset));
+                if (panOffset.x&&(panOffset.x/panOffset.y>1 || panOffset.x/panOffset.y<-1)) {
                     _isEdgeGes = YES;
                 } else {
                     _isEdgeGes = NO;
                 }
             }
-            
-            
             if (_isEdgeGes == NO) {
                 [_waveAnimaView removeFromSuperview];
                 return;
@@ -144,15 +160,13 @@
         [_screenImgV removeFromSuperview];
 //        _waveAnimaView = nil;
         _isFirstP = YES;
+        _isChanging = NO;
     }
         
     
     
 }
-// 当设置控制器出栈时移除cover
-- (void)SettingAnimaControllerPop{
-    [_waveAnimaView removeFromSuperview];
-}
+
 /** 拿到评论区截图 */
 - (UIImage *)setDrawSetttingImage
 {

@@ -29,9 +29,11 @@
 @property (nonatomic, assign) BOOL isFirstLoad;
 
 @property (nonatomic, strong) YJWaveAnimationTool *waveToll;
+@property (nonatomic, strong) YJWaveAnimationTool *standWaveToll;
 
 @property (nonatomic, strong) NSString *cacheStr;
 
+@property (nonatomic, assign) BOOL isClickGoBack;
 
 @end
 
@@ -52,6 +54,8 @@
     
     [self addGroup0];
     
+    // 监听通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backBtnClick) name:FNSettingBackBtnClick object:nil];
     _isFirstLoad = YES;
 }
 
@@ -81,7 +85,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    if (!_isGoNext) {
+    if (!_isGoNext && !_isClickGoBack) {
         [[UIApplication sharedApplication].keyWindow addSubview:_standHeader];
     }
     [super viewWillDisappear:animated];
@@ -187,6 +191,7 @@
     standHeader.frame = CGRectMake(0, 64, FNScreenW, 300);
     standHeader.userInteractionEnabled = NO;
     YJWaveAnimationTool *standWaveToll = [YJWaveAnimationTool shareWaveAnimationTool];
+    _standWaveToll = standWaveToll;
     standWaveToll.inView = standHeader;
     UILabel *standPersntL = standWaveToll.persentL;
     standWaveToll.persentL = standPersntL;
@@ -207,11 +212,15 @@
     [_waveToll fallAnimationWithDuration:1.0 target:nil action:nil completion:^{
         [self.tableView reloadData];
     }];
-    
+    [_standWaveToll fallAnimationWithDuration:1.0 target:nil action:nil completion:^{
+        
+    }];
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0/80.0 target:self selector:@selector(changePersent) userInfo:nil repeats:YES];
     self.timer = timer;
 }
 - (void)changePersent{
+    _standWaveToll.persentL.text = @"0.0M";
+    
     self.persentL.text = [NSString stringWithFormat:@"%0.1lfM",(60-self.index)/60.0*self.cacheContent];
     self.index++;
     if (self.index == 61) {
@@ -226,7 +235,9 @@
     self.backV.frame = CGRectMake(0, scrollView.contentOffset.y, FNScreenW, fabs(scrollView.contentOffset.y));
 }
 
-
+- (void)backBtnClick{
+    _isClickGoBack = YES;
+}
 
 
 @end

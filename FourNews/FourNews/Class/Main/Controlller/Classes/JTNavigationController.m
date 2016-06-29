@@ -50,6 +50,8 @@
 }
 
 - (void)didTapBackButton {
+    // 发出设置控制器出栈的通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:FNSettingBackBtnClick object:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

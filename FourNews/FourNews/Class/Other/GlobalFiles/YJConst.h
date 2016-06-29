@@ -40,3 +40,9 @@ UIKIT_EXTERN NSString * const FNNewsTabBarRefreshReady;
 UIKIT_EXTERN NSString * const FNNewsTitleRefreshReady;
 /** 发出设置控制器出栈的通知 */
 UIKIT_EXTERN NSString * const FNSettingAnimaControllerPop;
+
+/** 点击导航栏返回按钮的通知 */
+UIKIT_EXTERN NSString * const FNSettingBackBtnClick;
+
+
+

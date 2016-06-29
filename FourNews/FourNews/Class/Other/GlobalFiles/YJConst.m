@@ -33,5 +33,7 @@ NSString * const FNNewsNetInvalid = @"FNNewsNetInvalid";
 
 /** 发出设置控制器出栈的通知 */
 NSString * const FNSettingAnimaControllerPop = @"FNSettingAnimaControllerPop";
+/** 点击导航栏返回按钮的通知 */
+NSString * const FNSettingBackBtnClick = @"FNSettingBackBtnClick";
 
 CGFloat const YJMargin = 10;
