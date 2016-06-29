@@ -207,19 +207,19 @@
     }
     
     // 保持最多5个控制器的View存在，性能优化
-    NSInteger tableVCIndex = 0;
-    for (UITableViewController *tableVC in self.childViewControllers) {
-        if (fabs((double)(tableVCIndex-index)) > 2) {
-            [tableVC.view removeFromSuperview];
-        }
-        tableVCIndex++;
-    }
-    
+
+
     for (int i = 0;i < self.childViewControllers.count ;i++) {
         UITableViewController *tableVC = self.childViewControllers[i];
-        
-        // 当scrollsToTop属性为yes时，再点击顶部状态栏
-        tableVC.tableView.scrollsToTop = (i == index);
+    // 保持最多5个控制器的View存在，性能优化
+        if (fabs((double)(i-index)) > 2 && tableVC.isViewLoaded) {
+            [tableVC.view removeFromSuperview];
+        }
+//         当scrollsToTop属性为yes时，再点击顶部状态栏
+//         解决懒加载失败的BUG
+        if (tableVC.isViewLoaded) {
+            tableVC.tableView.scrollsToTop = (i == index);
+        }
     }
 
 }

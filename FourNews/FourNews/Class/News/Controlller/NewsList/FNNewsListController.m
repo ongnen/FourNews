@@ -40,6 +40,10 @@
 
 @implementation FNNewsListController
 
+- (void)loadView
+{
+    [super loadView];
+}
 
 - (NSMutableArray *)newsListArray
 {
@@ -75,7 +79,10 @@
     // 设置刷新控件
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
-    [self launchRefresh];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self launchRefresh];
+        
+    });
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNNewsTitleButtonRepeatClickNotification object:nil];

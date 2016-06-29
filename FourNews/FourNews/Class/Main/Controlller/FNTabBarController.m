@@ -99,7 +99,6 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    
     if (self.selectedItem == item && _isReady == YES) {
         // 发布tabBarButton被点击的通知
         // 这个通知的回调是在点击它的时候直接刷新对应模块的数据

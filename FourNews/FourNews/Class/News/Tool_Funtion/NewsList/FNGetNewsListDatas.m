@@ -30,6 +30,7 @@
             
             [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {
             } success:^(id responseObject, NSURLSessionDataTask *task) {
+                NSLog(@"complete");
                 // 转模型
                 NSInteger loc = [pgmid rangeOfString:@"/"].location+1;
                 NSArray *dicArray = responseObject[[pgmid substringFromIndex:loc]];
@@ -59,7 +60,7 @@
                 }];
                 // 请求成功后重置isReady
 //                [[NSNotificationCenter defaultCenter] postNotificationName:FNRefreshReady object:nil];
-                NSLog(@"complete");
+                
                 complete(newArray);
             } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 NSLog(@"%@",error);
