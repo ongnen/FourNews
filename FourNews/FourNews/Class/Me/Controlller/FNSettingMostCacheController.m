@@ -25,6 +25,29 @@
     [self addGroup1];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.tableView.scrollEnabled = NO;
+//    [self setDrawSetttingImage];
+}
+/** 拿到评论区截图 */
+- (UIImage *)setDrawSetttingImage
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(FNScreenW, FNScreenH-64), NO, 0);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
+    [self.view.layer renderInContext:ctx];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // 将图片导入桌面
+    NSData *data = UIImagePNGRepresentation(image);
+    [data writeToFile:[NSString stringWithFormat:@"/Users/zyj/Desktop/imag1.png"]atomically:YES];
+    return image;
+}
+
 - (void)addGroup1
 {
     YJSettingSelectedItem *item1 = [[YJSettingSelectedItem alloc] init];

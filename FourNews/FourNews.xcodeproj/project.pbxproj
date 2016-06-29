@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		148FB712AD7EC97AB9D8DD5B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE3CB63C7B3D0A5B2F274AC /* libPods.a */; };
+		3E7578931D1E708200A74B4E /* FNADViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E7578921D1E708200A74B4E /* FNADViewController.xib */; };
 		841EE6241CB5330F004A62F1 /* FNFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 841EE6231CB5330F004A62F1 /* FNFileManager.m */; };
 		8442B6FC1CC79C6600B90DCB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442B6FE1CC79C6600B90DCB /* InfoPlist.strings */; };
 		846967631CB60FA500747CF7 /* UIBarButtonItem+YJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 846967621CB60FA500747CF7 /* UIBarButtonItem+YJ.m */; };
@@ -28,7 +29,6 @@
 		8473DDF61CBA3762007362F2 /* FNAVListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8473DDF51CBA3762007362F2 /* FNAVListItem.m */; };
 		8473DDF91CBA3C37007362F2 /* FNAVListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8473DDF81CBA3C37007362F2 /* FNAVListCell.m */; };
 		8473DDFB1CBA3C45007362F2 /* FNAVListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8473DDFA1CBA3C45007362F2 /* FNAVListCell.xib */; };
-		8473DE0D1CBA7A3F007362F2 /* NewFeatureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8473DE0A1CBA7A3F007362F2 /* NewFeatureCell.m */; };
 		847468C01CE2C1C20097F29C /* FNNewsQRCodeScanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847468BF1CE2C1C20097F29C /* FNNewsQRCodeScanController.m */; };
 		8475206F1CB631C90008B8DC /* FNNewsSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475206E1CB631C90008B8DC /* FNNewsSearchController.m */; };
 		847520721CB636CE0008B8DC /* FNNewsGetHotWordsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 847520711CB636CE0008B8DC /* FNNewsGetHotWordsList.m */; };
@@ -50,7 +50,6 @@
 		848531831CC866750077AD39 /* FNNewsDetailShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 848531821CC866750077AD39 /* FNNewsDetailShareView.m */; };
 		848531851CC866810077AD39 /* FNNewsDetailShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848531841CC866810077AD39 /* FNNewsDetailShareView.xib */; };
 		848740C31CBF5AE00053C787 /* FNADViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848740C21CBF5AE00053C787 /* FNADViewController.m */; };
-		848740C51CBF5B3F0053C787 /* FNADViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848740C41CBF5B3F0053C787 /* FNADViewController.xib */; };
 		848740C91CBF5CA60053C787 /* FNADItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 848740C81CBF5CA60053C787 /* FNADItem.m */; };
 		848740D41CBF7B770053C787 /* FNMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848740CF1CBF7B770053C787 /* FNMeController.m */; };
 		848740D51CBF7B770053C787 /* FNMeController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 848740D01CBF7B770053C787 /* FNMeController.storyboard */; };
@@ -168,6 +167,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E7578921D1E708200A74B4E /* FNADViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FNADViewController.xib; sourceTree = "<group>"; };
 		6FE3CB63C7B3D0A5B2F274AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		841EE6221CB5330F004A62F1 /* FNFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNFileManager.h; sourceTree = "<group>"; };
 		841EE6231CB5330F004A62F1 /* FNFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNFileManager.m; sourceTree = "<group>"; };
@@ -209,8 +209,6 @@
 		8473DDF71CBA3C37007362F2 /* FNAVListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNAVListCell.h; sourceTree = "<group>"; };
 		8473DDF81CBA3C37007362F2 /* FNAVListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNAVListCell.m; sourceTree = "<group>"; };
 		8473DDFA1CBA3C45007362F2 /* FNAVListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FNAVListCell.xib; sourceTree = "<group>"; };
-		8473DE091CBA7A3F007362F2 /* NewFeatureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewFeatureCell.h; path = ../Controlller/NewFeatureCell.h; sourceTree = "<group>"; };
-		8473DE0A1CBA7A3F007362F2 /* NewFeatureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewFeatureCell.m; path = ../Controlller/NewFeatureCell.m; sourceTree = "<group>"; };
 		847468BE1CE2C1C20097F29C /* FNNewsQRCodeScanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsQRCodeScanController.h; sourceTree = "<group>"; };
 		847468BF1CE2C1C20097F29C /* FNNewsQRCodeScanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNNewsQRCodeScanController.m; sourceTree = "<group>"; };
 		8475206D1CB631C90008B8DC /* FNNewsSearchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNNewsSearchController.h; sourceTree = "<group>"; };
@@ -249,7 +247,6 @@
 		848531841CC866810077AD39 /* FNNewsDetailShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FNNewsDetailShareView.xib; sourceTree = "<group>"; };
 		848740C11CBF5AE00053C787 /* FNADViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNADViewController.h; sourceTree = "<group>"; };
 		848740C21CBF5AE00053C787 /* FNADViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNADViewController.m; sourceTree = "<group>"; };
-		848740C41CBF5B3F0053C787 /* FNADViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FNADViewController.xib; sourceTree = "<group>"; };
 		848740C71CBF5CA60053C787 /* FNADItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNADItem.h; sourceTree = "<group>"; };
 		848740C81CBF5CA60053C787 /* FNADItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FNADItem.m; sourceTree = "<group>"; };
 		848740CE1CBF7B770053C787 /* FNMeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNMeController.h; sourceTree = "<group>"; };
@@ -515,7 +512,7 @@
 			children = (
 				848740C11CBF5AE00053C787 /* FNADViewController.h */,
 				848740C21CBF5AE00053C787 /* FNADViewController.m */,
-				848740C41CBF5B3F0053C787 /* FNADViewController.xib */,
+				3E7578921D1E708200A74B4E /* FNADViewController.xib */,
 			);
 			path = Controlller;
 			sourceTree = "<group>";
@@ -523,8 +520,6 @@
 		8473DE0F1CBA7A4C007362F2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8473DE091CBA7A3F007362F2 /* NewFeatureCell.h */,
-				8473DE0A1CBA7A3F007362F2 /* NewFeatureCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1394,11 +1389,11 @@
 				8E65F4121CE4D88500270283 /* backImage@2x.png in Resources */,
 				8E9030391CB155CB001F005D /* FNNewsADView.xib in Resources */,
 				8E90303E1CB155CB001F005D /* FNNewsThrImgCell.xib in Resources */,
+				3E7578931D1E708200A74B4E /* FNADViewController.xib in Resources */,
 				847520801CB6399F0008B8DC /* FNNewsHotWordsListView.xib in Resources */,
 				8E5D3F311CBD398000003B4A /* FNTopicDetailCellAnsView.xib in Resources */,
 				84EA0ED31CB74DB400CFA801 /* FNNewsSearchListCell.xib in Resources */,
 				848AAC7B1CBF266F009401C2 /* FNReadListThreeImgCell.xib in Resources */,
-				848740C51CBF5B3F0053C787 /* FNADViewController.xib in Resources */,
 				8E0986301CB2A57C00EE5B21 /* NewsURLs.plist in Resources */,
 				848740E31CBF7C0B0053C787 /* FNMeSquareViewCell.xib in Resources */,
 				8E65F4131CE4D88500270283 /* backImage@3x.png in Resources */,
@@ -1514,7 +1509,6 @@
 				8E7948551CBA893300A8D3EE /* FNTopicViewController.m in Sources */,
 				84EA0ED61CB7501C00CFA801 /* NSString+YJ.m in Sources */,
 				8E90302D1CB155CB001F005D /* FNNewsDetailItem.m in Sources */,
-				8473DE0D1CBA7A3F007362F2 /* NewFeatureCell.m in Sources */,
 				8EDB8DD41CB5540800B001FE /* FNNewsPhotoDescView.m in Sources */,
 				848740EB1CBF7E5A0053C787 /* FNMeSettingController.m in Sources */,
 				848740E21CBF7C0B0053C787 /* FNMeSquareViewCell.m in Sources */,

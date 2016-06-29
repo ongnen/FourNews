@@ -103,6 +103,7 @@
 
 - (void)setADHeaderView
 {
+    if (self.newsListArray.count==0) return;
     FNNewsListItem *item = self.newsListArray[0];
     if (item.ads) {
         FNNewsADView *adView = [[NSBundle mainBundle] loadNibNamed:@"FNNewsADView" owner:nil options:0].lastObject;

@@ -38,15 +38,15 @@
 static YJWaveAnimationTool *_instance;
 
 //2.重写分配空间的方法
-+(instancetype)allocWithZone:(struct _NSZone *)zone
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance = [super allocWithZone:zone];
-        
-    });
-    return _instance;
-}
+//+(instancetype)allocWithZone:(struct _NSZone *)zone
+//{
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        _instance = [super allocWithZone:zone];
+//        
+//    });
+//    return _instance;
+//}
 
 //3.提供类方法
 +(instancetype)shareWaveAnimationTool
@@ -66,6 +66,7 @@ static YJWaveAnimationTool *_instance;
     transformRoate.byValue = [NSNumber numberWithDouble:(2 * M_PI)];
     transformRoate.duration = 2;
     transformRoate.repeatCount = MAXFLOAT;
+    transformRoate.removedOnCompletion = NO;
     [self.circleRotaV.layer addAnimation:transformRoate forKey:@"transformRoate"];
     
     
@@ -272,7 +273,9 @@ static YJWaveAnimationTool *_instance;
     anim.duration = 2;
     anim.path = path.CGPath;
     anim.repeatCount = MAXFLOAT;
-    
+    anim.removedOnCompletion = NO;
+    anim.fillMode = kCAFillModeForwards;
+    anim.autoreverses = NO;
     [self.waveLayer addAnimation:anim forKey:nil];
 }
 
@@ -284,4 +287,5 @@ static YJWaveAnimationTool *_instance;
 {
     [[YJWaveAnimationTool shareWaveAnimationTool] addWaveAnimationWithWaveHeight:height view:self  alpha:alpha];
 }
+
 @end

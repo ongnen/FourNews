@@ -39,7 +39,6 @@
     [self setContentScrollView];
     [self setTitleScrollView];
     [self setTitleScrollViewBtn];
-//    [self titleViewBtnClick:self.titleBtnArray[0]];
     [self showTargetViewWithIndex:0];
 }
 #pragma mark - 设置标题scrollView

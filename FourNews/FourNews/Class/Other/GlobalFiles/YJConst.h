@@ -38,3 +38,5 @@ UIKIT_EXTERN NSString * const FNNewsNetInvalid;
 UIKIT_EXTERN NSString * const FNNewsTabBarRefreshReady;
 /** 准备好刷新的通知 */
 UIKIT_EXTERN NSString * const FNNewsTitleRefreshReady;
+/** 发出设置控制器出栈的通知 */
+UIKIT_EXTERN NSString * const FNSettingAnimaControllerPop;

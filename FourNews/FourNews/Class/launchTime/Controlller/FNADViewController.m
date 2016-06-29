@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
 @property (weak, nonatomic) IBOutlet UIImageView *launchImageV;
 @property (weak, nonatomic) IBOutlet UIButton *adTimeBtn;
 @property (nonatomic, strong) FNADItem *item;
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, weak) NSTimer *timer;
 @property (nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, assign) NSInteger timeSeconed;
 
@@ -117,27 +117,33 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
     self.timer = timer;
 }
 // 跳过按钮点击
-- (IBAction)adTimeBtnClick:(id)sender {
-    
-    [self.timer invalidate];
-    self.title = nil;
-    [self dropRootViewController];
+- (IBAction)adTimeBtnClick{
+   
+    [self clearAndDrop];
+    [self timeFlow];
 }
 // 控制跳过时间
 - (void)timeFlow
 {
+    [self clearAndDrop];
     [self.adTimeBtn setTitle:[NSString stringWithFormat:@"跳过 (%lds)",3-self.timeSeconed] forState:UIControlStateNormal];
     
     self.timeSeconed++;
-    
+    NSLog(@"跳过");
     if (self.timeSeconed == 4) {
-        [self.timer invalidate];
-        self.title = nil;
-        // 跳转根控制器
-        [self dropRootViewController];
+        [self clearAndDrop];
     }
-    
 }
+
+/** 直接跳转 */
+- (void)clearAndDrop
+{
+    [self.timer invalidate];
+    self.title = nil;
+    // 跳转根控制器
+    [self dropRootViewController];
+}
+
 // 跳转根控制器
 - (void)dropRootViewController
 {

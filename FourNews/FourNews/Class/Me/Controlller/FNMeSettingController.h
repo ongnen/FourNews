@@ -9,5 +9,6 @@
 #import "YJSettingBaseController.h"
 
 @interface FNMeSettingController : YJSettingBaseController
-
+@property (nonatomic, strong) UIView *standHeader;
+@property (nonatomic, assign) BOOL isGoNext;
 @end

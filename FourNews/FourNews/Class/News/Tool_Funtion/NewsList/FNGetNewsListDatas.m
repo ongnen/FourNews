@@ -58,8 +58,8 @@
                     }
                 }];
                 // 请求成功后重置isReady
-                [[NSNotificationCenter defaultCenter] postNotificationName:FNRefreshReady object:nil];
-                
+//                [[NSNotificationCenter defaultCenter] postNotificationName:FNRefreshReady object:nil];
+                NSLog(@"complete");
                 complete(newArray);
             } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 NSLog(@"%@",error);
@@ -95,6 +95,7 @@
         complete(dicArray);
         return;
     }
+    
     
     NSString *urlStr = [NSString stringWithFormat:@"http://c.3g.163.com/nc/article/%@/%ld0-20.html",pgmid,count*2];
     [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {

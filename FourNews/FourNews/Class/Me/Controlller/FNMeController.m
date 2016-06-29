@@ -71,6 +71,15 @@ static NSString *const ID = @"cell";
     self.tableView.contentInset = UIEdgeInsetsMake(-25, 0, 0, 0);
     
 }
+
+//
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // 发出设置控制器出栈的通知
+    [[NSNotificationCenter defaultCenter] postNotificationName:FNSettingAnimaControllerPop object:nil];
+}
+
 // 设置tableView.footView为自己定义的collectionView
 - (void)setupFooterView
 {

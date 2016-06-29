@@ -42,6 +42,7 @@
 @property (nonatomic, strong) UIToolbar *blurView;
 
 @property (nonatomic, weak) UIView *shareV;
+@property (nonatomic, assign) BOOL isReady;
 
 @end
 
@@ -98,6 +99,8 @@ static NSString * const ID = @"cell";
     [self.view addSubview:self.plshdImgV];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // 初始化
+    _isReady = YES;
     // 设置下拉刷新
     self.tableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     // 设置上拉刷新
@@ -114,6 +117,7 @@ static NSString * const ID = @"cell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNAVTitleButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(avListendDecelerating) name:AVListEndDecelerating object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isReadyChange) name:FNRefreshReady object:nil];
     
 }
 
@@ -149,7 +153,11 @@ static NSString * const ID = @"cell";
     // 不再屏幕中间 返回
     if (self.tableView.scrollsToTop == NO) return;
     
-    [self.tableView.mj_header beginRefreshing];
+    // 防止数据返回前重复刷新
+    if (_isReady == YES) {
+        [self.tableView.mj_header beginRefreshing];
+        _isReady = NO;
+    }
 }
 
 - (void)bottomDragRefreshData
@@ -331,6 +339,11 @@ static NSString * const ID = @"cell";
     [self.playerVC.view removeFromSuperview];
     self.player = nil;
     self.playerVC = nil;
+}
+#pragma mark - 准备刷新
+- (void)isReadyChange
+{
+    _isReady = YES;
 }
 
 

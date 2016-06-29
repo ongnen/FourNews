@@ -80,7 +80,7 @@
     CGSize size1 = [detailItem.body boundingRectWithSize:CGSizeMake(FNScreenW - 2*FNNewsDetailLeftBorder, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:FNNewsDetailContentBodyFont]} context:nil].size;
     CGSize size2 = [detailItem.body boundingRectWithSize:CGSizeMake(FNScreenW - 2*FNNewsDetailLeftBorder, MAXFLOAT) options:NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:FNNewsDetailContentBodyFont]} context:nil].size;
     NSInteger numb = (int)size1.height/size2.height+1;
-    _contentF = (CGRect){FNNewsDetailLeftBorder,contentY,size1.width,numb*26};// *1.2是暂时性调整
+    _contentF = (CGRect){FNNewsDetailLeftBorder,contentY,size1.width,numb*23};// *1.2是暂时性调整
     
     // 责任编辑
     CGSize ecSize = [_detailItem.ec sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:FNNewsDetailSoureceFont]}];

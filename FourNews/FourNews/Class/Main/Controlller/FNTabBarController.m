@@ -51,6 +51,7 @@
     [super viewWillAppear:animated];
     NSLog(@"viewWillAppear");
 }
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];

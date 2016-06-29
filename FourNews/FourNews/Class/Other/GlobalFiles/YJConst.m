@@ -31,6 +31,7 @@ NSString * const AVListEndDecelerating = @"AVListEndDecelerating";
 /** 无网络且无缓存的通知 */
 NSString * const FNNewsNetInvalid = @"FNNewsNetInvalid";
 
-
+/** 发出设置控制器出栈的通知 */
+NSString * const FNSettingAnimaControllerPop = @"FNSettingAnimaControllerPop";
 
 CGFloat const YJMargin = 10;
