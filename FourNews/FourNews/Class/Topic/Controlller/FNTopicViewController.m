@@ -131,6 +131,9 @@ static NSString * const FOOT = @"footer";
     [self.navigationController pushViewController:detailVc animated:YES];
 }
 
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

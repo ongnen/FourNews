@@ -89,13 +89,13 @@ static NSValue *jt_tabBarRectValue;
     
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if (self.tabBarController && [self rootViewController].hidesBottomBarWhenPushed) {
-        self.tabBarController.tabBar.frame = CGRectZero;
-    }
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    
+//    if (self.tabBarController && [self rootViewController].hidesBottomBarWhenPushed) {
+//        self.tabBarController.tabBar.frame = CGRectZero;
+//    }
+//}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -109,9 +109,9 @@ static NSValue *jt_tabBarRectValue;
     return [self rootViewController].jt_fullScreenPopGestureEnabled;
 }
 
-- (BOOL)hidesBottomBarWhenPushed {
-    return [self rootViewController].hidesBottomBarWhenPushed;
-}
+//- (BOOL)hidesBottomBarWhenPushed {
+//    return [self rootViewController].hidesBottomBarWhenPushed;
+//}
 
 - (UITabBarItem *)tabBarItem {
     return [self rootViewController].tabBarItem;

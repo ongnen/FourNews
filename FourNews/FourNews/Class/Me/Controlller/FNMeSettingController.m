@@ -95,7 +95,6 @@
     [super viewDidDisappear:animated];
     [_standHeader removeFromSuperview];
 }
-
 - (void)addGroup0 {
     
     YJSettingGroupItem *group1 = [[YJSettingGroupItem alloc] init];
@@ -238,6 +237,9 @@
 - (void)backBtnClick{
     _isClickGoBack = YES;
 }
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

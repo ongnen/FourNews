@@ -132,6 +132,62 @@
         NSLog(@"%@",error);
     }];
 }
-
++ (void)getCacheNewsListItems:(void (^)(NSArray *nullable))complete
+{
+    NSString *pgmid = @"headline/T1348647853363";
+    NSString *newPgmid = @"T1348647853363FNNewsListItem";
+    
+    FNStatusParamModel *param = [[FNStatusParamModel alloc] init];
+    param.modelName = newPgmid;
+    param.count = 20;
+    param.timeid = 0;
+    NSMutableArray *dicArray = [FNStatusCacheTool getStatusCache:param];
+    if (dicArray.count) {
+        complete(dicArray);
+        return;
+    } else {
+        
+        NSString *urlStr = [NSString stringWithFormat:@"http://c.3g.163.com/nc/article/headline/T1348647853363/0-20.html"];
+        [FNStatusCacheTool setOriginReadSkimWithName:newPgmid];
+        [FNNetWorking GET:urlStr parameters:nil progress:^(NSProgress *progress) {
+        } success:^(id responseObject, NSURLSessionDataTask *task) {
+            // 转模型
+            NSInteger loc = [pgmid rangeOfString:@"/"].location+1;
+            NSArray *dicArray = responseObject[[pgmid substringFromIndex:loc]];
+            NSMutableArray<FNNewsListItem *> *array = [FNNewsListItem mj_objectArrayWithKeyValuesArray:dicArray];
+            
+            // 给timeid赋值
+            [FNNewsListItem setTimeidAttributeWithModelArray:array timeName:@"ptime"];
+            
+            // 全部模型添加广告字段
+            for (int i = 0; i<array.count; i++) {
+                array[i].ads = array[0].ads;
+            }
+            
+            // 加入缓存
+            [FNStatusCacheTool addStatusCache:array :newPgmid];
+            
+            
+            // 数组根据timeid排序
+            NSArray *newArray = [array sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                FNNewsListItem *item1 = obj1;
+                FNNewsListItem *item2 = obj2;
+                if (item1.timeid > item2.timeid) {
+                    return NSOrderedAscending;
+                } else {
+                    return NSOrderedDescending;
+                }
+            }];
+            // 请求成功后重置isReady
+            //                [[NSNotificationCenter defaultCenter] postNotificationName:FNRefreshReady object:nil];
+            
+            complete(newArray);
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"%@",error);
+        }];
+        
+        return;
+    }
+}
 
 @end

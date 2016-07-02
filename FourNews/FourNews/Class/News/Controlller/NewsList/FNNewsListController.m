@@ -79,10 +79,9 @@
     // 设置刷新控件
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self launchRefresh];
-        
-    });
+    // 启动时的数据展示
+    [self launchRefresh];
+    
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(titleButtonRepeatClick) name:FNNewsTitleButtonRepeatClickNotification object:nil];
@@ -181,6 +180,14 @@
 // 启动时的刷新不需要显示上拉控件
 - (void)launchRefresh
 {
+//    [FNGetNewsListDatas getCacheNewsListItems :^(NSArray *array) {
+//        [self.newsListArray addObjectsFromArray:array];
+//        // 设置广告
+//        [self setADHeaderView];
+//        // 设置timeid
+//        self.lastTimeid = self.newsListArray.lastObject.timeid;
+//        [self.tableView reloadData];
+//    }];
     [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :self.lastTimeid :^(NSArray *array) {
         [self.newsListArray addObjectsFromArray:array];
         // 设置广告

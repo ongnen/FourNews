@@ -172,37 +172,28 @@
     UITableViewController *tableVC = (UITableViewController*)self.childViewControllers[index];
     // 如果已经添加了View,不做重复操作
     if (!tableVC.tableView.window) {
-        [self.contentScrollView addSubview:tableVC.view];
-        tableVC.view.frame = CGRectMake(FNScreenW * index, 0, FNScreenW, FNScreenH);
-        tableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+        [self setLayout:tableVC.tableView :index];
     }
     // 对左右两个新闻界面进行提前缓存
     if (index == 0) {
         UITableViewController *rightTableVC = (UITableViewController*)self.childViewControllers[index+1];
         if (!rightTableVC.tableView.window) {
-            [self.contentScrollView addSubview:rightTableVC.view];
-            rightTableVC.view.frame = CGRectMake(FNScreenW * (index+1), 0, FNScreenW, FNScreenH);
-            rightTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+            [self setLayout:rightTableVC.tableView :index+1];
         }
     } else if (index == self.childViewControllers.count-1) {
         UITableViewController *leftTableVC = (UITableViewController*)self.childViewControllers[index-1];
         if (!leftTableVC.tableView.window) {
-            [self.contentScrollView addSubview:leftTableVC.view];
-            leftTableVC.view.frame = CGRectMake(FNScreenW * (index-1), 0, FNScreenW, FNScreenH);
-            leftTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+            [self setLayout:leftTableVC.tableView :index-1];
         };
     } else {
         UITableViewController *rightTableVC = (UITableViewController*)self.childViewControllers[index+1];
         if (!rightTableVC.tableView.window) {
-            [self.contentScrollView addSubview:rightTableVC.view];
-            rightTableVC.view.frame = CGRectMake(FNScreenW * (index+1), 0, FNScreenW, FNScreenH);
-            rightTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+            
+            [self setLayout:rightTableVC.tableView :index+1];
         }
         UITableViewController *leftTableVC = (UITableViewController*)self.childViewControllers[index-1];
         if (!leftTableVC.tableView.window) {
-            [self.contentScrollView addSubview:leftTableVC.view];
-            leftTableVC.view.frame = CGRectMake(FNScreenW * (index-1), 0, FNScreenW, FNScreenH);
-            leftTableVC.tableView.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+            [self setLayout:leftTableVC.tableView :index-1];
         }
     }
     
@@ -223,7 +214,13 @@
     }
 
 }
-
+#pragma mark - 抽出设置tableView frame的方法
+- (void)setLayout:(UITableView *)tableV :(NSInteger)XIndex{
+    [self.contentScrollView addSubview:tableV];
+    tableV.frame = CGRectMake(FNScreenW * (XIndex), 0, FNScreenW, FNScreenH);
+    tableV.contentInset = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
+    tableV.contentOffset = CGPointMake(0, -YJNavBarMaxY-YJTitlesViewH);
+}
 
 @end
 

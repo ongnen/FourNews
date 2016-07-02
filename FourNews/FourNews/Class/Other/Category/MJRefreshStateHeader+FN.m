@@ -38,5 +38,4 @@
 //    [self setTitle:@"暂无网络" forState:MJRefreshStateIdle];
 //    [self setTitle:@"暂无网络" forState:MJRefreshStateRefreshing];
 }
-
 @end

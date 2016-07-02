@@ -345,7 +345,10 @@ static NSString * const ID = @"cell";
 {
     _isReady = YES;
 }
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 
 
