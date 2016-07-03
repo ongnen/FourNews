@@ -43,6 +43,8 @@
 
 @property (nonatomic, weak) UIView *shareV;
 @property (nonatomic, assign) BOOL isReady;
+@property (nonatomic, weak) FNAVListCell *currentCell;
+@property (nonatomic, weak) UIView *playerV;
 
 @end
 
@@ -255,9 +257,33 @@ static NSString * const ID = @"cell";
     }];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (_currentCell) {
+        CGRect playerVframe = [_currentCell convertRect:_playerV.frame toView:[UIApplication sharedApplication].keyWindow];
+        NSLog(@"%lf",_currentCell.frame.size.height);
+        if (playerVframe.origin.y < -_currentCell.frame.size.height || playerVframe.origin.y> FNScreenH) {
+            // 移除正在播放的非窗口视频
+            if (self.previousIndexPath) { // 刷新对应的cell
+                [self.tableView reloadRowsAtIndexPaths:@[self.previousIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }
+            [self.avDetailVc.view removeFromSuperview];
+            [self.avDetailVc removeFromParentViewController];
+            self.player = nil;
+            [self.playerVC.view removeFromSuperview];
+            [self.playerVC removeFromParentViewController];
+            self.playerVC = nil;
+        }
+    }
+    
+    
+    
+}
+
 #pragma mark - 点击coverImg
 - (void)playMovieWithUrlStr:(NSString *)urlStr :(UIView *)playerV
 {
+    _playerV = playerV;
     // 移除正在播放的窗口视频
     [self.avDetailVc.view removeFromSuperview];
     [self.avDetailVc removeFromParentViewController];
@@ -267,6 +293,7 @@ static NSString * const ID = @"cell";
     for (int i = 0; i<self.listItemArray.count; i++) { // 遍历取出
         if ([self.listItemArray[i].mp4_url isEqualToString:urlStr]) {
             indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            _currentCell = [self.tableView cellForRowAtIndexPath:indexPath];
         }
     }
     // 存在上一个indexPath，则刷新上一次播放的视频的cell
