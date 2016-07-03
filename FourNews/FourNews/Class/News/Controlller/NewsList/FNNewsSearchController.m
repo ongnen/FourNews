@@ -59,7 +59,9 @@
     searchBar.placeholder = @"搜索";
     searchBar.delegate = self;
     self.searchBar = searchBar;
-    [self setSearchBarQRButton];
+    // 设置二维码扫描
+//    [self setSearchBarQRButton];
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchBar];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:0 target:self action:@selector(cancelBtnClick)];
     self.navigationController.navigationBar.tintColor = FNColor(150, 150, 150);
@@ -165,7 +167,7 @@
 - (void)setSearchBarQRButton
 {
     UIButton *qrBtn = [[UIButton alloc] init];
-    [qrBtn setImage:[UIImage imageNamed:@"QR_code_icon"] forState:UIControlStateNormal];
+    [qrBtn setImage:[UIImage imageNamed:@"home_scan_6"] forState:UIControlStateNormal];
     qrBtn.bounds = CGRectMake(0, 0, 30, 30);
     qrBtn.center = CGPointMake(self.searchBar.size.width-15, self.searchBar.size.height/2+2);
     [qrBtn addTarget:self action:@selector(qrCodeBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -179,8 +181,6 @@
     };
     
     [self.navigationController pushViewController:qrCodeVC animated:YES];
-    
-    
 }
 
 

@@ -25,21 +25,24 @@
     YJGridView *gridView = [[YJGridView alloc] init];
 
     gridView.itemArray = items;
-    
+    // 创建分割线
     NSInteger lineCount = items.count/4+6;
     for (int i = 0; i < lineCount; i++) {
         UIView *view = [[UIView alloc ] init];
         if (i < 4) {
             view.frame = CGRectMake(FNScreenW/4 * (i+1), 0, 0.5, FNScreenW/4 * (items.count/4+1));
-            if (items.count%4 == 0) continue;
-            if (i>=(items.count%4)) {
-                 view.frame = CGRectMake(FNScreenW/4 * (i+1), 0, 0.5, FNScreenW/4 * (items.count/4));
+            if (items.count%4 != 0){
+                if (i>=(items.count%4)) {
+                    view.frame = CGRectMake(FNScreenW/4 * (i+1), 0, 0.5, FNScreenW/4 * (items.count/4));
+                }
             }
+            
         } else {
             view.frame = CGRectMake(0, FNScreenW/4 * (i-4), FNScreenW, 0.5);
-            if (items.count%4 == 0) continue;
-            if (i == lineCount-1) {
-                view.frame = CGRectMake(0, FNScreenW/4 * (i-4), FNScreenW/4*(items.count%4), 0.5);
+            if (items.count%4 == 0) {
+                if (i == lineCount-1) {
+                    view.frame = CGRectMake(0, FNScreenW/4 * (i-4), FNScreenW/4*(items.count%4), 0.5);
+                }
             }
         }
         view.backgroundColor = FNColor(200, 200, 200);
