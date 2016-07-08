@@ -40,6 +40,9 @@
 @property (nonatomic, strong) NSString *shareLink;
 
 @property (nonatomic, strong) NSString *tid;
+
+@property (nonatomic, strong) NSArray *contArray;
+
 //@property (nonatomic, strong) NSArray *boboList;replyBoard
 //@property (nonatomic, strong) NSArray *apps;
 //@property (nonatomic, strong) NSArray *topiclist_news;

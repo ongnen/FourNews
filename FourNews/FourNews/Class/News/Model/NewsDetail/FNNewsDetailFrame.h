@@ -51,6 +51,9 @@
 
 @property (nonatomic, strong) FNNewsDetailItem *detailItem;
 
+- (NSArray *)getContFrameWith:(FNNewsDetailItem *)detailItem :(NSArray *)contArray;
+
+@property (nonatomic, strong) NSMutableArray<NSNumber *> *contFrameArray;
 
 
 @end

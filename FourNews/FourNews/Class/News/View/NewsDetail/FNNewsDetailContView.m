@@ -30,7 +30,7 @@
 
 @property (nonatomic, weak) UILabel *sourceL;
 
-@property (nonatomic, weak) FNLabel *contentL;
+@property (nonatomic, weak) UIView *contentL;
 
 @property (nonatomic, weak) FNNewsDetailShareView *shareV;
 
@@ -108,9 +108,9 @@
     self.sourceL = sourceL;
     [self addSubview:sourceL];
     
-    FNLabel *contentL = [[FNLabel alloc] init];
-    contentL.font = [UIFont systemFontOfSize:FNNewsDetailContentBodyFont];
-    contentL.textColor = FNColor(100, 100, 100);
+    UIView *contentL = [[UIView alloc] init];
+//    contentL.font = [UIFont systemFontOfSize:FNNewsDetailContentBodyFont];
+    contentL.backgroundColor = FNColor(245, 245, 245);
     self.contentL = contentL;
     [self addSubview:contentL];
     
@@ -175,19 +175,89 @@
     self.pTimeL.text = _detailItem.ptime;
     self.sourceL.text = _detailItem.source;
     self.ecL.text = _detailItem.ec;
-    // 设置body内容的格式
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:_detailItem.body];
-    for (int i = 0; i<self.attrRanges.count; i++) {
-        [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:FNNewsDetailContentBodyFont] range:[self.attrRanges[i] rangeValue]];
-        [attr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:[self.attrRanges[i] rangeValue]];
-    }
-    self.contentL.string = attr;
+    [self setTextCont];
+    
     self.replyV.replyArray = _detailItem.replys;
     if (_detailItem.relative_sys.count!=0) {
         self.relativeV.detailItem = _detailItem;
     }
-    // 设置所有图片
-    [self setPictures];
+}
+
+- (void)setTextCont{
+    int imgIndex = 0;
+    NSArray *frameArray = [[FNNewsDetailFrame alloc] getContFrameWith:_detailItem :_detailItem.contArray];
+    for (int i = 0; i<_detailItem.contArray.count; i++) {
+        if ([_detailItem.contArray[i] isKindOfClass:[NSString class]]) {
+            NSString *body = _detailItem.contArray[i];
+            UITextView *textV = [[UITextView alloc] init];
+            textV.editable = NO;
+            textV.text = body;
+            [self.contentL addSubview:textV];
+            textV.font = [UIFont systemFontOfSize:FNNewsDetailContentBodyFont];
+            textV.textColor = FNColor(100, 100, 100);
+            textV.backgroundColor = FNColor(245, 245, 245);
+            textV.frame = [frameArray[i] CGRectValue];
+            
+            NSMutableArray *rangeArray = [NSMutableArray array];
+            while ([body containsString:@"<b>"] || [body containsString:@"<strong>"]) {
+                NSRange rangeFront;
+                NSInteger locFront;
+                NSRange rangeBack;
+                NSInteger locBack;
+                NSRange range;
+                if ([body containsString:@"<b>"]) {
+                    rangeFront = [body rangeOfString:@"<b>"];
+                    locFront = rangeFront.location + 3;
+                    rangeBack = [body rangeOfString:@"</b>"];
+                    locBack = rangeBack.location;
+                    range = NSMakeRange(locFront-3, locBack-locFront);
+                } else {
+                    rangeFront = [body rangeOfString:@"<strong>"];
+                    locFront = rangeFront.location + 8;
+                    rangeBack = [body rangeOfString:@"</strong>"];
+                    locBack = rangeBack.location;
+                    range = NSMakeRange(locFront-8, locBack-locFront);
+                }
+                
+                body = [body stringByReplacingCharactersInRange:rangeBack withString:@""];
+                body = [body stringByReplacingCharactersInRange:rangeFront withString:@""];
+                
+                [rangeArray addObject:[NSValue valueWithRange:range]];
+                
+                
+            }
+            NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:body];
+            [attr addAttribute:NSForegroundColorAttributeName value:FNColor(100, 100, 100) range:NSMakeRange(0, body.length)];
+            [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:FNNewsDetailContentBodyFont] range:NSMakeRange(0, body.length)];
+            for (int i = 0; i<rangeArray.count; i++) {
+                NSRange range = [rangeArray[i] rangeValue];
+                [attr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range];
+                textV.attributedText = attr;
+            }
+            
+            if ([body containsString:@"<b>"] || [body containsString:@"<strong>"]) {
+                
+            }
+        } else {
+            UIImageView *ImgV = [[UIImageView alloc] init];
+            [self.imgVs addObject:ImgV];
+            [ImgV sd_setImageWithURL:[NSURL URLWithString:_detailItem.img[imgIndex][@"src"]] placeholderImage:[UIImage imageNamed:@"newsTitleImage"]];
+            
+            UILabel *altL = [[UILabel alloc] init];
+            [self.altLs addObject:altL];
+            [altL setText:_detailItem.img[imgIndex][@"alt"]];
+            altL.textColor = FNColor(100, 100, 100);
+            altL.font = [UIFont systemFontOfSize:14];
+            altL.numberOfLines = 0;
+            
+            [self.contentL addSubview:ImgV];
+            [self.contentL addSubview:altL];
+            CGRect imgF = [frameArray[i] CGRectValue];
+            ImgV.frame = CGRectMake(0, imgF.origin.y, imgF.size.width, imgF.size.height-20);
+            altL.frame = CGRectMake(0, CGRectGetMaxY(ImgV.frame), CGRectGetWidth(ImgV.frame), 20);
+            imgIndex++;
+        }
+    }
 }
 
 /*
@@ -224,7 +294,7 @@
     self.titleL.frame = contFrames.titleF;
     self.pTimeL.frame = contFrames.pTimeF;
     self.sourceL.frame = contFrames.sourceF;
-    [self setPictureFrames:contFrames];
+//    [self setPictureFrames:contFrames];
     self.contentL.frame = contFrames.contentF;
     self.ecL.frame = contFrames.ecF;
     self.shareV.frame = contFrames.shareF;
@@ -240,23 +310,7 @@
     _totalHeight = contFrames.relativeF.origin.y + contFrames.relativeF.size.height;
 }
 
-/*
- 动态设置所有图片的frame
- */
-- (void)setPictureFrames:(FNNewsDetailFrame *)frame
-{
-    NSInteger frameIndex = -1;
-    for (int i = 0; i<_detailItem.img.count; i++) {
-        if (_detailItem.img[i][@"pixel"]) {
-            frameIndex++;
-            CGRect imgF = [frame.pictureFs[frameIndex] CGRectValue];
-            self.imgVs[i].frame = imgF;
-            
-            CGRect altF = [frame.altFs[frameIndex] CGRectValue];
-            self.altLs[i].frame = altF;
-        }
-    }
-}
+
 
 #pragma mark TapGestureOfRelativeNew
 - (void)relativeViewClick

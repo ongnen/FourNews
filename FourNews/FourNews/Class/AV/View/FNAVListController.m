@@ -39,7 +39,7 @@
 
 @property (nonatomic, weak) UIImageView *plshdImgV;
 // 毛玻璃
-@property (nonatomic, strong) UIToolbar *blurView;
+@property (nonatomic, weak) UIToolbar *blurView;
 
 @property (nonatomic, weak) UIView *shareV;
 @property (nonatomic, assign) BOOL isReady;
