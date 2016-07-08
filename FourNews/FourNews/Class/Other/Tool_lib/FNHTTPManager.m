@@ -9,10 +9,19 @@
 #import "FNHTTPManager.h"
 
 @implementation FNHTTPManager
+static AFHTTPSessionManager *manager ;
 
++ (AFHTTPSessionManager *)sharedHTTPSession{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer.timeoutInterval = 10;
+    });
+    return manager;
+}
 + (instancetype)manager
 {
-    FNHTTPManager *mgr = [super manager];
+    FNHTTPManager *mgr = (FNHTTPManager *)[FNHTTPManager sharedHTTPSession];
     NSMutableSet *mgrSet = [NSMutableSet set];
     mgrSet.set = mgr.responseSerializer.acceptableContentTypes;
     

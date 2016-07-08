@@ -37,6 +37,8 @@
     } else{
         self.descL.text = descItem.imgtitle;
     }
+    CGSize descSize = [self.descL.text boundingRectWithSize:CGSizeMake(FNScreenW-16,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
+    self.descL.frame = CGRectMake(8, 36, descSize.width, descSize.height);
     
 }
 
@@ -44,8 +46,7 @@
 {
     [super layoutSubviews];
     
-    CGSize descSize = [self.descL.text boundingRectWithSize:CGSizeMake(FNScreenW-16,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
-    self.descL.frame = CGRectMake(8, 36, descSize.width, descSize.height);
+    
 }
 
 + (CGFloat)heightWithPhotoSet:(NSArray *)photoSet

@@ -60,6 +60,10 @@
     self.viewControllers.firstObject.jt_navigationController=nil;
 }
 
+- (void)dealloc
+{
+}
+
 @end
 
 #pragma mark - JTWrapViewController
@@ -133,7 +137,9 @@ static NSValue *jt_tabBarRectValue;
     JTWrapNavigationController *wrapNavController = self.childViewControllers.firstObject;
     return wrapNavController.viewControllers.firstObject;
 }
-
+- (void)dealloc
+{
+}
 @end
 
 #pragma mark - JTNavigationController
@@ -221,4 +227,7 @@ static NSValue *jt_tabBarRectValue;
     return viewControllers.copy;
 }
 
+- (void)dealloc
+{
+}
 @end

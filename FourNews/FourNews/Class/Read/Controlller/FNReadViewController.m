@@ -16,6 +16,7 @@
 #import "FNNewsListItem.h"
 #import "FNNewsGetDetailNews.h"
 #import "FNNewsGetReply.h"
+#import "FNNewsPhotoSetController.h"
 
 #import <MJRefresh.h>
 
@@ -135,22 +136,31 @@
     
     FNReadListItem *listItem = self.newsListArray[indexPath.row];
     
-    // 1.跳转
-    FNNewsDetailController *detailVC = [[FNNewsDetailController alloc] init];
-    [self.navigationController pushViewController:detailVC animated:YES];
-    detailVC.listItem = (FNNewsListItem *)listItem;
-    // 传数据
-    [FNNewsGetDetailNews getNewsDetailWithDocid:listItem.docid :^(FNNewsDetailItem *item) {
-        [FNNewsGetReply hotReplyWithDetailItem:item :^(NSArray *array) {
-            if (array == nil) {
-            } else {
-                item.replys = array;
-            }
-            detailVC.detailItem = item;
+   
+    // 1.跳转图集控制器
+    if (listItem.photosetID) {
+        FNNewsPhotoSetController *photoSetVC = [[FNNewsPhotoSetController alloc] init];
+        photoSetVC.photoSetid = listItem.photosetID;
+        photoSetVC.listItem = (FNNewsListItem *)listItem;
+        [self.navigationController pushViewController:photoSetVC animated:YES];
+    } else {
+        // 1.跳转
+        FNNewsDetailController *detailVC = [[FNNewsDetailController alloc] init];
+        [self.navigationController pushViewController:detailVC animated:YES];
+        // 传数据
+        detailVC.listItem = (FNNewsListItem *)listItem;
+        [FNNewsGetDetailNews getNewsDetailWithDocid:listItem.docid :^(FNNewsDetailItem *item) {
+            [FNNewsGetReply hotReplyWithDetailItem:item :^(NSArray *array) {
+                if (array == nil) {
+                } else {
+                    item.replys = array;
+                }
+                detailVC.detailItem = item;
+                
+            }];
             
         }];
-        
-    }];
+    }
 }
 #pragma mark - 准备刷新
 - (void)isReadyChange

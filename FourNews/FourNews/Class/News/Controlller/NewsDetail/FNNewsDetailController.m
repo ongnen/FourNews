@@ -23,7 +23,7 @@
 
 @interface FNNewsDetailController ()
 
-@property (nonatomic, strong) FNNewsDetailContView *contView;
+@property (nonatomic, weak) FNNewsDetailContView *contView;
 
 @end
 
@@ -39,6 +39,7 @@
     
     [self setBottomImgV];
     
+   
 }
 
 
@@ -93,8 +94,9 @@
 - (void)setContentScroView
 {
     FNNewsDetailContView *contView = [[FNNewsDetailContView alloc] init];
+    __weak typeof(self) weakSelf = self;
     contView.lastKeyWordBtnClick = ^(NSString *keyWord){
-        [self keyWordBtnClick:keyWord];
+        [weakSelf keyWordBtnClick:keyWord];
     };
     contView.frame = CGRectMake(0, 64, FNScreenW, FNScreenH-64-49);
     [self.view addSubview:contView];
@@ -102,7 +104,6 @@
     contView.contentSize = CGSizeMake(FNScreenW, contView.totalHeight);
     contView.backgroundColor = FNColor(245, 245, 245);
     self.contView = contView;
-    
     // 创建内部的replyView
     // 创建内部的relativeView
 }
@@ -165,6 +166,10 @@
     [FNNewsGetSearchNews getSearchNewsWithWord:keyWord :^(NSArray *array) {
         searchListVC.searchItems = array;;
     }];
+}
+
+- (void)dealloc
+{
 }
 
 @end

@@ -19,9 +19,11 @@
         progress(downloadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         success(responseObject,task);
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         taskError(task,error);
     }];
+    
 }
 
 + (NSURLSessionDataTask *)POST:(NSString *)url parameters:(NSDictionary *)parameters progress:(void (^)(NSProgress *))progress success:(void (^)(id, NSURLSessionDataTask *))success failure:(void (^)(NSURLSessionDataTask *, NSError *))taskError{

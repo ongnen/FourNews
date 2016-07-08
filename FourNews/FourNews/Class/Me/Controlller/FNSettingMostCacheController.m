@@ -44,7 +44,7 @@
     
     // 将图片导入桌面
     NSData *data = UIImagePNGRepresentation(image);
-    [data writeToFile:[NSString stringWithFormat:@"/Users/zyj/Desktop/imag1.png"]atomically:YES];
+//    [data writeToFile:[NSString stringWithFormat:@"/Users/zyj/Desktop/imag1.png"]atomically:YES];
     return image;
 }
 

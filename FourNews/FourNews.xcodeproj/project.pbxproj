@@ -1713,7 +1713,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FourNews/Class/libWeiboSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.myit.FourNews20160620;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myit.FourNews20160704;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1733,7 +1733,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FourNews/Class/libWeiboSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.myit.FourNews20160620;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myit.FourNews20160704;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

@@ -129,7 +129,6 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
     [self.adTimeBtn setTitle:[NSString stringWithFormat:@"跳过 (%lds)",3-self.timeSeconed] forState:UIControlStateNormal];
     
     self.timeSeconed++;
-    NSLog(@"跳过");
     if (self.timeSeconed == 4) {
         [self clearAndDrop];
     }

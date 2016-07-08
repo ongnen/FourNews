@@ -93,7 +93,6 @@ static NSString * const ID = @"collec";
     self.imageCollecV = collecV;
     
 }
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.photoSet.count;

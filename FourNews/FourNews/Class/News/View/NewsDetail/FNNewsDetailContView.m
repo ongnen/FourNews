@@ -121,14 +121,15 @@
     [self addSubview:ecL];
 
     FNNewsDetailShareView *shareV = [[NSBundle mainBundle] loadNibNamed:@"FNNewsDetailShareView" owner:nil options:0].lastObject;
+    __weak typeof(self) weakSelf = self;
     shareV.sinaWeiboShareBlock = ^{
-        [self shareTosinaWeibo];
+        [weakSelf shareTosinaWeibo];
     };
     shareV.weiCharShare = ^{
-        [self shareToWeiChar];
+        [weakSelf shareToWeiChar];
     };
     shareV.qqZoneShare = ^{
-        [self shareToQQZone];
+        [weakSelf shareToQQZone];
     };
     self.shareV = shareV;
     [self addSubview:shareV];
@@ -142,8 +143,9 @@
 
     
     FNNewsRelativeView *relativeV = [[NSBundle mainBundle] loadNibNamed:@"FNNewsRelativeView" owner:nil options:nil].lastObject;
+    
     relativeV.keyWordBlock = ^(NSString *keyWord){
-        [self lastKeyWordBtnClick:keyWord];
+        [weakSelf lastKeyWordBtnClick:keyWord];
     };
     UITapGestureRecognizer *relativeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(relativeViewClick)];
     [relativeV addGestureRecognizer:relativeTap];
@@ -319,6 +321,8 @@
     }];
 }
 
-
+- (void)dealloc
+{
+}
 
 @end

@@ -44,6 +44,7 @@
 
 @property (nonatomic, assign) CGFloat cellHeight;
 
+@property (nonatomic, strong) NSString *photosetID;
 @end
 //"boardid":"ent2_bbs",
 //"clkNum":0,

@@ -11,6 +11,6 @@
 @interface FNTabBarController : UITabBarController
 
 @property (nonatomic, weak) UIImageView *coverImgView;
-
+@property (nonatomic, weak) UIView *tipL;
 
 @end

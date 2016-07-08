@@ -19,7 +19,7 @@
     item.body = [item.body stringByReplacingOccurrencesOfString:@"</p><p>" withString:@"\n\n"];
     item.body = [item.body stringByReplacingOccurrencesOfString:@"</p>" withString:@"\n"];
     item.body = [item.body stringByReplacingOccurrencesOfString:@"<p>" withString:@""];
-    
+    item.body = [item.body stringByReplacingOccurrencesOfString:@"<b>" withString:@"\n"];
     
     for (int i = 0; i<20; i++) {
         item.body = [item.body stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<!--IMG#%d-->",i] withString:@""];

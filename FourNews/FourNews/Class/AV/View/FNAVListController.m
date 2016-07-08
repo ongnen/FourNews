@@ -196,12 +196,13 @@ static NSString * const ID = @"cell";
     FNAVListCell *cell = [tableView dequeueReusableCellWithIdentifier:ID forIndexPath:indexPath];
     cell.listItem = self.listItemArray[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    __weak typeof(self) weakSelf = self;
     cell.movieBlock = ^(NSString *urlStr,UIView *playerV){
-        [self playMovieWithUrlStr:urlStr :playerV];
+        [weakSelf playMovieWithUrlStr:urlStr :playerV];
     };
     
     cell.shareBlock = ^(FNAVListItem *item){
-        [self shareBtnClickWithListItem:item];
+        [weakSelf shareBtnClickWithListItem:item];
     };
     return cell;
 }
@@ -256,12 +257,11 @@ static NSString * const ID = @"cell";
         avDetailVC.view.frame = CGRectMake(0, 0, FNScreenW, FNScreenH);
     }];
 }
-
+#pragma mark - 销毁超出屏幕的视频
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (_currentCell) {
         CGRect playerVframe = [_currentCell convertRect:_playerV.frame toView:[UIApplication sharedApplication].keyWindow];
-        NSLog(@"%lf",_currentCell.frame.size.height);
         if (playerVframe.origin.y < -_currentCell.frame.size.height || playerVframe.origin.y> FNScreenH) {
             // 移除正在播放的非窗口视频
             if (self.previousIndexPath) { // 刷新对应的cell
@@ -325,8 +325,9 @@ static NSString * const ID = @"cell";
     [self.tabBarController.view addSubview:self.blurView];
     // close按钮回调
     FNAVShareView *shareV = [FNAVShareView avShareView];
+    __weak typeof(self) weakSelf = self;
     shareV.closeBlock = ^{
-        [self back];
+        [weakSelf back];
     };
     // 分享框动画
     shareV.item = item;

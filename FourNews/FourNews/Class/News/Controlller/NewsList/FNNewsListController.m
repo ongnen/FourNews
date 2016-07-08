@@ -5,7 +5,7 @@
 //  Created by admin on 16/3/28.
 //  Copyright © 2016年 天涯海北. All rights reserved.
 //
-
+#import "FNTabBarController.h"
 #import "FNNewsListController.h"
 #import "FNNewsListItem.h"
 #import "FNGetNewsListDatas.h"
@@ -76,6 +76,7 @@
     _isReady = YES;
     // 设置估算高度，减少heightForRowAtIndexPath调用频率
     self.tableView.estimatedRowHeight = 100.0;
+    
     // 设置刷新控件
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
@@ -90,6 +91,8 @@
     // 右边内容条设置
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(YJNavBarMaxY+YJTitlesViewH, 0, YJTabBarH, 0);
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -189,6 +192,8 @@
 //        [self.tableView reloadData];
 //    }];
     [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :self.lastTimeid :^(NSArray *array) {
+        
+        
         [self.newsListArray addObjectsFromArray:array];
         // 设置广告
         [self setADHeaderView];
