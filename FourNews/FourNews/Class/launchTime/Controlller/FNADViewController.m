@@ -125,7 +125,6 @@ typedef NS_ENUM(NSUInteger, FNScreenType) {
 // 控制跳过时间
 - (void)timeFlow
 {
-    [self clearAndDrop];
     [self.adTimeBtn setTitle:[NSString stringWithFormat:@"跳过 (%lds)",3-self.timeSeconed] forState:UIControlStateNormal];
     
     self.timeSeconed++;

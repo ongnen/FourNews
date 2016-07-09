@@ -57,7 +57,7 @@
 - (UIImageView *)plshdImgV
 {
     if (!_plshdImgV){
-        UIImageView *placeholderImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell_image_background"]];
+        UIImageView *placeholderImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"contentview_imagebg_logo"]];
         [self.view addSubview:placeholderImgV];
         [placeholderImgV sizeToFit];
         placeholderImgV.center = CGPointMake(FNScreenW/2, FNScreenH/2-100);
@@ -70,6 +70,9 @@
     [super viewDidLoad];
     [self.view addSubview:self.plshdImgV];
 
+    // 初始化背景色
+    self.view.backgroundColor = FNColor(245, 245, 245);
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.refreshCount = 1;
     // 初始化
@@ -81,7 +84,9 @@
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(bottomDragRefreshData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(topDragRefreshData)];
     // 启动时的数据展示
-    [self launchRefresh];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self launchRefresh];
+    });
     
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabBarButtonRepeatClick) name:FNTabBarButtonRepeatClickNotification object:nil];
@@ -192,7 +197,7 @@
 //        [self.tableView reloadData];
 //    }];
     [FNGetNewsListDatas getNewsListItemsWithProgramaid:self.pgmid :1 :self.lastTimeid :^(NSArray *array) {
-        
+        [_plshdImgV removeFromSuperview];
         
         [self.newsListArray addObjectsFromArray:array];
         // 设置广告

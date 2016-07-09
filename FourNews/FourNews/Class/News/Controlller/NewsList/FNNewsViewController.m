@@ -38,7 +38,7 @@
     [self setAllPrepare];
     
     // 导航条按钮
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithOriginImage:[UIImage imageNamed:@"search_icon"]] style:0 target:self action:@selector(searchBtnClick)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageWithOriginImage:[UIImage imageNamed:@"search_icon-1"]] style:0 target:self action:@selector(searchBtnClick)];
     
     // 取出历史浏览记录
     [self setHistorySkim];

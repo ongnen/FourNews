@@ -87,8 +87,10 @@
     FNNavigationController *nav = [[FNNavigationController alloc] initWithRootViewController:controller];
     controller.title = title;
     nav.title = title;
-    nav.fullScreenPopGestureEnabled = YES;
+    [controller.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    controller.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     
+    nav.fullScreenPopGestureEnabled = YES;
     nav.tabBarItem.image = [UIImage imageWithOriginImage:[UIImage imageNamed:image]];
     nav.tabBarItem.selectedImage = [UIImage imageWithOriginImage:[UIImage imageNamed:selectesImage]];
     
@@ -111,10 +113,6 @@
 // 交接动画
 - (void)startAppearAnimation
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 正在加载的提示
-//        [self refreshingTip];
-    });
     [UIView animateWithDuration:1.0 animations:^{
         self.coverImgView.alpha = 0;
         self.coverImgView.transform = CGAffineTransformMakeScale(1.5, 1.5);
@@ -122,15 +120,7 @@
         [self.coverImgView removeFromSuperview];
     }];
 }
-- (void)refreshingTip{
-    UILabel *tipL = [[UILabel alloc] init];
-    tipL.text = @"正在加载";
-    tipL.textColor = [UIColor grayColor];
-    [tipL sizeToFit];
-    tipL.center = self.view.center;
-    _tipL = tipL;
-    [[UIApplication sharedApplication].keyWindow addSubview:tipL];
-}
+
 - (void)isReadyChange
 {
     _isReady = YES;

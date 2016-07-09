@@ -43,9 +43,11 @@
                     array[i].ads = array[0].ads;
                 }
                 
-                // 加入缓存
-                [FNStatusCacheTool addStatusCache:array :newPgmid];
-                
+                // 缓存操作为同步函数，所以在要异步进行持久化操作
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    // 加入缓存
+                    [FNStatusCacheTool addStatusCache:array :newPgmid];
+                });
                 
                 // 数组根据timeid排序
                 NSArray *newArray = [array sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
@@ -163,9 +165,11 @@
                 array[i].ads = array[0].ads;
             }
             
-            // 加入缓存
-            [FNStatusCacheTool addStatusCache:array :newPgmid];
-            
+            // 缓存操作为同步函数，所以在要异步进行持久化操作
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                // 加入缓存
+                [FNStatusCacheTool addStatusCache:array :newPgmid];
+            });
             
             // 数组根据timeid排序
             NSArray *newArray = [array sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {

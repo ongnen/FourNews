@@ -19,6 +19,13 @@
 
 @implementation JTWrapNavigationController
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self.navigationBar setBarTintColor:FNColor(200, 0, 0)];
+}
+
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated {
     return [self.navigationController popViewControllerAnimated:animated];
 }

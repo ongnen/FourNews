@@ -43,6 +43,10 @@
     popRecognizer.delegate = self;
     popRecognizer.maximumNumberOfTouches = 1;
     [gestureView addGestureRecognizer:popRecognizer];
+    
+    
+    
+    
 }
 // 重写push方法进行某些设置
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated

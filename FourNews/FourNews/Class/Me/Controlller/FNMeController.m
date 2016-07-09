@@ -51,7 +51,7 @@ static NSString *const ID = @"cell";
     self.tableView.backgroundColor = FNCommonColor;
     // 设置
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:0 target:self action:@selector(setBtnClick)];
-    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
     
     [FNMeGetSquareItem squareItem:^(NSArray *array) {

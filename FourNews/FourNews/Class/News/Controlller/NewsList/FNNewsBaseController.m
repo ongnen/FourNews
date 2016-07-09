@@ -46,7 +46,7 @@
 {
     self.automaticallyAdjustsScrollViewInsets = NO;
     UIScrollView *titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, FNScreenW, 35)];
-    titleScrollView.backgroundColor = [UIColor whiteColor];
+    titleScrollView.backgroundColor = FNColor(235, 235, 235);
     
     CGFloat W = self.childViewControllers.count * FNScreenW / 4;
     titleScrollView.contentSize = CGSizeMake(W, 0);
