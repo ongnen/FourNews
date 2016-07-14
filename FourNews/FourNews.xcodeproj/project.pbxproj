@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		148FB712AD7EC97AB9D8DD5B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FE3CB63C7B3D0A5B2F274AC /* libPods.a */; };
+		3E1535981D34ED0F00B04B70 /* FourNewsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E1535971D34ED0F00B04B70 /* FourNewsTests.m */; };
 		3E7578931D1E708200A74B4E /* FNADViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E7578921D1E708200A74B4E /* FNADViewController.xib */; };
 		841EE6241CB5330F004A62F1 /* FNFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 841EE6231CB5330F004A62F1 /* FNFileManager.m */; };
 		8442B6FC1CC79C6600B90DCB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442B6FE1CC79C6600B90DCB /* InfoPlist.strings */; };
@@ -166,7 +167,20 @@
 		8EDB8DD61CB5541600B001FE /* FNNewsPhotoDescView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EDB8DD51CB5541600B001FE /* FNNewsPhotoDescView.xib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3E15359A1D34ED0F00B04B70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84BCD21C1CA78A660019F1A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84BCD2231CA78A670019F1A4;
+			remoteInfo = FourNews;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		3E1535951D34ED0F00B04B70 /* FourNewsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FourNewsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E1535971D34ED0F00B04B70 /* FourNewsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FourNewsTests.m; sourceTree = "<group>"; };
+		3E1535991D34ED0F00B04B70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E7578921D1E708200A74B4E /* FNADViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FNADViewController.xib; sourceTree = "<group>"; };
 		6FE3CB63C7B3D0A5B2F274AC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		841EE6221CB5330F004A62F1 /* FNFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FNFileManager.h; sourceTree = "<group>"; };
@@ -458,6 +472,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3E1535921D34ED0F00B04B70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84BCD2211CA78A670019F1A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -477,6 +498,15 @@
 				6FE3CB63C7B3D0A5B2F274AC /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3E1535961D34ED0F00B04B70 /* FourNewsTests */ = {
+			isa = PBXGroup;
+			children = (
+				3E1535971D34ED0F00B04B70 /* FourNewsTests.m */,
+				3E1535991D34ED0F00B04B70 /* Info.plist */,
+			);
+			path = FourNewsTests;
 			sourceTree = "<group>";
 		};
 		846C5B581CAE275500880168 /* libs */ = {
@@ -687,6 +717,7 @@
 			isa = PBXGroup;
 			children = (
 				84BCD2261CA78A670019F1A4 /* FourNews */,
+				3E1535961D34ED0F00B04B70 /* FourNewsTests */,
 				84BCD2251CA78A670019F1A4 /* Products */,
 				C1BEC45C17B357E2D8545382 /* Pods */,
 				23B0FAB84263E1DB6FBEE3F5 /* Frameworks */,
@@ -697,6 +728,7 @@
 			isa = PBXGroup;
 			children = (
 				84BCD2241CA78A670019F1A4 /* FourNews.app */,
+				3E1535951D34ED0F00B04B70 /* FourNewsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1324,6 +1356,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3E1535941D34ED0F00B04B70 /* FourNewsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E15359E1D34ED0F00B04B70 /* Build configuration list for PBXNativeTarget "FourNewsTests" */;
+			buildPhases = (
+				3E1535911D34ED0F00B04B70 /* Sources */,
+				3E1535921D34ED0F00B04B70 /* Frameworks */,
+				3E1535931D34ED0F00B04B70 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3E15359B1D34ED0F00B04B70 /* PBXTargetDependency */,
+			);
+			name = FourNewsTests;
+			productName = FourNewsTests;
+			productReference = 3E1535951D34ED0F00B04B70 /* FourNewsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		84BCD2231CA78A670019F1A4 /* FourNews */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84BCD23B1CA78A670019F1A4 /* Build configuration list for PBXNativeTarget "FourNews" */;
@@ -1353,6 +1403,10 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "天涯海北";
 				TargetAttributes = {
+					3E1535941D34ED0F00B04B70 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 84BCD2231CA78A670019F1A4;
+					};
 					84BCD2231CA78A670019F1A4 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = PBYD6PREQ6;
@@ -1376,11 +1430,19 @@
 			projectRoot = "";
 			targets = (
 				84BCD2231CA78A670019F1A4 /* FourNews */,
+				3E1535941D34ED0F00B04B70 /* FourNewsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3E1535931D34ED0F00B04B70 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84BCD2221CA78A670019F1A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1472,6 +1534,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3E1535911D34ED0F00B04B70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E1535981D34ED0F00B04B70 /* FourNewsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84BCD2201CA78A670019F1A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1603,6 +1673,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3E15359B1D34ED0F00B04B70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84BCD2231CA78A670019F1A4 /* FourNews */;
+			targetProxy = 3E15359A1D34ED0F00B04B70 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		8442B6FE1CC79C6600B90DCB /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -1619,6 +1697,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3E15359C1D34ED0F00B04B70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FourNews.app/FourNews";
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = FourNewsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.----.FourNewsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FourNews.app/FourNews";
+			};
+			name = Debug;
+		};
+		3E15359D1D34ED0F00B04B70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FourNews.app/FourNews";
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = FourNewsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.----.FourNewsTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FourNews.app/FourNews";
+			};
+			name = Release;
+		};
 		84BCD2391CA78A670019F1A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1742,6 +1848,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3E15359E1D34ED0F00B04B70 /* Build configuration list for PBXNativeTarget "FourNewsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E15359C1D34ED0F00B04B70 /* Debug */,
+				3E15359D1D34ED0F00B04B70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		84BCD21F1CA78A660019F1A4 /* Build configuration list for PBXProject "FourNews" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

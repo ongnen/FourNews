@@ -234,7 +234,5 @@ static NSValue *jt_tabBarRectValue;
     return viewControllers.copy;
 }
 
-- (void)dealloc
-{
-}
+
 @end

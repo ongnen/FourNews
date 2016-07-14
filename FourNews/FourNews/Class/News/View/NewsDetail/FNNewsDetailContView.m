@@ -193,8 +193,8 @@
             textV.editable = NO;
             textV.text = body;
             [self.contentL addSubview:textV];
-            textV.font = [UIFont systemFontOfSize:FNNewsDetailContentBodyFont];
-            textV.textColor = FNColor(100, 100, 100);
+//            textV.font = [UIFont systemFontOfSize:FNNewsDetailContentBodyFont];
+//            textV.textColor = FNColor(100, 100, 100);
             textV.backgroundColor = FNColor(245, 245, 245);
             textV.frame = [frameArray[i] CGRectValue];
             
@@ -226,18 +226,20 @@
                 
                 
             }
+            
+            NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+            // 两端对齐
+            style.alignment = NSTextAlignmentJustified;
             NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:body];
             [attr addAttribute:NSForegroundColorAttributeName value:FNColor(100, 100, 100) range:NSMakeRange(0, body.length)];
             [attr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:FNNewsDetailContentBodyFont] range:NSMakeRange(0, body.length)];
+            [attr addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, body.length)];
             for (int i = 0; i<rangeArray.count; i++) {
                 NSRange range = [rangeArray[i] rangeValue];
                 [attr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range];
-                textV.attributedText = attr;
             }
             
-            if ([body containsString:@"<b>"] || [body containsString:@"<strong>"]) {
-                
-            }
+            textV.attributedText = attr;
         } else {
             UIImageView *ImgV = [[UIImageView alloc] init];
             [self.imgVs addObject:ImgV];
